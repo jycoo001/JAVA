@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.AddressDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		CRI_ID,CRI_NAME,CRI_PARENT_ID
+	</sql>
+	<resultMap type="Address" id="Map">
+		<id property="id" column="CRI_ID" />
+		<result property="name" column="CRI_NAME" />
+		<result property="parentId" column="CRI_PARENT_ID" />
+		<association property="parent" column="parent_id" select="com.jyc.dao.AddressDAO.findById"/>
+		<collection property="childrens" column="id" select="com.jyc.dao.AddressDAO.findByParentId"/>
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="Address">
+		select
+		<include refid="Columns" />
+		from t_cn_region_info
+		<where>
+			<if test="id!=null and id!=''">
+				and CRI_ID=#{id}
+			</if>
+			<if test="name!=null and name!=''">
+				and CRI_NAME=#{name}
+			</if>
+			<if test="parentId!=null and parentId!=''">
+				and CRI_PARENT_ID=#{parentId}
+			</if>
+		</where>
+		order by id
+	</select>
+
+	<select id="findById" resultMap="Map" parameterType="Address">
+		select
+		<include refid="Columns" />
+		from t_cn_region_info
+		where CRI_ID=#{id}
+	</select>
+	
+	<select id="findByParentId" resultMap="Map" parameterType="java.lang.Integer">
+		select <include refid="Columns"/>
+		from t_cn_region_info
+		where CRI_PARENT_ID=#{id}
+	</select>
+</mapper>
