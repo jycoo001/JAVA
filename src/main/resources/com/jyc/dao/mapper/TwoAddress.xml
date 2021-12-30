@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.TwoAddressDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		id,name,parent_id
+	</sql>
+	<resultMap type="TwoAddress" id="Map">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="parentId" column="parent_id" />
+		<association property="parent" column="parent_id" select="com.jyc.dao.OneAddressDAO.findById"/>
+		<collection property="childrens" column="id" select="com.jyc.dao.ThreeAddressDAO.findByParentId"/>
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="TwoAddress">
+		select
+		<include refid="Columns" />
+		from v_fulladdress_2
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="name!=null and name!=''">
+				and name=#{name}
+			</if>
+			<if test="parentId!=null and parentId!=''">
+				and parent_id=#{parentId}
+			</if>
+		</where>
+		order by id
+	</select>
+
+	<select id="findById" resultMap="Map" parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from v_fulladdress_2
+		where id=#{id}
+	</select>
+	
+	<select id="findByParentId" resultMap="Map" parameterType="java.lang.Integer">
+		select <include refid="Columns"/>
+		from v_fulladdress_2
+		where parent_id=#{id}
+	</select>
+</mapper>

@@ -11,6 +11,7 @@ public class ThreeType {
 	private Integer id;
 	private String name;
 	private Integer parentId;
+	private TwoType parent;
 
 	public Integer getId() {
 		return id;
@@ -34,6 +35,14 @@ public class ThreeType {
 
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
+	}
+
+	public TwoType getParent() {
+		return parent;
+	}
+
+	public void setParent(TwoType parent) {
+		this.parent = parent;
 	}
 
 }

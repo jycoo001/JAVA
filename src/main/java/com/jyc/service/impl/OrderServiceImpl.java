@@ -36,9 +36,12 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		Order order = new Order();
 
 		order.setUserId(user.getId());
-		order.setPay("1");
+		// user付款操作
+		order.setPay("已付款");
 		order.setCreatTime(Calendar.getInstance().getTime());
 		order.setUpdateTime(Calendar.getInstance().getTime());
+		order.setStatus("未发货");
+		order.setUserStatus("未收货");
 
 		UserAddress userAddress = new UserAddress();
 		userAddress.setUserId(user.getId());
@@ -72,6 +75,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 				}
 			}
 			price += od.getCount() * od.getPrice();
+			od.setUserId(user.getId());
 			row2 = orderDetailDAO.insert(od);
 		}
 

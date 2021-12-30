@@ -43,8 +43,6 @@
 </head>
 
 <body>
-
-
 	<!-- 顶部 -->
 	<header class="header">
 		<!-- 中间 -->
@@ -116,18 +114,20 @@
 					id="header-user">请登录</a></li>
 				<li class="header-right-tit"><a href="forward/user/register">注册有礼</a>
 				</li>
-				<li class="header-right-tit"><a href="shop.html">我的订单</a></li>
-				<li class="header-right-tit"><a href="/forward/user/my">我的博汇</a></li>
-				<li class="header-right-tit mycar"><a href="cart.html"><span
-						class="iconfont icon-gouwuche2"></span>购物车</a></li>
+				<li class="header-right-tit"><a href="forward/user/order">我的订单</a></li>
+				<li class="header-right-tit"><a href="forward/user/my">我的博汇</a></li>
+				<li class="header-right-tit mycar"><a
+					href="javascript:void(0);"><span
+						class="cartaaa iconfont icon-gouwuche2"></span>购物车</a></li>
 			</ul>
 		</div>
 	</header>
 	<!-- 购物车 -->
 	<div class="right">
 		<ul class="wrap1">
-			<li><a href="my.html"><span class="iconfont icon-ren-copy"></span></a></li>
-			<li><a href="javascript:void();" class="cartaaa"><span
+			<li><a href="forward/user/my"><span
+					class="iconfont icon-ren-copy"></span></a></li>
+			<li><a href="javascript:void(0);" class="cartaaa"><span
 					class="iconfont icon-gouwuche2"></span><span>购物车<b
 						class="numc">0</b></span></a></li>
 			<li><a href="shop.html"><span class="iconfont icon-shouhou1"></span><span>售后服务</span></a></li>
@@ -179,9 +179,7 @@
 					</c:forEach>
 				</ul>
 			</div>
-
-
-			<!-- Swiper -->
+			<!-- 轮播图 -->
 			<div class="swiper-container-bannerlun">
 				<div class="swiper-wrapper">
 					<c:forEach items="${shufflings}" var="s">
@@ -200,7 +198,37 @@
 
 		</div>
 	</section>
+	<!-- 商品列表 -->
+	<div>
+		<div class="main-tit">
+			—— <b>商品列表</b>——
+		</div>
+		<ul class="wrap shopwrap">
 
+			<c:forEach items="${goods }" var="g">
+				<li class="main"><a href="#"> <c:set var="count" value="1"></c:set>
+						<c:forEach items="${g.pictures }" var="p">
+							<c:choose>
+								<c:when test="${count==1}">
+									<img src="${p.picture}" alt="${p.id}">
+									<c:set var="count" value="2"></c:set>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+
+						</c:forEach>
+				</a>
+					<div class="main-detail">
+						<div class="detail-title">${g.name}${g.goodsDesc }</div>
+						<div class="detail-price">
+							<b class="price">￥${g.shopPrice}</b class="price">
+							<div class="detail-car">加入购物车</div>
+						</div>
+					</div></li>
+			</c:forEach>
+		</ul>
+	</div>
 
 	<!-- 抢购列表一 -->
 	<div class="main-tit">
@@ -523,40 +551,6 @@
 		</ul>
 	</div>
 
-
-	<!-- 商品列表 -->
-	<div>
-		<div class="main-tit">
-			—— <b>商品列表</b>——
-		</div>
-		<ul class="wrap shopwrap">
-
-			<c:forEach items="${goods }" var="g">
-				<li class="main"><a href="#"> <c:set var="count" value="1"></c:set>
-						<c:forEach items="${g.pictures }" var="p">
-							<c:choose>
-								<c:when test="${count==1}">
-									<img src="${p.picture}" alt="${p.id}">
-									<c:set var="count" value="2"></c:set>
-								</c:when>
-								<c:otherwise>
-								</c:otherwise>
-							</c:choose>
-
-						</c:forEach>
-				</a>
-					<div class="main-detail">
-						<div class="detail-title">${g.name}${g.goodsDesc }</div>
-						<div class="detail-price">
-							<b class="price">￥${g.shopPrice}</b class="price">
-							<div class="detail-car">加入购物车</div>
-						</div>
-					</div></li>
-			</c:forEach>
-		</ul>
-	</div>
-
-
 	<!-- 页脚 -->
 	<div class="main-tit">
 		—— <b>END </b>——
@@ -663,4 +657,105 @@
 	</footer>
 	<script src="static/forward/js/swiper.min.js"></script>
 	<script src="static/forward/js/index.js"></script>
+
+	<!-- 素材 -->
+	<script type="text/javascript">
+	  var oRegion = document.getElementById("txtRegion");     //需要弹出下拉列表的文本框 
+      var oDivList = document.getElementById("divList");         //要弹出的下拉列表
+      var contentD = document.getElementById("contentDiv") ;
+      //var oClose = document.getElementById("tdClose");   //关闭div的单元格，也可使用按钮实现 
+      var QueryCode ="COPY_aibsm.enums.sm.receive.support_row" ;
+      var bNoAdjusted = true; 
+      var html = "" ; 
+      var all_html ="" ;
+      var colOptions = "" ;
+      $(document).ready(function(){
+             oRegion.style.background="url(/bomc3/jx/boms/busBackup/select2.jpg)  right -3px no-repeat";
+             oRegion.style.backgroundColor="#fff" ;
+             getJsonListFromCode(QueryCode,function(data){
+                     if(data!=null&&data!=""){           // 存在查询结果 ;
+                          $.each(data,function(i,e){
+                                  all_html +="<li style='text-align:left; padding-left:5px;'>"+e.VALUE+"</li>" ;
+                          }) ;
+                    }
+             },'') ;
+      }) ;
+      $(document).click(function (e) {          
+         var target_id = $(e.target).attr('id') ;             // 获取点击dom元素id ;
+         if(target_id!=oRegion.id)
+         {
+                 oDivList.style.display = "none";　　//隐藏div，实现关闭下拉框的效果 ;
+                oRegion.style.background="url(/bomc3/jx/boms/busBackup/select2.jpg)  right -3px no-repeat";
+                 oRegion.style.backgroundColor="#fff" ;
+         }
+      }) ;
+      //设置下列选择项的一些事件 
+      function setEvent(colOptions){
+             for (var i=0; i<colOptions.length; i++) 
+             { 
+                 colOptions[i].onclick = function()　　　//为列表项添加单击事件 
+                 { 
+                     oRegion.value = this.innerText;     //显示选择的文本；
+                     oRegion.style.backgroundColor="#219DEF" ;
+                     oDivList.style.display = "none";  
+                 }; 
+                 colOptions[i].onmouseover = function()　//为列表项添加鼠标移动事件 
+                 { 
+                     this.style.backgroundColor = "#219DEF"; 
+                 }; 
+                 colOptions[i].onmouseout = function()  //为列表项添加鼠标移走事件 
+                 { 
+                     this.style.backgroundColor = ""; 
+                 }; 
+             } 
+      }
+      //文本获得焦点时的事件 
+      oRegion.onfocus = function() 
+      { 
+          oRegion.style.background="url(/bomc3/jx/boms/busBackup/select.jpg)  right -3px no-repeat";
+          oRegion.style.backgroundColor="#fff" ;
+          oDivList.style.display = "block";
+          if (bNoAdjusted)　　//控制div是否已经显示的变量 
+          { 
+              bNoAdjusted = false; 
+              //设置下拉列表的宽度和位置 
+              oDivList.style.width = this.offsetWidth - 4; 
+              oDivList.style.posTop = oRegion.offsetTop + oRegion.offsetHeight + 1;          // 设定高度
+              oDivList.style.posLeft = oRegion.offsetLeft +1 ;               // 设定与左边的位置;
+          } 
+      }; 
+     
+      // 文本内容改变时监听事件 ;
+      oRegion.onpropertychange = function(){
+              contentD.innerHTML ="" ; // 情况div中所有li元素;
+              html ="" ;
+              InitializeDIV( oRegion.value) ;
+      }
+      function InitializeDIV(value){
+             var sql ="" ;
+             if(value!=""){
+                    html+= "<ul><li style='text-align:left; padding-left:3px;'>按"+'"'+"<font style='color :red;'>"+value+"</font>"+'"'+"检索:</li>";
+                    sql += 'value='+value ;
+             }else{
+               html+= "<ul><li style='text-align:left; padding-left:3px;'>请输入检索条件:"+"</li>";
+                    sql ="" ;
+             }
+             getJsonListFromCodeSync(QueryCode,function(data){
+                     if(data!=null&&data!=""){           // 存在查询结果 ;
+                          $.each(data,function(i,e){
+                                  html+="<li style='text-align:left; padding-left:3px;'>"+e.VALUE+"</li>" ;
+                          }) ;
+                     }else{         // 没有查询结果;
+                                 html ="" ;
+                                 html+= "<ul><li style='text-align:left; padding-left:3px;'>无法匹配:"+'"'+"<font style='color :red;'>"+value+"</font>"+'"'+"</li>";
+                                 html += all_html ;
+                     }
+                     html+="</ul>" ;
+             },sql) ;
+             contentD.innerHTML = html ;
+             colOptions = $("#contentDiv li") ; //所有列表元素
+             setEvent(colOptions) ;
+      }
+
+	</script>
 </body>

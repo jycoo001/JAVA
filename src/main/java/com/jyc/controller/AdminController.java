@@ -1,5 +1,6 @@
 package com.jyc.controller;
 
+import java.util.Calendar;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,13 @@ public class AdminController extends BaseController {
 			}
 			Admin admin1 = service.login(admin);
 			if (admin1 != null) {
-				session.setAttribute("detail", "登录成功！");
+				if (admin1.getLocalLastLoginTime() != null) {
+					session.setAttribute("detail", "登录成功！您最后一次登陆是在" + admin1.getLocalLastLoginTime());
+				} else {
+					session.setAttribute("detail", "登录成功！");
+				}
+				admin1.setLastLoginTime(Calendar.getInstance().getTime());
+				service.update(admin1);
 				session.setAttribute("####admin_login####", admin1);
 				session.setMaxInactiveInterval(10 * 60);
 				return "redirect:/background/index";

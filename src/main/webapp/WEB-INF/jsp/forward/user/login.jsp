@@ -18,7 +18,8 @@
 	type="text/css">
 <link href="static/forward-login/css/login.css" rel="stylesheet"
 	type="text/css">
-<script type="text/javascript" src="static/forward/js/jquery-3.4.1.js"></script>
+
+
 </head>
 
 
@@ -69,7 +70,7 @@
 								readonly="readonly" value="登录">
 						</div>
 						<div class="aui-protocol">
-							登录即同意 <a href="#">《飞天素材网使用协议》</a>& <a href="#">《隐私权条款》</a>
+							登录即同意 <a href="#">《商城健康使用使用协议》</a>& <a href="#">《用户隐私权条款》</a>
 						</div>
 						<div class="aui-thirds">
 							<a href="#"> <i class="aui-qq-img"></i> <i>QQ登录</i>
@@ -151,16 +152,21 @@
 			name="password" /> <input type="text" name="code" />
 	</form>
 </div>
+<script type="text/javascript" src="static/forward/js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="static/forward-login/js/login.js"></script>
+<script type="text/javascript" src="static/public/layer/layer.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var detail = "${detail}";
 		if (detail) {
-			alert(detail);
-			if(detail=="登陆成功") {
-				window.localStorage.setItem("username","${user.userId}");
-				window.location="/";
-			}
+			layer.alert(detail,function(index) {
+				if (detail == "登陆成功") {
+					window.localStorage.setItem("username", "${user.userId}");
+					window.location = "/";
+				}
+				layer.close(index);
+			});
+			
 		}
 		$("#imageCode").click(function() {
 			$("#imageCode").attr("src", "code?" + Math.random());

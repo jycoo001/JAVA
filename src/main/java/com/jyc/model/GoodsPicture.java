@@ -11,6 +11,7 @@ public class GoodsPicture {
 	private Integer id;
 	private Integer goodsId;
 	private String picture;
+	private Goods parent;
 
 	public Integer getId() {
 		return id;
@@ -34,6 +35,14 @@ public class GoodsPicture {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public Goods getParent() {
+		return parent;
+	}
+
+	public void setParent(Goods parent) {
+		this.parent = parent;
 	}
 
 }

@@ -17,4 +17,6 @@ public interface BaseDAO {
 	public int deleteById(Integer id);
 
 	public int deleteByIds(@Param(value = "ids") Integer[] ids);
+
+	public <T> List<T> findByParentId(Integer id);
 }

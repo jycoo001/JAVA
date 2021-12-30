@@ -12,7 +12,7 @@ public class UserAddress {
 	private Integer userId;
 	private Integer addressId;
 	private String defaults;
-	private Address address;
+	private FourAddress address;
 
 	public Integer getId() {
 		return id;
@@ -46,11 +46,11 @@ public class UserAddress {
 		this.defaults = defaults;
 	}
 
-	public Address getAddress() {
+	public FourAddress getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(FourAddress address) {
 		this.address = address;
 	}
 

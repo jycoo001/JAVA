@@ -7,7 +7,6 @@
 	<sql id="Columns">
 		id,goods_id,name,price,shop_price,inventory,goods_unit,hot,goods_desc,type_id
 	</sql>
-
 	<resultMap type="Goods" id="Map">
 		<id property="id" column="id" />
 		<result property="goodsId" column="goods_id" />
@@ -19,6 +18,8 @@
 		<result property="hot" column="hot" />
 		<result property="goodsDesc" column="goods_desc" />
 		<result property="typeId" column="type_id" />
+		
+		<association property="type" column="type_id" select="com.jyc.dao.ThreeTypeDAO.findById" />
 		<collection property="pictures" column="id"
 			select="com.jyc.dao.GoodsPictureDAO.findByGoodsId" />
 	</resultMap>
@@ -28,7 +29,6 @@
 		<include refid="Columns" />
 		from t_goods
 		<where>
-		
 			<if test="id!=null and id!=''">
 				and id=#{id}
 			</if>
@@ -51,7 +51,7 @@
 				and goods_unit=#{goodsUnit}
 			</if>
 			<if test="hot!=null and hot!=''">
-				and hot=#{hot}
+				and hot>=#{hot}
 			</if>
 			<if test="goodsDesc!=null and goodsDesc!=''">
 				and goods_desc=#{goodsDesc}
@@ -60,9 +60,8 @@
 				and type_id=#{typeId}
 			</if>
 		</where>
-		order by id
+		order by hot desc
 	</select>
-
 
 	<select id="findById" resultMap="Map"
 		parameterType="java.lang.Integer">

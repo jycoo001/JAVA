@@ -23,15 +23,22 @@ public class Order {
 	private Integer addressId;
 	private Double price;
 	private String status;
+	private String userStatus;
 	private User user;
 	private List<OrderDetail> details;
 
 	public String getLocalCreatTime() {
+		if (creatTime == null) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(creatTime);
 	}
 
 	public String getLocalUpdateTime() {
+		if (updateTime == null) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(updateTime);
 	}
@@ -108,12 +115,30 @@ public class Order {
 		this.user = user;
 	}
 
+	public Double getAllPrice() {
+		Double d = 0.0;
+		if (getDetails() != null && getDetails().size() > 0) {
+			for (int i = 0; i < getDetails().size(); i++) {
+				d += this.details.get(i).getPrice() * this.details.get(i).getCount();
+			}
+		}
+		return d;
+	}
+
 	public List<OrderDetail> getDetails() {
 		return details;
 	}
 
 	public void setDetails(List<OrderDetail> details) {
 		this.details = details;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 
 }

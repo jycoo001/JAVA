@@ -5,7 +5,7 @@
 <mapper namespace="com.jyc.dao.OrderDAO">
 	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
 	<sql id="Columns">
-		id,user_id,pay,price,creat_time,update_time,address_id,status
+		id,user_id,pay,price,creat_time,update_time,address_id,status,user_status
 	</sql>
 	<resultMap type="Order" id="Map">
 		<id property="id" column="id" />
@@ -16,6 +16,7 @@
 		<result property="updateTime" column="update_time" />
 		<result property="addressId" column="address_id"/>
 		<result property="status" column="status"/>
+		<result property="userStatus" column="user_status"/>
 		<association property="user" column="user_id" select="com.jyc.dao.UserDAO.findById" />
 		<collection property="details" column="user_id" select="com.jyc.dao.OrderDetailDAO.findByUserId"/>
 	</resultMap>
@@ -49,6 +50,9 @@
 			<if test="status!=null and status!=''">
 				and status=#{status}
 			</if>
+			<if test="userStatus!=null and userStatus!=''">
+				and user_status=#{userStatus}
+			</if>
 		</where>
 		order by id
 	</select>
@@ -63,8 +67,8 @@
 
 	<insert id="insert" parameterType="Order">
 		insert into
-		t_order(user_id,pay,price,creat_time,update_time,address_id,status)
-		values(#{userId},#{pay},#{price},#{localCreatTime},#{localUpdateTime},#{addressId},'未发货')
+		t_order(user_id,pay,price,creat_time,update_time,address_id,status,user_status)
+		values(#{userId},#{pay},#{price},#{localCreatTime},#{localUpdateTime},#{addressId},#{status},#{user_status})
 	</insert>
 
 	<update id="update" parameterType="Order">

@@ -21,6 +21,7 @@ public class Goods {
 	private Integer typeId;
 
 	private List<GoodsPicture> pictures;
+	private ThreeType type;
 
 	public Integer getId() {
 		return id;
@@ -116,4 +117,13 @@ public class Goods {
 		}
 		return pictures.get(0).getPicture();
 	}
+
+	public ThreeType getType() {
+		return type;
+	}
+
+	public void setType(ThreeType type) {
+		this.type = type;
+	}
+
 }

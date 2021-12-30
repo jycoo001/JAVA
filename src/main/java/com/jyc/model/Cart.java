@@ -71,11 +71,17 @@ public class Cart {
 	}
 
 	public String getLocalCreatTime() {
+		if (creatTime == null) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(creatTime);
 	}
 
 	public String getLocalUpdateTime() {
+		if (updateTime == null) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(updateTime);
 	}

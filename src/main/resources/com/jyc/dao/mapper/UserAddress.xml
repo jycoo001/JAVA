@@ -9,10 +9,11 @@
 	</sql>
 	<resultMap type="UserAddress" id="Map">
 		<id property="id" column="id" />
-		<result property="userId" column="user_id"/>
-		<result property="addressId" column="address_id"/>
-		<result property="defaults" column="default"/>
-		<association property="address" column="address_id" select="com.jyc.dao.AddressDAO.findById" />
+		<result property="userId" column="user_id" />
+		<result property="addressId" column="address_id" />
+		<result property="defaults" column="default" />
+		<association property="address" column="address_id"
+			select="com.jyc.dao.FourAddressDAO.findById" />
 	</resultMap>
 
 	<select id="findAll" resultMap="Map" parameterType="UserAddress">
@@ -33,20 +34,38 @@
 				and `default`=#{defaults}
 			</if>
 		</where>
-		order by id
+		order by `default` desc
 	</select>
 
-	<select id="findById" resultMap="Map" parameterType="java.lang.Integer">
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
 		select
 		<include refid="Columns" />
 		from t_user_address
 		where id=#{id}
 	</select>
-	
-	<select id="findByUserId" resultMap="Map" parameterType="java.lang.Integer">
+
+	<select id="findByUserId" resultMap="Map"
+		parameterType="java.lang.Integer" useCache="false">
 		select
 		<include refid="Columns" />
 		from t_user_address
 		where user_id=#{id}
 	</select>
+
+	<update id="update" parameterType="UserAddress">
+		update t_user_address
+		<set>
+			<if test="userId!=null and userId!=''">
+				user_id=#{userId},
+			</if>
+			<if test="addressId!=null and addressId!=''">
+				address_id=#{addressId},
+			</if>
+			<if test="defaults!=null and defaults!=''">
+				`default`=#{defaults},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
 </mapper>

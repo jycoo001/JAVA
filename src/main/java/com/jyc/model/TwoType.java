@@ -14,6 +14,7 @@ public class TwoType {
 	private String name;
 	private Integer parentId;
 	private List<ThreeType> threeTypes;
+	private OneType oneType;
 
 	public Integer getId() {
 		return id;
@@ -45,6 +46,14 @@ public class TwoType {
 
 	public void setThreeTypes(List<ThreeType> threeTypes) {
 		this.threeTypes = threeTypes;
+	}
+
+	public OneType getOneType() {
+		return oneType;
+	}
+
+	public void setOneType(OneType oneType) {
+		this.oneType = oneType;
 	}
 
 }

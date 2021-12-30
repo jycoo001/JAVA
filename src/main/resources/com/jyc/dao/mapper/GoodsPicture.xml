@@ -11,6 +11,7 @@
 		<id property="id" column="id" />
 		<result property="goodsId" column="goods_id" />
 		<result property="picture" column="picture" />
+		<association property="parent" column="goods_id" select="com.jyc.dao.GoodsDAO.findById" />
 	</resultMap>
 	
 	<select id="findAll" resultMap="Map" parameterType="GoodsPicture">
@@ -37,5 +38,4 @@
 		from t_goods_picture
 		where goods_id=#{id}
 	</select>
-
 </mapper>

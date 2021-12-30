@@ -2,12 +2,15 @@ package com.jyc.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jyc.dao.UserAddressDAO;
 import com.jyc.dao.UserDAO;
 import com.jyc.model.User;
+import com.jyc.model.UserAddress;
 import com.jyc.service.UserService;
 
 @Service
@@ -15,6 +18,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 	@Autowired
 	private UserDAO dao;
+	@Autowired
+	private UserAddressDAO userAddressDAO;
 
 	@Override
 	public User login(User user) {
@@ -36,5 +41,22 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		user.setUserMoney(0.0);
 		user.setUserStatus("1");
 		return dao.register(user);
+	}
+
+	@Override
+	public int handlerAddress(Integer id) {
+
+		UserAddress ud = userAddressDAO.findById(id);
+		int row = 0;
+		List<UserAddress> user = userAddressDAO.findByUserId(ud.getUserId());
+		for (int i = 0; i < user.size(); i++) {
+			UserAddress user1 = user.get(i);
+			user1.setDefaults("0");
+			row += userAddressDAO.update(user1);
+		}
+		ud.setDefaults("1");
+		row += userAddressDAO.update(ud);
+
+		return row;
 	}
 }

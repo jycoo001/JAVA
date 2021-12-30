@@ -290,12 +290,12 @@ count.addEventListener("click", () => {
 		window.location.assign("forward/user/login");//跳转到下一个页面
 	} else {
 		if (countp) {
-			var str = JSON.stringify(cartList);
+			var str1 = JSON.stringify(cartList);
 			$.ajax({
 				url: "forward/order/pay",
 				method: "post",
 				data: {
-					cartList: str
+					cartList: str1
 				},
 				dataType: "json",
 				tranditional: true,

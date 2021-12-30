@@ -20,7 +20,6 @@ public class User extends Base {
 	private String password;
 	private String secret;
 	private String sex;
-	private String name;
 	private String phone;
 	private String qq;
 	private String email;
@@ -56,6 +55,9 @@ public class User extends Base {
 	}
 
 	public String getLocalPassword() {
+		if (this.password.length() > 30) {
+			return null;
+		}
 		String str = this.userId + "{" + this.password + "}";
 		return DigestUtils.md5DigestAsHex(str.getBytes());
 	}
@@ -87,20 +89,6 @@ public class User extends Base {
 
 	public void setSex(String sex) {
 		this.sex = sex;
-	}
-
-	public String getName() {
-		if (name != null) {
-			return name;
-		} else {
-			return null;
-		}
-	}
-
-	public void setName(String name) {
-		if (name != null && name.trim().length() > 0) {
-			this.name = name;
-		}
 	}
 
 	public String getPhone() {
@@ -140,11 +128,17 @@ public class User extends Base {
 	}
 
 	public String getLocalCreatTime() {
+		if (creatTime == null) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(creatTime);
 	}
 
 	public String getLocalLastTime() {
+		if (lastTime == null) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(lastTime);
 	}
@@ -196,6 +190,15 @@ public class User extends Base {
 
 	public void setAddress(List<UserAddress> address) {
 		this.address = address;
+	}
+
+	public UserAddress getUserAddressOne() {
+		for (int i = 0; i < this.address.size(); i++) {
+			if (this.address.get(i).getDefaults().equals("1")) {
+				return this.address.get(i);
+			}
+		}
+		return null;
 	}
 
 }

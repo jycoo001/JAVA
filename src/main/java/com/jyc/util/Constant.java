@@ -8,7 +8,7 @@ package com.jyc.util;
  */
 public class Constant {
 
-	public static final String PICTURE_URL = "d:/File/";
+	public static final String PICTURE_URL = "d:/图片/ssmShopping/";
 
 	/**
 	 * sql语句，employee实体的数量

@@ -52,6 +52,9 @@ public class Admin {
 	}
 
 	public String getLocalPassword() {
+		if (this.password.length() > 30) {
+			return null;
+		}
 		String str = this.name + "{" + this.password + "}";
 		return DigestUtils.md5DigestAsHex(str.getBytes());
 	}
@@ -115,11 +118,17 @@ public class Admin {
 	}
 
 	public String getLocalCreatTime() {
+		if (creatTime == null) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(creatTime);
 	}
 
 	public String getLocalLastLoginTime() {
+		if (lastLoginTime == null) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(lastLoginTime);
 	}
