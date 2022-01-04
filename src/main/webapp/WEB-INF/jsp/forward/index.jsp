@@ -114,7 +114,7 @@
 					id="header-user">请登录</a></li>
 				<li class="header-right-tit"><a href="forward/user/register">注册有礼</a>
 				</li>
-				<li class="header-right-tit"><a href="forward/user/order">我的订单</a></li>
+				<li class="header-right-tit"><a href="forward/order/all">我的订单</a></li>
 				<li class="header-right-tit"><a href="forward/user/my">我的博汇</a></li>
 				<li class="header-right-tit mycar"><a
 					href="javascript:void(0);"><span
@@ -137,7 +137,7 @@
 	<!-- logo 搜索 -->
 	<section class="section1 wrap">
 		<div class="logo">
-			<a href="index.html"><img src="static/forward/images/logo.png"></a>
+			<a href="index.html"><img src="${logo.address}"></a>
 		</div>
 		<div class="search">
 			<input class="search-input" autofocus=" autofocus" type="text"

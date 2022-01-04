@@ -31,6 +31,14 @@
 								data-text="后台菜单"><span class="l-line"></span>后台菜单</a>
 						</dd>
 						<dd>
+							<a href="javascript:;" data-url="background/type/list" data-id='2'
+								data-text="前台菜单"><span class="l-line"></span>商品分类菜单</a>
+						</dd>
+						<dd>
+							<a href="javascript:;" data-url="menu2.html" data-id='2'
+								data-text="前台菜单"><span class="l-line"></span>前台菜单</a>
+						</dd>
+						<dd>
 							<a href="javascript:;" data-url="menu2.html" data-id='2'
 								data-text="前台菜单"><span class="l-line"></span>前台菜单</a>
 						</dd>

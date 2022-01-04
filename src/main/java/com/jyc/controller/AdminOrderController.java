@@ -22,14 +22,14 @@ public class AdminOrderController {
 
 	@RequestMapping("/order-list")
 	public String orderManage(Map<String, Object> map, @RequestParam(defaultValue = "1") Integer pageNumber,
-			@RequestParam(defaultValue = "5") Integer pageSize) {
-		List<Order> order = service.findAll(null);
+			@RequestParam(defaultValue = "5") Integer pageSize, Order o) {
 		PageHelper.startPage(pageNumber, pageSize);
+		List<Order> order = service.findAll(o);
 		PageInfo<Order> page = new PageInfo<Order>(order);
 		map.put("order", order);
 		map.put("page", page);
 		map.put("pageNumber", pageNumber);
-		return "background/order-list";
+		return "background/order/order-list";
 	}
 
 	@RequestMapping("/order-detail")
@@ -44,10 +44,9 @@ public class AdminOrderController {
 				return "redirect:/background/order/order-list";
 			} else {
 				map.put("detail", "修改失败！");
-				return "background/order-detail";
 			}
 		}
-		return "background/order-detail";
+		return "background/order/order-detail";
 	}
 
 }

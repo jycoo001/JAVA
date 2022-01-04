@@ -49,16 +49,17 @@
 									${user.userAddressOne.address.parent.name }
 									${user.userAddressOne.address.name }</td>
 								<td><c:choose>
-									<c:when test="${o.status=='未发货'}">
+										<c:when test="${o.status=='未发货'}">
 										${o.status}
 									</c:when>
-									<c:otherwise>
+										<c:otherwise>
 										${o.userStatus}
 									</c:otherwise>
-								</c:choose></td>
-								<td><c:if test="${o.userStatus!='已收货'}"><a href="forward/order/orderUpdate?id=${o.id}"><button
-											class="button">确认收货</button></a>
-								</c:if></td>
+									</c:choose></td>
+								<td><c:if test="${o.userStatus!='已收货' && o.status=='已发货'}">
+										<a href="forward/order/orderUpdate?id=${o.id}"><button
+												class="button">确认收货</button></a>
+									</c:if></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -87,7 +88,7 @@
 	<script type="text/javascript" src="static/forward/js/jquery-3.4.1.js"></script>
 	<script type="text/javascript" src="static/public/layer/layer.js"></script>
 	<script type="text/javascript">
-		if(detail) {
+		if (detail) {
 			layer.alert(detail);
 		}
 	</script>

@@ -9,5 +9,5 @@ import com.jyc.model.OrderDetail;
 @Mapper
 public interface OrderDetailDAO extends BaseDAO {
 
-	public List<OrderDetail> findByUserId(Integer id);
+	public List<OrderDetail> findByOrderId(String id);
 }

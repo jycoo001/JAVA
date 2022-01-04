@@ -2,6 +2,7 @@ package com.jyc.service.impl;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			return false;
 		}
 		Order order = new Order();
-
+		String uuid = UUID.randomUUID().toString();
+		order.setOrderId(uuid);
 		order.setUserId(user.getId());
 		// user付款操作
 		order.setPay("已付款");
@@ -76,6 +78,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			}
 			price += od.getCount() * od.getPrice();
 			od.setUserId(user.getId());
+			od.setOrderId(uuid);
 			row2 = orderDetailDAO.insert(od);
 		}
 

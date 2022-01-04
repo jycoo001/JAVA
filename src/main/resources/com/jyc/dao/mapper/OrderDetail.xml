@@ -5,7 +5,7 @@
 <mapper namespace="com.jyc.dao.OrderDetailDAO">
 	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
 	<sql id="Columns">
-		id,user_id,goods_id,price,count,creat_time,update_time
+		id,user_id,goods_id,price,count,creat_time,update_time,order_id
 	</sql>
 	<resultMap type="OrderDetail" id="Map">
 		<id property="id" column="id" />
@@ -15,6 +15,7 @@
 		<result property="count" column="count"/>
 		<result property="creatTime" column="creat_time" />
 		<result property="updateTime" column="update_time" />
+		<result property="orderId" column="order_id"/>
 		<association property="goods" column="goods_id" select="com.jyc.dao.GoodsDAO.findById" />
 	</resultMap>
 
@@ -44,6 +45,9 @@
 			<if test="localUpdateTime!=null and localUpdateTime!=''">
 				and update_time=#{localUpdateTime}
 			</if>
+			<if test="orderId!=null and orderId!=''">
+				and order_id=#{orderId}
+			</if>
 		</where>
 		order by id
 	</select>
@@ -56,16 +60,16 @@
 		where id=#{id}
 	</select>
 	
-	<select id="findByUserId" resultMap="Map" parameterType="java.lang.Integer">
+	<select id="findByOrderId" resultMap="Map" parameterType="java.lang.String">
 		select <include refid="Columns"/>
 		from t_order_detail
-		where user_id=#{id}
+		where order_id=#{id}
 	</select>
 
 	<insert id="insert" parameterType="OrderDetail">
 		insert into
-		t_order_detail(goods_id,user_id,price,count,creat_time,update_time)
-		values(#{goodsId},#{userId},#{price},#{count},#{localCreatTime},#{localUpdateTime})
+		t_order_detail(goods_id,user_id,price,count,creat_time,update_time,order_id)
+		values(#{goodsId},#{userId},#{price},#{count},#{localCreatTime},#{localUpdateTime},#{orderId})
 	</insert>
 
 	<update id="update" parameterType="OrderDetail">
@@ -92,9 +96,13 @@
 			<if test="localUpdateTime!=null and localUpdateTime!=''">
 				update_time=#{localUpdateTime},
 			</if>
+			<if test="orderId!=null and orderId!=''">
+				order_id=#{orderId},
+			</if>
 		</set>
 		where id=#{id}
 	</update>
+	
 	<delete id="delete" parameterType="java.lang.Integer">
 		delete from t_order_detail where
 		id=#{id}

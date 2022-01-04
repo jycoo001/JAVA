@@ -14,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class Order {
 	private Integer id;
+	private String orderId;
 	private Integer userId;
 	private String pay;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -41,6 +42,14 @@ public class Order {
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(updateTime);
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	public Integer getId() {

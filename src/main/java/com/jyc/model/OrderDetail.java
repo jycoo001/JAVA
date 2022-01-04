@@ -22,6 +22,7 @@ public class OrderDetail {
 	private Date creatTime;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
+	private String orderId;
 	private Goods goods;
 
 	public String getLocalCreatTime() {
@@ -94,6 +95,14 @@ public class OrderDetail {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	public Goods getGoods() {
