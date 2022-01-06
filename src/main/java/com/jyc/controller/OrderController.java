@@ -49,7 +49,7 @@ public class OrderController extends BaseController {
 	@GetMapping("/orderUpdate")
 	public String orderUpdate(Integer id) {
 		Order order = service.findById(id);
-		order.setStatus("已收货");
+		order.setUserStatus("已收货");
 		int row = service.update(order);
 		if (row > 0) {
 			return "redirect:/forward/user/my";

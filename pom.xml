@@ -15,6 +15,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- 导出excel -->
+		<!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>easyexcel</artifactId>
+			<version>3.0.5</version>
+		</dependency>
 
 
 		<!-- mybatis的二级缓存适配 -->

@@ -68,4 +68,17 @@
 		</set>
 		where id=#{id}
 	</update>
+
+	<insert id="insert" parameterType="UserAddress"
+		flushCache="true">
+		insert into
+		t_user_address(user_id,address_id,`default`)
+		values(#{userId},#{addressId},#{defaults})
+	</insert>
+
+	<delete id="deleteById" parameterType="java.lang.Integer"
+		flushCache="true">
+		delete from t_user_address where id=#{id}
+	</delete>
+	
 </mapper>

@@ -12,6 +12,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>我的信息</title>
 <link href="static/forward/css/my.css" rel="stylesheet">
+<style type="text/css">
+</style>
 <script type="text/javascript">
 	var detail = "${detail}";
 </script>
@@ -35,13 +37,16 @@
 				<table>
 					<thead>
 						<th>地址</th>
-						<th>操作</th>
+						<th colspan="3">操作</th>
 					</thead>
 					<tbody>
 						<c:forEach items="${user.address}" var="a">
 							<tr>
-								<td>${a.address.parent.parent.name}${a.address.parent.name}
+								<td>${a.address.parent.parent.parent.name}
+									${a.address.parent.parent.name} ${a.address.parent.name}
 									${a.address.name}</td>
+								<input type="hidden" class="inpaddre" name="addressId"
+									value="${a.id}" />
 								<td><c:choose>
 										<c:when test="${a.defaults=='1'}">
 											<span>默认地址</span>
@@ -50,12 +55,39 @@
 											<button class="btn-edit" my="${a.id}">设置为默认地址</button>
 										</c:otherwise>
 									</c:choose></td>
+								<td>
+									<button class="address-edit" my="${a.id}">修改地址</button>
+								</td>
+								<td>
+									<button class="address-delete" my="${a.id}">删除地址</button>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 
 				</table>
 				<button class="address-add">新增地址</button>
+				<div id="modal" class="c2 hide">
+					<div class="" style="cursor: pointer;" onclick="Hide();">x</div>
+					<div class="kong"></div>
+					<input type="hidden" name="address" value="" />
+					<p>
+						省：<select name="oneId"></select>
+					</p>
+					<p>
+						市：<select name="twoId"></select>
+					</p>
+					<p>
+						区/县：<select name="threeId"></select>
+					</p>
+					<p>
+						镇：<select name="addressId"></select>
+					</p>
+					<p>
+						<input class="addYes" type="button" value="确定"> <input
+							type="button" value="取消" onclick="Hide();">
+					</p>
+				</div>
 			</div>
 			<div class="order">
 				<a href="forward/order/all">所有订单</a>

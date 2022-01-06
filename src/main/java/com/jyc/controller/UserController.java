@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jyc.model.Admin;
 import com.jyc.model.Order;
 import com.jyc.model.User;
+import com.jyc.model.UserAddress;
 import com.jyc.service.OrderService;
+import com.jyc.service.UserAddressService;
 import com.jyc.service.UserService;
 import com.jyc.util.Constant;
 
@@ -39,6 +41,8 @@ public class UserController {
 	private UserService service;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private UserAddressService usService;
 
 	@GetMapping(value = { "/login", "/register", "/back", "/update" })
 	public String toL(HttpSession session, HttpServletRequest req, Map<String, Object> map) {
@@ -74,7 +78,7 @@ public class UserController {
 				user1.setLastTime(Calendar.getInstance().getTime());
 				service.update(user1);
 				session.setAttribute("####user_login####", user1);
-				session.setMaxInactiveInterval(10 * 60);
+				session.setMaxInactiveInterval(60 * 60);
 				map.put("detail", "登陆成功");
 				map.put("user", user1);
 				return "forward/user/login";
@@ -125,11 +129,16 @@ public class UserController {
 	@RequestMapping("/my")
 	public String my(HttpSession session, Map<String, Object> map) {
 		User user = (User) session.getAttribute("####user_login####");
+		List<UserAddress> list1 = usService.findByUserId(user.getId());
+		user.setAddress(list1);
+		session.setAttribute("####user_login####", user);
 		map.put("user", user);
 		Order order = new Order();
 		order.setUserId(user.getId());
 		List<Order> list = orderService.findAll(order);
 		map.put("order", list);
+		map.put("detail", session.getAttribute("detail"));
+		session.removeAttribute("detail");
 		return "forward/user/my";
 	}
 
@@ -200,7 +209,6 @@ public class UserController {
 		int row = service.handlerAddress(userAddressId);
 		if (row > 0) {
 			session.setAttribute("detail", "修改成功");
-			session.removeAttribute("####user_login####");
 		} else {
 			session.setAttribute("detail", "修改失败");
 		}

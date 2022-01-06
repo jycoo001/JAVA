@@ -22,6 +22,7 @@
 			<mvc:exclude-mapping path="/**/update" />
 			<mvc:exclude-mapping path="/*/code" />
 			<mvc:exclude-mapping path="/static/**" />
+			<mvc:exclude-mapping path="/forward/address/all"/>
 			<bean class="com.jyc.interceptor.UserInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>

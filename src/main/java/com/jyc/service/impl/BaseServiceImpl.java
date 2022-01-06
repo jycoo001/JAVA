@@ -26,6 +26,10 @@ public class BaseServiceImpl {
 		return getDAO().findById(id);
 	}
 
+	public <T> List<T> findByParentId(Integer id) {
+		return getDAO().findByParentId(id);
+	}
+
 	public <T> int insert(T t) {
 		return getDAO().insert(t);
 	}

@@ -14,8 +14,7 @@
 <title>网站后台管理模版</title>
 <link rel="stylesheet" type="text/css"
 	href="static/admin/layui/css/layui.css" />
-<link rel="stylesheet" type="text/css"
-	href="static/admin/css/admin.css" />
+<link rel="stylesheet" type="text/css" href="static/admin/css/admin.css" />
 </head>
 <body>
 	<div class="main-layout" id='main-layout'>
@@ -24,15 +23,35 @@
 			<div class="m-logo"></div>
 			<ul class="layui-nav layui-nav-tree" lay-filter="leftNav">
 				<li class="layui-nav-item layui-nav-itemed"><a
+					href="javascript:;"><i class="iconfont">&#xe607;</i>用户管理</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="javascript:;" data-url="" data-id='1' data-text="后台菜单"><span
+								class="l-line"></span></a>
+						</dd>
+						<dd>
+							<a href="javascript:;" data-url="background/type/list"
+								data-id='2' data-text="前台菜单"><span class="l-line"></span>商品分类菜单</a>
+						</dd>
+						<dd>
+							<a href="javascript:;" data-url="menu2.html" data-id='2'
+								data-text="前台菜单"><span class="l-line"></span>前台菜单</a>
+						</dd>
+						<dd>
+							<a href="javascript:;" data-url="menu2.html" data-id='2'
+								data-text="前台菜单"><span class="l-line"></span>前台菜单</a>
+						</dd>
+					</dl></li>
+				<li class="layui-nav-item layui-nav-itemed"><a
 					href="javascript:;"><i class="iconfont">&#xe607;</i>菜单管理</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="javascript:;" data-url="" data-id='1'
-								data-text="后台菜单"><span class="l-line"></span>后台菜单</a>
+							<a href="javascript:;" data-url="" data-id='1' data-text="后台菜单"><span
+								class="l-line"></span>后台菜单</a>
 						</dd>
 						<dd>
-							<a href="javascript:;" data-url="background/type/list" data-id='2'
-								data-text="前台菜单"><span class="l-line"></span>商品分类菜单</a>
+							<a href="javascript:;" data-url="background/type/list"
+								data-id='2' data-text="前台菜单"><span class="l-line"></span>商品分类菜单</a>
 						</dd>
 						<dd>
 							<a href="javascript:;" data-url="menu2.html" data-id='2'
@@ -47,8 +66,8 @@
 						class="iconfont">&#xe608;</i>内容管理</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="javascript:;" data-url="/background/order/order-list" data-id='3'
-								data-text="订单管理"><span class="l-line"></span>订单管理</a>
+							<a href="javascript:;" data-url="/background/order/order-list"
+								data-id='3' data-text="订单管理"><span class="l-line"></span>订单管理</a>
 						</dd>
 						<dd>
 							<a href="javascript:;" data-url="danye-list.html" data-id='9'

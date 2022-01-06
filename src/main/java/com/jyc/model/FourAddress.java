@@ -1,5 +1,8 @@
 package com.jyc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(value = { "handler" })
 public class FourAddress {
 
 	private Integer id;

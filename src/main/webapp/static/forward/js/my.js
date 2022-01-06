@@ -1,14 +1,119 @@
 
 //不是模板,是自定义js
+//更新用户
 $(".user .btn-edit").click(function() {
 	location.href = "/forward/user/update";
 });
+//设置默认地址
 $(".address .btn-edit").click(function() {
 	location.href = "/forward/user/address-edit?userAddressId=" + $(this).attr("my");
 });
+//删除地址
+$(".address .address-delete").click(function() {
+	var value = $(this).parent().parent().find("input.inpaddre").val();
+	location.href="/forward/address/delete?id="+value;
+});
+//修改地址
+$(".address .address-edit").click(function() {
+	var value = $(this).parent().parent().find("input.inpaddre").val();
+	$("#modal").removeClass("hide");
+	ajaxAdd("id", value, "edit", "");
+});
+//ajax添加地址
+function ajaxAdd(name, id, url, field) {
+	$.ajax({
+		url: "forward/address/" + url,
+		method: "post",
+		data: name + "=" +  id+ field,
+		dataType: "json",
+		tranditional: true,
+		success: function(map) {
+			if (map.one) {
+				$("#modal select[name=oneId]").append("<option value=''>请选择</option>");
+				map.one.forEach(function(index) {
+					$("#modal select[name=oneId]").append("<option value=" + index.id + ">" + index.name + "</option>");
+				});
+			}
+			if (map.two) {
+				$("#modal select[name=twoId]").empty();
+				$("#modal select[name=twoId]").append("<option value=''>请选择</option>");
+				map.two.forEach(function(index) {
+					$("#modal select[name=twoId]").append("<option value=" + index.id + ">" + index.name + "</option>");
+				});
+				$("#modal select[name=threeId]").empty();
+				$("#modal select[name=addressId]").empty();
+			}
+			if (map.three) {
+				$("#modal select[name=threeId]").empty();
+				$("#modal select[name=threeId]").append("<option value=''>请选择</option>");
+				map.three.forEach(function(index) {
+					$("#modal select[name=threeId]").append("<option value=" + index.id + ">" + index.name + "</option>");
+				});
+				$("#modal select[name=addressId]").empty();
+			}
+			if (map.four) {
+				$("#modal select[name=addressId]").empty();
+				$("#modal select[name=addressId]").append("<option value=''>请选择</option>");
+				map.four.forEach(function(index) {
+					$("#modal select[name=addressId]").append("<option value=" + index.id + ">" + index.name + "</option>");
+				});
+			}
+			if (map.address) {
+				$("#modal select[name=addressId]").append("<option value=" + map.address.id + "selected >" + map.address.name + "</option>");
+				$("#modal select[name=threeId]").append("<option value=" + map.address.parent.id + " selected >" + map.address.parent.name + "</option>");
+				$("#modal select[name=twoId]").append("<option value=" + map.address.parent.parent.id + " selected >" + map.address.parent.parent.name + "</option>");
+				$("#modal select[name=oneId]").append("<option value=" + map.address.parent.parent.parent.id + " selected >" + map.address.parent.parent.parent.name + "</option>");
+				$("#modal input[name=address]").val(map.id);
+			}
+			if (map.detail) {
+				if (map.detail == '添加成功' || map.detail == '修改成功') {
+					$("#modal").addClass("hide");
+					$("#modal input[name=address]").val("");
+					layer.alert(map.detail, function() {
+						location.href = "/forward/user/my";
+					});
+				} else {
+					layer.alert(map.detail);
+				}
+			}
+		}
+	});
+}
 
+//ajax添加地址省级
+$(".address .address-add").click(function() {
+	$("#modal").removeClass("hide");
+	ajaxAdd(null, null, "list", "");
+});
 
+//ajax地址下拉列表
+$("#modal select").change(function() {
+	var id = $(this).val();
+	var name = $(this).attr("name");
+	if (name != 'addressId') {
+		ajaxAdd(name, id, "list", "");
+	}
+});
 
+//确定按钮
+$("#modal input.addYes").click(function() {
+	var id = $("select[name=addressId]").val();
+	var name = $("select[name=addressId]").attr("name");
+	var address = $("#modal input[name=address]").val();
+	if (address && address != "") {
+		ajaxAdd(name, id, "edit", "&&id=" + address);
+	} else {
+		ajaxAdd(name, id, "list", "");
+	}
+});
+
+//取消按钮
+function Hide() {
+	$("#modal").addClass("hide");
+	$("#modal input[name=address]").val("");
+}
+
+//返回的提示
 if (detail) {
 	layer.alert(detail);
 }

@@ -7,6 +7,8 @@ public interface BaseService {
 
 	public <T> T findById(Integer id);
 
+	public <T> List<T> findByParentId(Integer id);
+
 	public <T> int insert(T t);
 
 	public <T> int update(T t);

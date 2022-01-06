@@ -2,12 +2,15 @@ package com.jyc.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * 二级地址
  * 
  * @author 12430
  *
  */
+@JsonIgnoreProperties(value = { "handler", "childrens" })
 public class TwoAddress {
 
 	private Integer id;

@@ -2,12 +2,15 @@ package com.jyc.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * 三级地址实体
  * 
  * @author 12430
  *
  */
+@JsonIgnoreProperties(value = { "handler", "childrens" })
 public class ThreeAddress {
 
 	private Integer id;
@@ -34,9 +37,9 @@ public class ThreeAddress {
 
 	public Integer getParentId() {
 		if (parentId == null) {
-			return parentId;
-		} else {
 			return null;
+		} else {
+			return parentId;
 		}
 	}
 
