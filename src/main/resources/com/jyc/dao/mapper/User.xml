@@ -13,7 +13,7 @@
 		<result property="password" column="password" />
 		<result property="phone" column="phone" />
 		<result property="qq" column="qq" />
-		<result property="eMail" column="e-mail" />
+		<result property="email" column="e_mail" />
 		<result property="cardId" column="card_id" />
 		<result property="secret" column="secret" />
 		<result property="sex" column="sex" />
@@ -35,7 +35,8 @@
 				and id=#{id}
 			</if>
 			<if test="userId!=null and userId!=''">
-				and user_id=#{userId}
+				<bind name="likeUserId" value="'%'+userId+'%'" />
+				and user_id like #{likeUserId}
 			</if>
 			<if test="localPassword!=null and localPassword!=''">
 				and password=#{localPassword}
@@ -90,13 +91,20 @@
 		select
 		<include refid="Columns" />
 		from t_user
-		where user_id=#{userId} and password=#{localPassword}
+		where user_id=#{userId} and password=#{localPassword} and
+		user_status='1'
 	</select>
 
 	<insert id="register" parameterType="User">
 		insert into
 		t_user(user_id,password,secret,sex,phone,qq,e_mail,card_id,creat_time,user_money,user_status)
-		values(#{userId},#{password},#{secret},#{sex},#{phone},#{qq},#{email},#{cardId},#{creatTime},#{userMoney},#{userStatus})
+		values(#{userId},#{localPassword},#{secret},#{localSex},#{phone},#{qq},#{email},#{cardId},#{creatTime},#{userMoney},#{userStatus})
+	</insert>
+
+	<insert id="insert" parameterType="User">
+		insert into
+		t_user(user_id,password,secret,sex,phone,qq,e_mail,card_id,creat_time,user_money,user_status)
+		values(#{userId},#{localPassword},#{secret},#{localSex},#{phone},#{qq},#{email},#{cardId},#{creatTime},#{userMoney},#{userStatus})
 	</insert>
 
 	<update id="update" parameterType="User">
@@ -114,8 +122,8 @@
 			<if test="secret!=null and secret!=''">
 				secret=#{secret},
 			</if>
-			<if test="sex!=null and sex!=''">
-				sex=#{sex},
+			<if test="localSex!=null and localSex!=''">
+				sex=#{localSex},
 			</if>
 			<if test="phone!=null and phone!=''">
 				phone=#{phone},
@@ -149,12 +157,12 @@
 		where id=#{id}
 	</update>
 
-	<delete id="delete" parameterType="java.lang.Integer">
+	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from t_user where
 		id=#{id}
 	</delete>
 
-	<delete id="deleteMany" parameterType="java.util.List">
+	<delete id="deleteByIds" parameterType="java.util.List">
 		delete from t_user where id in
 		<foreach collection="ids" item="id" separator="," open="("
 			close=")">

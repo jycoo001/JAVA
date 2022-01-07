@@ -1,7 +1,6 @@
 package com.jyc.service.impl;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +26,18 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
+	public int insert(User user) {
+		user.setCreatTime(Calendar.getInstance().getTime());
+		user.setLastTime(Calendar.getInstance().getTime());
+		return super.insert(user);
+	}
+
+	@Override
 	public int register(User user) {
-		Calendar calendar = Calendar.getInstance();
-		Date creatTime = calendar.getTime();
-		user.setCreatTime(creatTime);
-		String caId = user.getCardId().substring(user.getCardId().length() - 2, user.getCardId().length() - 1);
-		int id = Integer.valueOf(caId);
-		if (id % 2 == 0) {
-			user.setSex("女");
-		} else {
-			user.setSex("男");
-		}
+		user.setCreatTime(Calendar.getInstance().getTime());
 		user.setUserMoney(0.0);
 		user.setUserStatus("1");
+		user.setLastTime(Calendar.getInstance().getTime());
 		return dao.register(user);
 	}
 

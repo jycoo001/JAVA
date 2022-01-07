@@ -52,7 +52,7 @@ public class Admin {
 	}
 
 	public String getLocalPassword() {
-		if (this.password.length() > 30) {
+		if (this.password == null || this.password.trim().length() > 30) {
 			return null;
 		}
 		String str = this.name + "{" + this.password + "}";

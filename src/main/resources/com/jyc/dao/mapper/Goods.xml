@@ -36,7 +36,8 @@
 				and goods_id=#{goodsId}
 			</if>
 			<if test="name!=null and name!=''">
-				and name=#{name}
+			<bind name="likeNmae" value="'%'+name+'%'"/>
+				and name=#{likeName}
 			</if>
 			<if test="price!=null and price!=''">
 				and price=#{price}

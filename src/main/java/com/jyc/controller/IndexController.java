@@ -11,13 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jyc.model.Goods;
 import com.jyc.model.Logo;
+import com.jyc.model.OneAddress;
 import com.jyc.model.OneType;
 import com.jyc.model.Shuffling;
+import com.jyc.model.ThreeAddress;
+import com.jyc.model.TwoAddress;
 import com.jyc.model.User;
 import com.jyc.service.GoodsService;
 import com.jyc.service.LogoService;
+import com.jyc.service.OneAddressService;
 import com.jyc.service.OneTypeService;
 import com.jyc.service.ShufflingService;
+import com.jyc.service.ThreeAddressService;
+import com.jyc.service.TwoAddressService;
 
 @Controller
 @RequestMapping("")
@@ -30,6 +36,12 @@ public class IndexController {
 	private GoodsService goodsService;
 	@Autowired
 	private LogoService logoService;
+	@Autowired
+	private OneAddressService one;
+	@Autowired
+	private TwoAddressService two;
+	@Autowired
+	private ThreeAddressService three;
 
 	@RequestMapping("")
 	public String index(HttpSession session, Map<String, Object> map) {
@@ -58,6 +70,15 @@ public class IndexController {
 		if (user != null) {
 			map.put("user", user);
 		}
+
+		// 地址
+		List<OneAddress> onex = one.findAll(null);
+		List<TwoAddress> twox = two.findAll(null);
+		List<ThreeAddress> threex = three.findAll(null);
+		map.put("one", onex);
+		map.put("two", twox);
+		map.put("three", threex);
+
 		return "forward/index";
 	}
 }

@@ -4,7 +4,7 @@ layui.config({
 	dialog: 'dialog',
 });
 
-layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog',   'element'], function() {
+layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element'], function() {
 	var form = layui.form(),
 		layer = layui.layer,
 		$ = layui.jquery,
@@ -20,10 +20,10 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog',   'element
 		form.render('checkbox');
 	});
 	//渲染表单
-	form.render();	
+	form.render();
 	//顶部添加
 	$('.addBtn').click(function() {
-		var url=$(this).attr('data-url');
+		var url = $(this).attr('data-url');
 		//将iframeObj传递给父级窗口,执行操作完成刷新
 		parent.page("菜单添加", url, iframeObj, w = "700px", h = "620px");
 		return false;
@@ -35,13 +35,13 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog',   'element
 	})
 	//顶部排序
 	$('.listOrderBtn').click(function() {
-		var url=$(this).attr('data-url');
+		var url = $(this).attr('data-url');
 		dialog.confirm({
-			message:'您确定要进行排序吗？',
-			success:function(){
+			message: '您确定要进行排序吗？',
+			success: function() {
 				layer.msg('确定了')
 			},
-			cancel:function(){
+			cancel: function() {
 				layer.msg('取消了')
 			}
 		})
@@ -51,17 +51,40 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog',   'element
 
 		dialog.tips('批量排序', '.listOrderBtn');
 
-	})	
+	})
 	//顶部批量删除
 	$('.delBtn').click(function() {
-		var url=$(this).attr('data-url');
+		var url = $(this).attr('data-url');
 		dialog.confirm({
-			message:'您确定要删除选中项',
-			success:function(){
-				layer.msg('删除了')
+			message: '您确定要删除选中项',
+			success: function(index) {
+				var checked = $(".myChecked:checked");
+				var ids = [];
+				var trs = checked.closest("tr");
+				for (var i = 0; i < checked.length; i++) {
+					ids[i] = +checked[i].getAttribute("data-id");
+				}
+				$.ajax({
+					url: url,
+					method: "post",
+					data: {
+						"ids": ids
+					},
+					dataType: "json",
+					tranditional: true,
+					success: function(map) {
+						if (map.detail == '删除成功') {
+							$(trs).remove();
+							layer.msg(map.detail + ",删除了" + map.rows + "个用户");
+						} else {
+							layer.msg(map.detail);
+						}
+					}
+				});
+				layer.close(index);
 			},
-			cancel:function(){
-				layer.msg('取消了')
+			cancel: function() {
+				layer.msg('取消了');
 			}
 		})
 		return false;
@@ -70,41 +93,60 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog',   'element
 
 		dialog.tips('批量删除', '.delBtn');
 
-	})	
+	})
 	//列表添加
 	$('#table-list').on('click', '.add-btn', function() {
-		var url=$(this).attr('data-url');
+		var url = $(this).attr('data-url');
 		//将iframeObj传递给父级窗口
 		parent.page("菜单添加", url, iframeObj, w = "700px", h = "620px");
 		return false;
 	})
 	//列表删除
 	$('#table-list').on('click', '.del-btn', function() {
-		var url=$(this).attr('data-url');
+		var url = $(this).attr('data-url');
+		var thisx = $(this).closest("tr");
 		var id = $(this).attr('data-id');
 		dialog.confirm({
-			message:'您确定要进行删除吗？',
-			success:function(){
-				layer.msg('确定了')
+			message: '您确定要进行删除吗？',
+			success: function(index) {
+				//自定义ajax
+				$.ajax({
+					url: url,
+					method: "post",
+					data: {
+						"ids": id
+					},
+					dataType: "json",
+					tranditional: true,
+					success: function(map) {
+						if (map.detail == '删除成功') {
+							$(thisx).remove();
+							layer.msg(map.detail + ",删除了" + map.rows + "个用户");
+						} else {
+							layer.msg(map.detail);
+						}
+					}
+				});
+				layer.close(index);
 			},
-			cancel:function(){
-				layer.msg('取消了')
+			cancel: function() {
+				layer.msg('取消删除');
 			}
 		})
 		return false;
 	})
 	//列表跳转
 	$('#table-list,.tool-btn').on('click', '.go-btn', function() {
-		var url=$(this).attr('data-url');
+		var url = $(this).attr('data-url');
 		var id = $(this).attr('data-id');
-		window.location.href=url+"?id="+id;
+		window.location.href = url + "?id=" + id;
 		return false;
 	})
 	//编辑栏目
 	$('#table-list').on('click', '.edit-btn', function() {
 		var That = $(this);
 		var id = That.attr('data-id');
-		var url=That.attr('data-url');
+		var url = That.attr('data-url');
 		//将iframeObj传递给父级窗口
 		parent.page("菜单编辑", url + "?id=" + id, iframeObj, w = "700px", h = "620px");
 		return false;
@@ -118,21 +160,21 @@ var iframeObjName;
 
 //父级弹出页面
 function page(title, url, obj, w, h) {
-	if(title == null || title == '') {
+	if (title == null || title == '') {
 		title = false;
 	};
-	if(url == null || url == '') {
+	if (url == null || url == '') {
 		url = "404.html";
 	};
-	if(w == null || w == '') {
+	if (w == null || w == '') {
 		w = '700px';
 	};
-	if(h == null || h == '') {
+	if (h == null || h == '') {
 		h = '350px';
 	};
 	iframeObjName = obj;
 	//如果手机端，全屏显示
-	if(window.innerWidth <= 768) {
+	if (window.innerWidth <= 768) {
 		var index = layer.open({
 			type: 2,
 			title: title,
@@ -157,7 +199,7 @@ function page(title, url, obj, w, h) {
  */
 function refresh() {
 	//根据传递的name值，获取子iframe窗口，执行刷新
-	if(window.frames[iframeObjName]) {
+	if (window.frames[iframeObjName]) {
 		window.frames[iframeObjName].location.reload();
 
 	} else {

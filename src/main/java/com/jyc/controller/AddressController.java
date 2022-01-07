@@ -27,7 +27,6 @@ import com.jyc.service.UserAddressService;
 @Controller
 @RequestMapping("/forward/address")
 public class AddressController {
-
 	@Autowired
 	private OneAddressService service;
 	@Autowired

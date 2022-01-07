@@ -15,8 +15,27 @@
 <link href="static/forward/css/public.css" rel="stylesheet">
 <link href="static/forward/css/swiper.min.css" rel="stylesheet">
 <script src="static/forward/js/jquery-3.4.1.js"></script>
+
 <script type="text/javascript">
 	var user = "${user.userId}"
+	var pp = [];
+	var cc=[];
+	var ch=[];
+	var i = 0;
+    <c:forEach items="${one}" var="o">
+    	pp[i] = ["${o.id}","${o.name}",0];
+    	i++;
+	</c:forEach>
+	i=0;
+	<c:forEach items="${two}" var="t">
+		cc[i] = ["${t.id}","${t.name}","${t.parentId}"];
+		i++;
+	</c:forEach>
+	i=0;
+	<c:forEach items="${three}" var="th">
+		ch[i] = ["${th.id}","${th.name}","${th.parentId}"];
+		i++;
+	</c:forEach>
 	$(function() {
 		$(".left-hid-s").hover(function() {
 			$(this).find("li").css("display", "inline-block");

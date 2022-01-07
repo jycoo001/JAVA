@@ -35,7 +35,8 @@ public class User extends Base {
 
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(new String[] { "id", "name", "sex", "secret", "userStatus", "lastTime", "userMany" });
+		return super.equals(
+				new String[] { "id", "sex", "secret", "userMoney", "userPicture", "address", "creatTime", "lastTime" });
 	}
 
 	public Integer getId() {
@@ -55,11 +56,11 @@ public class User extends Base {
 	}
 
 	public String getLocalPassword() {
-		if (this.password.length() > 30) {
-			return null;
+		if (this.password != null && this.password.length() <= 30 && this.password.trim().length() > 0) {
+			String str = this.userId + "{" + this.password + "}";
+			return DigestUtils.md5DigestAsHex(str.getBytes());
 		}
-		String str = this.userId + "{" + this.password + "}";
-		return DigestUtils.md5DigestAsHex(str.getBytes());
+		return null;
 	}
 
 	public String getPassword() {
@@ -71,6 +72,10 @@ public class User extends Base {
 	}
 
 	public String getSecret() {
+		return this.secret;
+	}
+
+	public String getLocalSecret() {
 		if (secret != null && secret.trim().length() > 0) {
 			return secret;
 		} else {
@@ -84,6 +89,22 @@ public class User extends Base {
 	}
 
 	public String getSex() {
+		return this.sex;
+	}
+
+	public String getLocalSex() {
+		if (this.sex != null) {
+			return sex;
+		} else {
+			if (getCardId() != null) {
+				int id = Integer.valueOf(getCardId().substring(getCardId().length() - 2, getCardId().length() - 1));
+				if (id % 2 == 0) {
+					this.sex = "女";
+				} else {
+					this.sex = "男";
+				}
+			}
+		}
 		return sex;
 	}
 
@@ -128,19 +149,21 @@ public class User extends Base {
 	}
 
 	public String getLocalCreatTime() {
-		if (creatTime == null) {
+		if (creatTime != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			return sdf.format(creatTime);
+		} else {
 			return null;
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return sdf.format(creatTime);
 	}
 
 	public String getLocalLastTime() {
-		if (lastTime == null) {
+		if (lastTime != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			return sdf.format(lastTime);
+		} else {
 			return null;
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return sdf.format(lastTime);
 	}
 
 	public void setCreatTime(Date creatTime) {
@@ -161,6 +184,9 @@ public class User extends Base {
 	}
 
 	public Double getUserMoney() {
+		if (this.userMoney == null) {
+			return 0.0;
+		}
 		return userMoney;
 	}
 
@@ -192,13 +218,14 @@ public class User extends Base {
 		this.address = address;
 	}
 
-	public UserAddress getUserAddressOne() {
-		for (int i = 0; i < this.address.size(); i++) {
-			if (this.address.get(i).getDefaults().equals("1")) {
-				return this.address.get(i);
+	public UserAddress getMyAddress() {
+		if (getAddress() != null) {
+			for (int i = 0; i < getAddress().size(); i++) {
+				if (getAddress().get(i).getDefaults().equals("1")) {
+					return getAddress().get(i);
+				}
 			}
 		}
 		return null;
 	}
-
 }

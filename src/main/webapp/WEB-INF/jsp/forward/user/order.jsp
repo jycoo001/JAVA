@@ -44,10 +44,10 @@
 							<tr>
 								<td>${o.id}</td>
 								<td>${o.allPrice}</td>
-								<td>${user.userAddressOne.address.parent.parent.parent.name}
-									${user.userAddressOne.address.parent.parent.name}
-									${user.userAddressOne.address.parent.name }
-									${user.userAddressOne.address.name }</td>
+								<td>${user.myAddress.address.parent.parent.parent.name}
+									${user.myAddress.address.parent.parent.name}
+									${user.myAddress.address.parent.name }
+									${user.myAddress.address.name }</td>
 								<td><c:choose>
 										<c:when test="${o.status=='未发货'}">
 										${o.status}
