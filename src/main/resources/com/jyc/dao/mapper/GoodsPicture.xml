@@ -38,4 +38,39 @@
 		from t_goods_picture
 		where goods_id=#{id}
 	</select>
+	
+	<insert id="insert" parameterType="GoodsPicture">
+		insert into
+		t_goods_picture(goods_id,picture)
+		values(#{goodsId},#{picture})
+	</insert>
+
+	<update id="update" parameterType="GoodsPicture">
+		update t_goods_picture
+		<set>
+			<if test="id!=null and id!=''">
+				id=#{id},
+			</if>
+			<if test="goodsId!=null and goodsId!=''">
+				good_id=#{goodsId},
+			</if>
+			<if test="picture!=null and picture!=''">
+				picture=#{picture},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_goods_picture where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_goods_picture where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 </mapper>

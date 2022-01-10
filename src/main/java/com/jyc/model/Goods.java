@@ -8,20 +8,25 @@ import java.util.List;
  * @author 12430
  *
  */
-public class Goods {
-	private Integer id;
-	private String goodsId;
-	private String name;
-	private Double price;
-	private Double shopPrice;
-	private Integer inventory;
-	private String goodsUnit;
-	private Integer hot;
-	private String goodsDesc;
-	private Integer typeId;
+public class Goods extends Base {
+	private Integer id;// 非业务主键
+	private String goodsId;// 业务主键
+	private String name;// 商品名
+	private Double price;// 价格
+	private Double shopPrice;// 实价
+	private Integer inventory;// 数量
+	private String goodsUnit;// 单位
+	private Integer hot;// 热度
+	private String goodsDesc;// 备注
+	private Integer typeId;// 类型ID
 
-	private List<GoodsPicture> pictures;
-	private ThreeType type;
+	private List<GoodsPicture> pictures;// 商品图片
+	private ThreeType type;// 商品类型
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(new String[] { "id" });
+	}
 
 	public Integer getId() {
 		return id;

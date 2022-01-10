@@ -1,16 +1,27 @@
 package com.jyc.model;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+
 /**
  * 轮播图
  * 
  * @author 12430
  *
  */
-public class Shuffling {
+public class Shuffling extends Base {
+	@ExcelProperty("编号")
 	private Integer id;
+	@ExcelProperty("照片名")
 	private String name;
+	@ExcelProperty("照片地址")
 	private String picture;
+	@ExcelProperty("状态（0：隐藏/1：显示）")
 	private String status;
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(new String[] { "id", "picture" });
+	}
 
 	public Integer getId() {
 		return id;

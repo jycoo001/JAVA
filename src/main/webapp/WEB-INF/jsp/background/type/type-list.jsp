@@ -20,32 +20,32 @@
 <body>
 	<div class="wrap-container clearfix">
 		<div class="column-content-detail">
-			<form class="layui-form" action="">
+			<form class="layui-form" action="background/type/list">
 				<div class="layui-form-item">
 					<div class="layui-inline tool-btn">
 						<button class="layui-btn layui-btn-small layui-btn-normal addBtn"
-							data-url="article-add.html">
+							data-url="background/type/list">
 							<i class="layui-icon">&#xe654;</i>
 						</button>
 						<button class="layui-btn layui-btn-small layui-btn-danger delBtn"
-							data-url="article-add.html">
+							data-url="background/type/list">
 							<i class="layui-icon">&#xe640;</i>
 						</button>
 						<button
 							class="layui-btn layui-btn-small layui-btn-warm listOrderBtn hidden-xs"
-							data-url="article-add.html">
+							data-url="background/type/list">
 							<i class="iconfont">&#xe656;</i>
 						</button>
 					</div>
 					<div class="layui-inline">
-						<input type="text" name="userId" required lay-verify="required"
-							placeholder="请输入标题" autocomplete="off" class="layui-input">
+						<input type="text" name="name" placeholder="请输入分类名"
+							autocomplete="off" class="layui-input">
 					</div>
 					<div class="layui-inline">
-						<select name="states" lay-filter="status">
+						<select name="hidden" lay-filter="status">
 							<option value="">请选择一个状态</option>
-							<option value="未发货">未发货</option>
-							<option value="已发货">已发货</option>
+							<option value="1">显示</option>
+							<option value="0">隐藏</option>
 						</select>
 					</div>
 					<button class="layui-btn layui-btn-normal" lay-submit="search">搜索</button>
@@ -76,7 +76,7 @@
 					</thead>
 					<tbody>
 
-						<c:forEach items="${type}" var="t">
+						<c:forEach items="${list}" var="t">
 							<tr>
 								<td><input type="checkbox" name="" lay-skin="primary"
 									data-id="1"></td>

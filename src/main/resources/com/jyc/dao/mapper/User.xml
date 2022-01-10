@@ -38,7 +38,7 @@
 				<bind name="likeUserId" value="'%'+userId+'%'" />
 				and user_id like #{likeUserId}
 			</if>
-			<if test="localPassword!=null and localPassword!=''">
+			<if test="password!=null and password!=''">
 				and password=#{localPassword}
 			</if>
 			<if test="secret!=null and secret!=''">
@@ -59,14 +59,14 @@
 			<if test="cardId!=null and cardId!=''">
 				and card_id=#{cardId}
 			</if>
-			<if test="localCreatTime!=null and localCreatTime!=''">
+			<if test="creatTime!=null">
 				and creat_time=#{localCreatTime}
 			</if>
 			<if test="userMoney!=null and userMoney!=''">
 				and user_money=#{userMoney}
 			</if>
 			<!--last_time,user_status -->
-			<if test="localLastTime!=null and localLastTime!=''">
+			<if test="lastTime!=null">
 				and last_time=#{localLastTime}
 			</if>
 			<if test="userStatus!=null and userStatus!=''">
@@ -78,6 +78,8 @@
 		</where>
 		order by id
 	</select>
+	
+	
 
 	<select id="findById" resultMap="UserMap"
 		parameterType="java.lang.Integer">
@@ -85,6 +87,10 @@
 		<include refid="Columns" />
 		from t_user
 		where id=#{id}
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(id) from t_user
 	</select>
 
 	<select id="login" resultMap="UserMap" parameterType="User">
@@ -98,13 +104,13 @@
 	<insert id="register" parameterType="User">
 		insert into
 		t_user(user_id,password,secret,sex,phone,qq,e_mail,card_id,creat_time,user_money,user_status)
-		values(#{userId},#{localPassword},#{secret},#{localSex},#{phone},#{qq},#{email},#{cardId},#{creatTime},#{userMoney},#{userStatus})
+		values(#{userId},#{localPassword},#{localSecret},#{localSex},#{phone},#{qq},#{email},#{cardId},#{localCreatTime},#{userMoney},#{userStatus})
 	</insert>
 
 	<insert id="insert" parameterType="User">
 		insert into
 		t_user(user_id,password,secret,sex,phone,qq,e_mail,card_id,creat_time,user_money,user_status)
-		values(#{userId},#{localPassword},#{secret},#{localSex},#{phone},#{qq},#{email},#{cardId},#{creatTime},#{userMoney},#{userStatus})
+		values(#{userId},#{localPassword},#{localSecret},#{localSex},#{phone},#{qq},#{email},#{cardId},#{localCreatTime},#{userMoney},#{userStatus})
 	</insert>
 
 	<update id="update" parameterType="User">
@@ -116,14 +122,14 @@
 			<if test="userId!=null and userId!=''">
 				user_id=#{userId},
 			</if>
-			<if test="localPassword!=null and localPassword!=''">
+			<if test="password!=null and password!=''">
 				password=#{localPassword},
 			</if>
-			<if test="secret!=null and secret!=''">
-				secret=#{secret},
+			<if test="localSecret!=null and localSecret!=''">
+				secret=#{localSecret},
 			</if>
-			<if test="localSex!=null and localSex!=''">
-				sex=#{localSex},
+			<if test="sex!=null and sex!=''">
+				sex=#{sex},
 			</if>
 			<if test="phone!=null and phone!=''">
 				phone=#{phone},
@@ -137,14 +143,14 @@
 			<if test="cardId!=null and cardId!=''">
 				card_id=#{cardId},
 			</if>
-			<if test="localCreatTime!=null and localCreatTime!=''">
+			<if test="creatTime!=null">
 				creat_time=#{localCreatTime},
 			</if>
 			<if test="userMoney!=null and userMoney!=''">
 				user_money=#{userMoney},
 			</if>
 			<!--last_time,user_status -->
-			<if test="localLastTime!=null and localLastTime!=''">
+			<if test="lastTime!=null">
 				last_time=#{localLastTime},
 			</if>
 			<if test="userStatus!=null and userStatus!=''">

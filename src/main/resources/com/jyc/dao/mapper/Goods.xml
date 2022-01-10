@@ -18,8 +18,9 @@
 		<result property="hot" column="hot" />
 		<result property="goodsDesc" column="goods_desc" />
 		<result property="typeId" column="type_id" />
-		
-		<association property="type" column="type_id" select="com.jyc.dao.ThreeTypeDAO.findById" />
+
+		<association property="type" column="type_id"
+			select="com.jyc.dao.ThreeTypeDAO.findById" />
 		<collection property="pictures" column="id"
 			select="com.jyc.dao.GoodsPictureDAO.findByGoodsId" />
 	</resultMap>
@@ -36,7 +37,7 @@
 				and goods_id=#{goodsId}
 			</if>
 			<if test="name!=null and name!=''">
-			<bind name="likeNmae" value="'%'+name+'%'"/>
+				<bind name="likeNmae" value="'%'+name+'%'" />
 				and name=#{likeName}
 			</if>
 			<if test="price!=null and price!=''">
@@ -71,7 +72,11 @@
 		from t_goods
 		where id=#{id}
 	</select>
-	
+
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(id) from t_goods
+	</select>
+
 	<insert id="insert" parameterType="Goods">
 		insert into
 		t_goods(goods_id,name,price,shop_price,inventory,goods_unit,hot,goods_desc,type_id)

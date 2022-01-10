@@ -72,6 +72,10 @@
 		from t_order
 		where id=#{id}
 	</select>
+	
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(id) from t_order 
+	</select>
 
 	<insert id="insert" parameterType="Order">
 		insert into

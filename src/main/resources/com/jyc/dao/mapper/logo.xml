@@ -45,7 +45,7 @@
 	</insert>
 
 	<update id="update" parameterType="Logo">
-		update t_user_address
+		update t_logo
 		<set>
 			<if test="id!=null and id!=''">
 				id=#{id},
@@ -59,4 +59,19 @@
 		</set>
 		where id=#{id}
 	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_logo where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_logo where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	
 </mapper>

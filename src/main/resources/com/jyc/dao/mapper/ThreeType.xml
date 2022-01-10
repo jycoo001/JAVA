@@ -24,6 +24,7 @@
 				and id=#{id}
 			</if>
 			<if test="name!=null and name!=''">
+			<bind name="likeName" value="'%'+name+'%'"/>
 				and name=#{name}
 			</if>
 			<if test="parentId!=null and parentId!=''">

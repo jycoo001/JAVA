@@ -30,7 +30,8 @@
 				and id=#{id}
 			</if>
 			<if test="name!=null and name!=''">
-				and name=#{name}
+			<bind name="likeName" value="'%'+name+'%'"/>
+				and name=#{likeName}
 			</if>
 			<if test="picture!=null and picture!=''">
 				and picture=#{picture}
@@ -71,4 +72,17 @@
 		</set>
 		where id=#{id}
 	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_shuffling where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_shuffling where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 </mapper>

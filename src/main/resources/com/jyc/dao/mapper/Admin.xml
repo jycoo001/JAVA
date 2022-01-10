@@ -7,7 +7,7 @@
 	<sql id="Columns">
 		id,name,password,phone,secret_key,staff_status,delete_flag,creat_time,last_login_time
 	</sql>
-	
+
 	<resultMap type="Admin" id="Map">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
@@ -29,7 +29,8 @@
 				and id=#{id}
 			</if>
 			<if test="name!=null and name!=''">
-				and name=#{name}
+				<bind name="likeName" value="'%'+name+'%'" />
+				and name like #{likeName}
 			</if>
 			<if test="password!=null and password!=''">
 				and password=#{password}
@@ -40,13 +41,13 @@
 			<if test="secretKey!=null and secretKey!=''">
 				and secret_key=#{secretKey}
 			</if>
-			<if test="localCreatTime!=null and localCreatTime!=''">
+			<if test="creatTime!=null">
 				and creat_time=#{localCreatTime}
 			</if>
 			<if test="staffStatus!=null and staffStatus!=''">
 				and staff_status=#{staffStatus}
 			</if>
-			<if test="localLastLoginTime!=null and localLastLoginTime!=''">
+			<if test="lastLoginTime!=null">
 				and last_login_time=#{localLastLoginTime}
 			</if>
 			<if test="deleteFlag!=null and deleteFlag!=''">
@@ -54,6 +55,26 @@
 			</if>
 		</where>
 		order by id
+	</select>
+
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_admin
+		where id=#{id}
+	</select>
+
+	<select id="findByIds" resultMap="Map"
+		parameterType="java.util.List">
+		select
+		<include refid="Columns" />
+		from t_admin
+		where id in
+		<foreach collection="ids" open="(" close=")" item="id"
+			separator=",">
+			#{id}
+		</foreach>
 	</select>
 
 	<select id="login" resultMap="Map" parameterType="Admin">
@@ -67,7 +88,7 @@
 	<insert id="insert" parameterType="Admin">
 		insert into
 		t_admin(name,password,phone,secret_key,staff_status,delete_flag,creat_time)
-		values(#{name},#{password},#{phone},#{secretKey},#{staffStatus},'0',#{creatTime})
+		values(#{name},#{localPassword},#{phone},#{localSecretKey},#{staffStatus},#{localDeleteFlag},#{localCreatTime})
 	</insert>
 
 	<update id="update" parameterType="Admin">
@@ -82,13 +103,13 @@
 			<if test="phone!=null and phone!=''">
 				phone=#{phone},
 			</if>
-			<if test="secretKey!=null and secretKey!=''">
-				secret_key=#{secretKey},
+			<if test="localSecretKey!=null">
+				secret_key=#{localSecretKey},
 			</if>
 			<if test="staffStatus!=null and staffStatus!=''">
 				staff_status=#{staffStatus},
 			</if>
-			<if test="localLastLoginTime!=null and localLastLoginTime!=''">
+			<if test="lastLoginTime!=null">
 				last_login_time=#{localLastLoginTime},
 			</if>
 			<if test="deleteFlag!=null and deleteFlag!=''">
@@ -96,6 +117,16 @@
 			</if>
 		</set>
 		where id=#{id}
+	</update>
+
+	<update id="updateFlagByIds" parameterType="java.util.List">
+		update t_admin
+		set deleteFlag='1'
+		where id in
+		<foreach collection="ids" open="(" close=")" item="id"
+			separator=",">
+			#{id}
+		</foreach>
 	</update>
 
 </mapper>

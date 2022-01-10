@@ -1,10 +1,15 @@
 package com.jyc.model;
 
-public class Logo {
+public class Logo extends Base {
 
 	private Integer id;
 	private String address;
 	private String status;
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(new String[] { "id", "address" });
+	}
 
 	public Integer getId() {
 		return id;

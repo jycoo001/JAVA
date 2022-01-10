@@ -30,7 +30,7 @@
 								data-id='1' data-text="前台用户管理"><span class="l-line"></span>前台用户管理</a>
 						</dd>
 						<dd>
-							<a href="javascript:;" data-url="background/type/list"
+							<a href="javascript:;" data-url="background/admin/admin"
 								data-id='2' data-text="后台管理员菜单"><span class="l-line"></span>后台管理员菜单</a>
 						</dd>
 					</dl></li>
@@ -38,24 +38,16 @@
 					href="javascript:;"><i class="iconfont">&#xe607;</i>菜单管理</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="javascript:;" data-url="" data-id='1' data-text="后台菜单"><span
-								class="l-line"></span>后台菜单【】</a>
-						</dd>
-						<dd>
-							<a href="javascript:;" data-url="menu2.html" data-id='2'
-								data-text="前台菜单"><span class="l-line"></span>轮播图菜单【】</a>
+							<a href="javascript:;" data-url="background/shuffling" data-id='2'
+								data-text="前台菜单"><span class="l-line"></span>轮播图菜单</a>
 						</dd>
 						<dd>
 							<a href="javascript:;" data-url="background/type/list"
 								data-id='3' data-text="商品分类"><span class="l-line"></span>商品分类</a>
 						</dd>
 						<dd>
-							<a href="javascript:;" data-url="menu2.html" data-id='4'
-								data-text="前台菜单"><span class="l-line"></span>前台菜单【】</a>
-						</dd>
-						<dd>
-							<a href="javascript:;" data-url="menu2.html" data-id='5'
-								data-text="前台菜单"><span class="l-line"></span>LOGO菜单【】</a>
+							<a href="javascript:;" data-url="background/logo" data-id='5'
+								data-text="前台菜单"><span class="l-line"></span>LOGO菜单</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item"><a href="javascript:;"><i

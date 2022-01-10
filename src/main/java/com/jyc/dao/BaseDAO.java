@@ -10,6 +10,8 @@ public interface BaseDAO {
 
 	public <T> T findById(Integer id);
 
+	public int findCount();
+
 	public <T> int insert(T t);
 
 	public <T> int update(T t);

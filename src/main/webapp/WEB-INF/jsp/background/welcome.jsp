@@ -31,7 +31,7 @@
 								<div class="right-text-con">
 									<p class="name">会员数</p>
 									<p>
-										<span class="color-org">89</span>数据<span class="iconfont">&#xe628;</span>
+										<span class="color-org">${userCount }</span>数据<span class="iconfont">&#xe628;</span>
 									</p>
 								</div>
 						</a></li>
@@ -41,9 +41,9 @@
 									<span class="iconfont">&#xe602;</span>
 								</div>
 								<div class="right-text-con">
-									<p class="name">文章数</p>
+									<p class="name">商品数</p>
 									<p>
-										<span class="color-blue">189</span>数据<span class="iconfont">&#xe628;</span>
+										<span class="color-blue">${goodsCount}</span>数据<span class="iconfont">&#xe628;</span>
 									</p>
 								</div>
 						</a></li>
@@ -53,9 +53,9 @@
 									<span class="iconfont">&#xe605;</span>
 								</div>
 								<div class="right-text-con">
-									<p class="name">评论数</p>
+									<p class="name">订单数</p>
 									<p>
-										<span class="color-green">221</span>数据<span class="iconfont">&#xe60f;</span>
+										<span class="color-green">${orderCount}</span>数据<span class="iconfont">&#xe60f;</span>
 									</p>
 								</div>
 						</a></li>
@@ -71,7 +71,7 @@
 					<div class="panel-body clearfix">
 						<div class="col-md-2">
 							<p class="title">服务器环境</p>
-							<span class="info">Apache/2.4.4 (Win32) PHP/5.4.16</span>
+							<span class="info">Tomcat v9.0 </span>
 						</div>
 						<div class="col-md-2">
 							<p class="title">服务器IP地址</p>
@@ -91,7 +91,7 @@
 						</div>
 						<div class="col-md-2">
 							<p class="title">服务器当前时间</p>
-							<span class="info">2016-06-22 11:37:35</span>
+							<span class="info">2022-01-10 22:00:35</span>
 						</div>
 					</div>
 				</div>

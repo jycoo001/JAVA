@@ -81,6 +81,7 @@ public class AdminController extends BaseController {
 		return "background/user/user-add";
 	}
 
+	// 未使用
 	@RequestMapping(value = "/user-up", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Map<String, Object> addpic(User user, @RequestParam(name = "pic") MultipartFile multipartFile) {
@@ -158,6 +159,7 @@ public class AdminController extends BaseController {
 		return map;
 	}
 
+	// 管理员登陆
 	@PostMapping("/login")
 	public String login(HttpSession session, Map<String, Object> map, Admin admin, String code) {
 		String sessionCode = "" + session.getAttribute("verification");
@@ -195,10 +197,93 @@ public class AdminController extends BaseController {
 		}
 	}
 
+	// 管理员退出登录
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("####admin_login####");
 		return "redirect:/background/admin/login";
 	}
 
+	// 后台用户
+	@RequestMapping("/admin")
+	public String listAdmin(@RequestParam(defaultValue = "1") Integer pageNumber,
+			@RequestParam(defaultValue = "5") Integer pageSize, Admin admin, Map<String, Object> map) {
+		PageHelper.startPage(pageNumber, pageSize);
+		List<Admin> list = service.findAll(admin);
+		PageInfo<Admin> page = new PageInfo<>(list);
+		map.put("list", list);
+		map.put("page", page);
+		map.put("pageNumber", pageNumber);
+		map.put("admin", admin);
+		return "background/admin/admin-list";
+	}
+
+	@RequestMapping(value = "/admin-delete", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> deleteAdmin(@RequestParam(required = true, name = "ids") Integer ids) {
+		Map<String, Object> map = new HashMap<>();
+		Admin admin = service.findById(ids);
+		admin.setDeleteFlag("1");
+		int row = service.update(admin);
+		if (row > 0) {
+			map.put("detail", "删除成功");
+			map.put("rows", row);
+		} else {
+			map.put("detail", "删除失败");
+		}
+		return map;
+	}
+
+	@RequestMapping(value = "/admin-delete-many", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> deleteAdmin(@RequestParam(required = true, name = "ids[]") Integer[] ids) {
+		Map<String, Object> map = new HashMap<>();
+		int row = service.updateFlagIds(ids);
+		if (row > 0) {
+			map.put("detail", "删除成功");
+			map.put("rows", row);
+		} else {
+			map.put("detail", "删除失败");
+		}
+		return map;
+	}
+
+	@GetMapping("/admin-add")
+	public String addAdmin(Admin admin, Map<String, Object> map) {
+		admin.setCreatTime(Calendar.getInstance().getTime());
+
+		if (admin.equals("")) {
+			int row1 = service.insert(admin);
+			if (row1 > 0) {
+				map.put("detail", "添加成功");
+				return "background/admin/admin-list";
+			} else {
+				map.put("admin", admin);
+				map.put("detail", "添加失败");
+			}
+		} else {
+			map.put("detail", "输入有空");
+			map.put("admin", admin);
+		}
+		return "background/admin/admin-add";
+	}
+
+	@RequestMapping("/admin-detail")
+	public String updateAdmin(Admin admin, Map<String, Object> map, HttpSession session) {
+		if (admin.getName() != null && admin.getName().trim().length() > 0) {
+			int row = service.update(admin);
+			if (row > 0) {
+				session.setAttribute("detail", "修改成功");
+				return "redirect:/background/admin/admin";
+			} else {
+				map.put("user", admin);
+				map.put("detail", "修改失败");
+				return "/background/admin/admin-detail";
+			}
+		} else {
+			Admin admin1 = service.findById(admin.getId());
+			map.put("admin", admin1);
+			return "background/admin/admin-detail";
+		}
+	}
 }

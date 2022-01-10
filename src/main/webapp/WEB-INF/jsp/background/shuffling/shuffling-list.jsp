@@ -22,15 +22,15 @@
 <body>
 	<div class="wrap-container clearfix">
 		<div class="column-content-detail">
-			<form class="layui-form" action="background/admin/user" method="post">
+			<form class="layui-form" action="background/shuffling" method="post">
 				<div class="layui-form-item">
 					<div class="layui-inline tool-btn">
 						<button class="layui-btn layui-btn-small layui-btn-normal addBtn"
-							data-url="background/admin/user-add">
+							data-url="background/shuffling/shuffling-add">
 							<i class="layui-icon">&#xe654;</i>
 						</button>
 						<button class="layui-btn layui-btn-small layui-btn-danger delBtn"
-							data-url="background/admin/user-delete-many">
+							data-url="background/shuffling/shuffling-delete-many">
 							<i class="layui-icon">&#xe640;</i>
 						</button>
 						<button
@@ -40,13 +40,13 @@
 						</button>
 					</div>
 					<div class="layui-inline">
-						<input type="text" name="userId" placeholder="请输入用户名"
-							value="${user.userId}" autocomplete="off" class="layui-input">
+						<input type="text" name="name" placeholder="请输入图片名"
+							value="${shuffling.name}" autocomplete="off" class="layui-input">
 					</div>
 					<div class="layui-inline">
-						<select name="userStatus" lay-filter="status">
+						<select name="status" lay-filter="status">
 							<option value="">请选择一个状态</option>
-							<option value="0">冻结</option>
+							<option value="0">隐藏</option>
 							<option value="1">正常</option>
 						</select>
 					</div>
@@ -55,8 +55,8 @@
 
 					<button class="layui-btn layui-btn-normal findBtn"
 						lay-submit="search">搜索</button>
-					<button class="layui-btn layui-btn-normal excelNow" data-url="background/user/excel">导出本页</button>
-					<button class="layui-btn layui-btn-normal excelAll" data-url="background/user/excel">导出全部</button>
+					<button class="layui-btn layui-btn-normal excelNow" data-url="background/shuffling/excel">导出本页</button>
+					<button class="layui-btn layui-btn-normal excelAll" data-url="background/shuffling/excel">导出全部</button>
 				</div>
 			</form>
 			<div class="layui-form" id="table-list">
@@ -75,15 +75,10 @@
 						<tr>
 							<th><input type="checkbox" name="" lay-skin="primary"
 								lay-filter="allChoose"></th>
-							<th class="hidden-xs">昵称</th>
+							<th class="hidden-xs">名</th>
 							<th class="hidden-xs">排序</th>
-							<th>性别</th>
-							<th>手机号</th>
-							<th>qq</th>
-							<th>邮箱</th>
-							<th>身份证号</th>
-							<th class="hidden-xs">创建时间</th>
-							<th class="hidden-xs">最后登录时间</th>
+							<th>地址</th>
+							<th>预览</th>
 							<th>用户状态</th>
 							<th>操作</th>
 						</tr>
@@ -94,35 +89,30 @@
 							<tr>
 								<td><input type="checkbox" name="" class="myChecked"
 									lay-skin="primary" data-id="${l.id}"></td>
-								<td class="hidden-xs">${l.userId}</td>
+								<td class="hidden-xs">${l.name}</td>
 								<td class="hidden-xs"><input type="text" name="title"
 									autocomplete="off" class="layui-input" value="0" data-id="1"></td>
-								<td>${l.sex}</td>
-								<td>${l.phone}</td>
-								<td>${l.qq}</td>
-								<td>${l.email}</td>
-								<td>${l.cardId}</td>
-								<td class="hidden-xs">${l.localCreatTime}</td>
-								<td class="hidden-xs">${l.localLastTime}</td>
+								<td>${l.picture}</td>
+								<td><img alt="${l.name}" src="${l.picture}" style="max-height: 100px;"></td>
 								<td><button
 										class="layui-btn layui-btn-mini layui-btn-normal">
-										<c:if test="${l.userStatus=='1'}">
+										<c:if test="${l.status=='1'}">
 											正常
 										</c:if>
-										<c:if test="${l.userStatus=='0'}">
-											冻结
+										<c:if test="${l.status=='0'}">
+											隐藏
 										</c:if>
 									</button></td>
 								<td>
 									<div class="layui-inline">
 										<button
 											class="layui-btn layui-btn-small layui-btn-normal go-btn"
-											data-id="${l.id}" data-url="background/admin/user-detail">
+											data-id="${l.id}" data-url="background/shuffling/shuffling-detail">
 											<i class="layui-icon">&#xe642;</i>
 										</button>
 										<button
 											class="layui-btn layui-btn-small layui-btn-danger del-btn"
-											data-id="${l.id}" data-url="background/admin/user-delete">
+											data-id="${l.id}" data-url="background/shuffling/shuffling-delete">
 											<i class="layui-icon">&#xe640;</i>
 										</button>
 									</div>

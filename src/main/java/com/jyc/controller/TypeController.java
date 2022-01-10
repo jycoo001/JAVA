@@ -21,15 +21,16 @@ public class TypeController {
 
 	@RequestMapping("/list")
 	public String type(Map<String, Object> map, @RequestParam(defaultValue = "1") Integer pageNumber,
-			@RequestParam(defaultValue = "5") Integer pageSize) {
+			@RequestParam(defaultValue = "5") Integer pageSize, OneType one) {
 
 		PageHelper.startPage(pageNumber, pageSize);
-		List<OneType> list = service.findAll(null);
+		List<OneType> list = service.findAll(one);
 		PageInfo<OneType> page = new PageInfo<>(list);
 
 		map.put("page", page);
 		map.put("pageNumber", pageNumber);
-		map.put("type", list);
+		map.put("list", list);
+		map.put("type", one);
 		return "background/type/type-list";
 	}
 

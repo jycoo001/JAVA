@@ -46,4 +46,8 @@ public class BaseServiceImpl {
 		return getDAO().deleteByIds(ids);
 	}
 
+	public int findCount() {
+		return getDAO().findCount();
+	}
+
 }

@@ -94,6 +94,20 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element']
 		dialog.tips('批量删除', '.delBtn');
 
 	})
+	//导出本页数据
+	$(".excelNow").click(function() {
+		var url = $(this).attr('data-url');
+		var searchFrom = $(".layui-form").serialize();
+		window.location.href = url + "?" + searchFrom;
+	});
+	//导出所有数据
+	$(".excelAll").click(function() {
+		$(".layui-form input[name=pageNumber]").val(1);
+		$(".layui-form input[name=pageSize]").val(2147483647);
+		var url = $(this).attr('data-url');
+		var searchFrom = $(".layui-form").serialize();
+		location.href = url + "?" + searchFrom;
+	});
 	//列表添加
 	$('#table-list').on('click', '.add-btn', function() {
 		var url = $(this).attr('data-url');
@@ -142,6 +156,27 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element']
 		window.location.href = url + "?id=" + id;
 		return false;
 	})
+	//自定义
+	$(".pagination a").click(function() {
+		console.log("jin");
+		var th = $(this);
+		if (th.is(".last")) {
+			var pageNumber = $("a.last").attr("data-pageNumber");
+			$(".layui-form input[name=pageNumber]").val(pageNumber);
+			$(".layui-form").submit();
+		}
+		if (th.is(".next")) {
+			var pageNumber = $("a.next").attr("data-pageNumber");
+			$(".layui-form input[name=pageNumber]").val(pageNumber);
+			$(".layui-form").submit();
+		}
+		if (th.is(".pageNumber")) {
+			var pageNumber = $("a.pageNumber").attr("data-pageNumber");
+			$(".layui-form input[name=pageNumber]").val(pageNumber);
+			$(".layui-form").submit();
+		}
+	})
+	//结尾
 	//编辑栏目
 	$('#table-list').on('click', '.edit-btn', function() {
 		var That = $(this);

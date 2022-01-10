@@ -1,10 +1,13 @@
 package com.jyc.model;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.DigestUtils;
+
+import com.alibaba.excel.annotation.ExcelProperty;
 
 /**
  * 后台管理员
@@ -12,23 +15,34 @@ import org.springframework.util.DigestUtils;
  * @author 12430
  *
  */
-public class Admin {
+public class Admin extends Base {
 
+	@ExcelProperty("编号")
 	private Integer id;
+	@ExcelProperty("用户名")
 	private String name;
+	@ExcelProperty("密码")
 	private String password;
+	@ExcelProperty("电话")
 	private String phone;
+	@ExcelProperty("安全码")
 	private String secretKey;
+	@ExcelProperty("状态")
 	private String staffStatus;
+	@ExcelProperty("是否删除")
 	private String deleteFlag;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelProperty("创建日期")
+	@com.alibaba.excel.annotation.format.DateTimeFormat("yyyy-MM-dd HH:mm:ss")
 	private Date creatTime;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelProperty("最后登录日期")
+	@com.alibaba.excel.annotation.format.DateTimeFormat("yyyy-MM-dd HH:mm:ss")
 	private Date lastLoginTime;
 
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(new String[] { "id", "secretKey", "staffStatus", "deleteFlag", "lastLoginTime" });
+		return super.equals(new String[] { "id", "secretKey", "deleteFlag", "creatTime", "lastLoginTime" });
 	}
 
 	public Integer getId() {
@@ -49,14 +63,6 @@ public class Admin {
 
 	public String getPassword() {
 		return password;
-	}
-
-	public String getLocalPassword() {
-		if (this.password == null || this.password.trim().length() > 30) {
-			return null;
-		}
-		String str = this.name + "{" + this.password + "}";
-		return DigestUtils.md5DigestAsHex(str.getBytes());
 	}
 
 	public void setPassword(String password) {
@@ -104,33 +110,62 @@ public class Admin {
 	}
 
 	public Date getLastLoginTime() {
-		if (lastLoginTime != null) {
-			return lastLoginTime;
-		} else {
-			return null;
-		}
+		return lastLoginTime;
 	}
 
 	public void setLastLoginTime(Date lastLoginTime) {
-		if (lastLoginTime != null) {
-			this.lastLoginTime = lastLoginTime;
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	public String getLocalPassword() {
+		if (this.password == null || this.password.trim().length() > 30) {
+			return null;
 		}
+		if (this.name != null && this.name.trim().length() > 0 && this.password != null
+				&& this.password.trim().length() > 0) {
+			String str = this.name + "{" + this.password + "}";
+			return DigestUtils.md5DigestAsHex(str.getBytes());
+		}
+		return null;
+	}
+
+	public String getLocalSecretKey() {
+		if (secretKey != null && secretKey.trim().length() > 0) {
+			return secretKey;
+		} else {
+			if (this.name != null && this.name.trim().length() > 0 && this.password != null
+					&& this.password.trim().length() > 0) {
+				String str = this.name + "{" + this.password + "安全码}";
+				return DigestUtils.md5DigestAsHex(str.getBytes());
+			}
+		}
+		return null;
 	}
 
 	public String getLocalCreatTime() {
-		if (creatTime == null) {
-			return null;
-		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return sdf.format(creatTime);
+		if (creatTime != null) {
+			return sdf.format(creatTime);
+		} else {
+			return sdf.format(Calendar.getInstance().getTime());
+		}
 	}
 
 	public String getLocalLastLoginTime() {
-		if (lastLoginTime == null) {
-			return null;
-		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return sdf.format(lastLoginTime);
+		if (lastLoginTime == null) {
+			return sdf.format(Calendar.getInstance().getTime());
+		} else {
+			return sdf.format(lastLoginTime);
+		}
+	}
+
+	public String getLocalDeleteFlag() {
+		if (deleteFlag != null) {
+			return deleteFlag;
+		} else {
+			return "0";
+		}
 	}
 
 }

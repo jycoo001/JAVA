@@ -24,7 +24,8 @@
 				and id=#{id}
 			</if>
 			<if test="name!=null and name!=''">
-				and name=#{name}
+				<bind name="likeName" value="'%'+name+'%'" />
+				and name=#{likeName}
 			</if>
 			<if test="hidden!=null and hidden!=''">
 				and hidden=#{hidden}

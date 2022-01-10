@@ -17,4 +17,6 @@ public interface BaseService {
 
 	public int deleteByIds(Integer[] ids);
 
+	public int findCount();
+
 }
