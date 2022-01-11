@@ -77,6 +77,22 @@
 		</foreach>
 	</select>
 
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(id) from t_admin
+	</select>
+
+
+	<select id="findFromTo" parameterType="java.util.List"
+		resultType="ViewDate">
+		select count(1) count, DAYOFMONTH(creat_time)
+		from t_admin where
+		creat_time between
+		<foreach collection="fromTo" item="date" separator=" and ">
+			#{date}
+		</foreach>
+		group by DAYOFMONTH(creat_time)
+	</select>
+
 	<select id="login" resultMap="Map" parameterType="Admin">
 		select
 		<include refid="Columns" />
@@ -98,7 +114,7 @@
 				name=#{name},
 			</if>
 			<if test="password!=null and password!=''">
-				password=#{password},
+				password=#{localPassword},
 			</if>
 			<if test="phone!=null and phone!=''">
 				phone=#{phone},

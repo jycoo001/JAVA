@@ -48,6 +48,7 @@ public class ShufflingController {
 		return "background/shuffling/shuffling-add";
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@PostMapping("/shuffling-add")
 	public String addUser(Shuffling shuffling,
 			@RequestParam(name = "picturex", required = false) MultipartFile multipartFile, Map<String, Object> map) {
@@ -80,6 +81,7 @@ public class ShufflingController {
 		return "background/shuffling/shuffling-add";
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping("/shuffling-detail")
 	public String upda(Shuffling shuffling, Map<String, Object> map, HttpSession session) {
 		if (shuffling.equals("") && shuffling.getId() != null) {

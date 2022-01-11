@@ -20,78 +20,20 @@
 
 <body>
 	<div class="page-content-wrap">
-		<form class="layui-form">
+		<form class="layui-form" enctype="multipart/form-data" method="post">
+			<input type="hidden" name="id" value="${id}" />
 			<div class="layui-tab" style="margin: 0;">
 				<ul class="layui-tab-title">
-					<li><a href="background/goods">商品列表</a></li>
-					<li class="layui-this">商品操作</li>
+					<li><a href="background/goods/picture">图片列表</a></li>
+					<li class="layui-this">图片操作</li>
 				</ul>
 				<div class="layui-tab-content">
 					<div class="layui-tab-item"></div>
 					<div class="layui-tab-item layui-show">
 						<div class="layui-form-item">
-							<label class="layui-form-label">号：</label>
+							<label class="layui-form-label">上传图片：</label>
 							<div class="layui-input-block">
-								<input type="text" name="id" value="${goods.id}" required
-									lay-verify="required" autocomplete="off" class="layui-input"
-									readonly="readonly">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">商品编号：</label>
-							<div class="layui-input-block">
-								<input type="text" name="goodsId" value="${goods.goodsId}"
-									required lay-verify="required" autocomplete="off"
-									class="layui-input" readonly="readonly">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">商品名：</label>
-							<div class="layui-input-block">
-								<input type="text" name="name" value="${goods.name}" required
-									lay-verify="required" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">价格：</label>
-							<div class="layui-input-block">
-								<input type="text" name="price" value="${goods.price}" required
-									lay-verify="required" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">门店价：</label>
-							<div class="layui-input-block">
-								<input type="text" name="shopPrice" value="${goods.shopPrice}" required
-									lay-verify="required" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">数量：</label>
-							<div class="layui-input-block">
-								<input type="text" name="inventory" value="${goods.inventory}" required
-									lay-verify="required" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">单位：</label>
-							<div class="layui-input-block">
-								<input type="text" name="goodsUnit" value="${goods.goodsUnit}" required
-									lay-verify="required" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">热度：</label>
-							<div class="layui-input-block">
-								<input type="text" name="hot" value="${goods.hot}" required
-									lay-verify="required" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">备注：</label>
-							<div class="layui-input-block">
-								<input type="text" name="goodsDesc" value="${goods.goodsDesc}" required
-									lay-verify="required" autocomplete="off" class="layui-input">
+								<input type="file" name="picturex" autocomplete="off" />
 							</div>
 						</div>
 					</div>

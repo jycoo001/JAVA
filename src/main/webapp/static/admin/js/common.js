@@ -33,6 +33,17 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element']
 		dialog.tips('添加', '.addBtn');
 
 	})
+	
+	$('.addBtn1').click(function() {
+		var url = $(this).attr('data-url');
+		var id = $(this).attr('data-id');
+		//将iframeObj传递给父级窗口,执行操作完成刷新
+		parent.page("菜单添加", url+"?id="+id, iframeObj, w = "700px", h = "620px");
+		return false;
+	}).mouseenter(function() {
+		dialog.tips('添加', '.addBtn');
+	})
+	
 	//顶部排序
 	$('.listOrderBtn').click(function() {
 		var url = $(this).attr('data-url');

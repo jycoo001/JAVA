@@ -25,67 +25,15 @@
 				<li>更多</li>
 			</ul>
 			<div class="layui-tab-content">
-				<div class="layui-tab-item layui-show">
-					<div class="layui-form-item">
-						<label class="layui-form-label">商品名：</label>
-						<div class="layui-input-block">
-							<input type="text" name="name" value="${goods.name}" required
-								lay-verify="required" placeholder="请输入商品名" autocomplete="off"
-								class="layui-input">
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">价格：</label>
-						<div class="layui-input-block">
-							<input type="text" name="price" value="${goods.price}" required
-								lay-verify="required" placeholder="请输入价格" autocomplete="off"
-								class="layui-input">
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">门店价：</label>
-						<div class="layui-input-block">
-							<input type="text" name="shopPrice" value="${goods.shopPrice}"
-								required lay-verify="required" placeholder="请输入门店价格"
-								autocomplete="off" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">数量：</label>
-						<div class="layui-input-block">
-							<input type="text" name="inventory" value="${goods.inventory}"
-								required lay-verify="required" placeholder="请输入商品数量"
-								autocomplete="off" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">单位：</label>
-						<div class="layui-input-block">
-							<input type="text" name="goodsUnit" value="${goods.goodsUnit}"
-								required lay-verify="required" placeholder="请输入单位"
-								autocomplete="off" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">热度：</label>
-						<div class="layui-input-block">
-							<input type="text" name="hot" value="${goods.hot}" required
-								lay-verify="required" placeholder="请输入热度" autocomplete="off"
-								class="layui-input">
-						</div>
-					</div>
-				</div>
-				<div class="layui-tab-item">
-					<div class="layui-form-item">
-						<label class="layui-form-label">备注：</label>
-						<div class="layui-input-block">
-							<input type="text" name="goodsDesc" placeholder="请输入备注" required
-								lay-verify="required" value="${goods.goodsDesc}"
-								autocomplete="off" class="layui-input">
-						</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">图片上传：</label>
+					<div class="layui-input-block">
+						<input type="file" name="picturex" autocomplete="off" />
 					</div>
 				</div>
 			</div>
+			<div class="layui-tab-item">no have</div>
+		</div>
 		</div>
 		<div class="layui-form-item" style="padding-left: 10px;">
 			<div class="layui-input-block">

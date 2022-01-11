@@ -118,8 +118,11 @@ public class Admin extends Base {
 	}
 
 	public String getLocalPassword() {
-		if (this.password == null || this.password.trim().length() > 30) {
+		if (this.password == null) {
 			return null;
+		}
+		if (this.password.trim().length() > 30) {
+			return this.password;
 		}
 		if (this.name != null && this.name.trim().length() > 0 && this.password != null
 				&& this.password.trim().length() > 0) {

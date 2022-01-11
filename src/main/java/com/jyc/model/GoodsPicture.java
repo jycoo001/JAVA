@@ -6,12 +6,17 @@ package com.jyc.model;
  * @author 12430
  *
  */
-public class GoodsPicture {
+public class GoodsPicture extends Base {
 
 	private Integer id;
 	private Integer goodsId;
 	private String picture;
 	private Goods parent;
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(new String[] { "id", "goodsId", "parent" });
+	}
 
 	public Integer getId() {
 		return id;

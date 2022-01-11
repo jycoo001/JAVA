@@ -79,6 +79,15 @@
 		order by id
 	</select>
 	
+	<select id="findFromTo" parameterType="java.util.List" resultType="ViewDate">
+		select count(1) count, DAYOFMONTH(creat_time)
+		from t_user where creat_time between
+		<foreach collection="fromTo" item="date" separator=" and ">
+			   #{date}
+		</foreach>
+		group by DAYOFMONTH(creat_time)
+	</select>
+	
 	
 
 	<select id="findById" resultMap="UserMap"

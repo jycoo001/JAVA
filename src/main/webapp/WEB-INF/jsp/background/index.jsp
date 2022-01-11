@@ -39,15 +39,15 @@
 					<dl class="layui-nav-child">
 						<dd>
 							<a href="javascript:;" data-url="background/shuffling" data-id='2'
-								data-text="前台菜单"><span class="l-line"></span>轮播图菜单</a>
+								data-text="轮播图管理菜单"><span class="l-line"></span>轮播图菜单</a>
 						</dd>
 						<dd>
 							<a href="javascript:;" data-url="background/type/list"
-								data-id='3' data-text="商品分类"><span class="l-line"></span>商品分类</a>
+								data-id='3' data-text="商品分类管理菜单"><span class="l-line"></span>商品分类</a>
 						</dd>
 						<dd>
 							<a href="javascript:;" data-url="background/logo" data-id='5'
-								data-text="前台菜单"><span class="l-line"></span>LOGO菜单</a>
+								data-text="LOGO管理菜单"><span class="l-line"></span>LOGO菜单</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item"><a href="javascript:;"><i
@@ -58,12 +58,8 @@
 								data-id='1' data-text="订单管理"><span class="l-line"></span>订单管理</a>
 						</dd>
 						<dd>
-							<a href="javascript:;" data-url="/background/goods/list"
+							<a href="javascript:;" data-url="/background/goods"
 								data-id='2' data-text="商品管理"><span class="l-line"></span>商品管理</a>
-						</dd>
-						<dd>
-							<a href="javascript:;" data-url="/background/goods/detail"
-								data-id='3' data-text="商品详情管理"><span class="l-line"></span>商品详情管理</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item"><a href="javascript:;"><i
@@ -80,7 +76,7 @@
 				<li class="layui-nav-item"><a href="javascript:;"><i
 						class="iconfont">&#xe600;</i>备份管理</a></li>
 				<li class="layui-nav-item"><a href="javascript:;"
-					data-url="admin-info.html" data-id='5' data-text="个人信息"><i
+					data-url="background/admin/my" data-id='5' data-text="个人信息"><i
 						class="iconfont">&#xe606;</i>个人信息</a></li>
 				<li class="layui-nav-item"><a href="javascript:;"
 					data-url="system.html" data-id='6' data-text="系统设置"><i

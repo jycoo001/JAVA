@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.jyc.model.ViewDate;
+
 public interface BaseDAO {
 
 	public <T> List<T> findAll(T t);
@@ -21,4 +23,6 @@ public interface BaseDAO {
 	public int deleteByIds(@Param(value = "ids") Integer[] ids);
 
 	public <T> List<T> findByParentId(Integer id);
+
+	public List<ViewDate> findFromTo(@Param(value = "fromTo") String[] fromTo);
 }

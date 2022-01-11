@@ -14,4 +14,5 @@ public interface AdminDAO extends BaseDAO {
 	public List<Admin> findByIds(@Param(value = "ids") Integer[] ids);
 
 	public int updateFlagByIds(@Param(value = "ids") Integer[] ids);
+
 }

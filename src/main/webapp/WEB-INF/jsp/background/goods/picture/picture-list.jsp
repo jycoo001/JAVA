@@ -16,21 +16,30 @@
 <link rel="stylesheet" type="text/css"
 	href="static/admin/layui/css/layui.css" />
 <link rel="stylesheet" type="text/css" href="static/admin/css/admin.css" />
+<script type="text/javascript"
+	src="static/public/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var goodsId = "${goodsId}";
+		if (goodsId) {
+			$("input[name=goodsId]").val(goodsId);
+		}
+	});
+</script>
 </head>
-
-
 <body>
 	<div class="wrap-container clearfix">
 		<div class="column-content-detail">
-			<form class="layui-form" action="background/goods" method="post">
+			<form class="layui-form" action="background/goods/picture"
+				method="post">
 				<div class="layui-form-item">
 					<div class="layui-inline tool-btn">
 						<button class="layui-btn layui-btn-small layui-btn-normal addBtn"
-							data-url="background/goods/goods-add">
+							data-url="background/goods/picture-add">
 							<i class="layui-icon">&#xe654;</i>
 						</button>
 						<button class="layui-btn layui-btn-small layui-btn-danger delBtn"
-							data-url="background/goods/goods-delete-many">
+							data-url="background/goods/goods-picture-delete-many">
 							<i class="layui-icon">&#xe640;</i>
 						</button>
 						<button
@@ -40,22 +49,19 @@
 						</button>
 					</div>
 					<div class="layui-inline">
-						<input type="text" name="name" placeholder="请输入商品名"
-							value="${goods.name}" autocomplete="off" class="layui-input">
+						<input type="text" name="id" placeholder="请输入id"
+							value="${goodsPicture.id}" autocomplete="off" class="layui-input">
 					</div>
-					<div class="layui-inline">
-						<input type="text" name="price" placeholder="请输入价格"
-							value="${goods.price}" autocomplete="off" class="layui-input">
-					</div>
+					<input type="hidden" name="goodsId" value="${goodsPicture.goodsId}">
 					<input type="hidden" name="pageNumber" value="" /> <input
 						type="hidden" name="pageSize" value="" />
 
 					<button class="layui-btn layui-btn-normal findBtn"
 						lay-submit="search">搜索</button>
 					<button class="layui-btn layui-btn-normal excelNow"
-						data-url="background/goods/excel">导出本页</button>
+						data-url="background/goods/goodsPicture/excel">导出本页</button>
 					<button class="layui-btn layui-btn-normal excelAll"
-						data-url="background/goods/excel">导出全部</button>
+						data-url="background/goods/goodsPicture/excel">导出全部</button>
 				</div>
 			</form>
 			<div class="layui-form" id="table-list">
@@ -74,15 +80,9 @@
 						<tr>
 							<th><input type="checkbox" name="" lay-skin="primary"
 								lay-filter="allChoose"></th>
-							<th class="hidden-xs">商品编号</th>
 							<th class="hidden-xs">排序</th>
-							<th>商品名</th>
-							<th>价格</th>
-							<th>门店价</th>
-							<th>剩余数量</th>
-							<th>单位</th>
-							<th>热度</th>
-							<th>类型</th>
+							<th>地址</th>
+							<th>浏览</th>
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -92,40 +92,22 @@
 							<tr>
 								<td><input type="checkbox" name="" class="myChecked"
 									lay-skin="primary" data-id="${l.id}"></td>
-								<td>${l.goodsId }</td>
 								<td class="hidden-xs"><input type="text" name="title"
 									autocomplete="off" class="layui-input" value="0" data-id="1"></td>
-								<td class="hidden-xs">${l.name}</td>
-								<td>${l.price}</td>
-								<td>${l.shopPrice}</td>
-								<td>${l.inventory}</td>
-								<td>${l.goodsUnit}</td>
-								<td><button
-										class="layui-btn layui-btn-mini layui-btn-normal">
-										${l.hot}</button></td>
-								<td>${l.type.parent.oneType.name}${l.type.parent.name}
-									${l.type.name}</td>
+								<td class="hidden-xs">${l.picture}</td>
+								<td><img src="${l.picture}" alt="${l.id}"
+									style="max-height: 100px;" /></td>
 								<td>
 									<div class="layui-inline">
 										<button
 											class="layui-btn layui-btn-small layui-btn-normal go-btn"
-											data-id="${l.id}" data-url="background/goods/goods-detail">
+											data-id="${l.id}" data-url="background/goods/picture-detail">
 											<i class="layui-icon">&#xe642;</i>
 										</button>
 										<button
 											class="layui-btn layui-btn-small layui-btn-danger del-btn"
-											data-id="${l.id}" data-url="background/goods/goods-delete">
+											data-id="${l.id}" data-url="background/goods/picture-delete">
 											<i class="layui-icon">&#xe640;</i>
-										</button>
-										<button
-											class="layui-btn layui-btn-small layui-btn-normal addBtn1"
-											data-id="${l.id}" data-url="background/goods/type">
-											<i class="layui-icon">种类</i>
-										</button>
-										<button
-											class="layui-btn layui-btn-small layui-btn-normal go-btn"
-											data-id="${l.id}" data-url="background/goods/picture">
-											<i class="layui-icon">图片</i>
 										</button>
 									</div>
 								</td>

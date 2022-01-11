@@ -2,6 +2,8 @@ package com.jyc.model;
 
 import java.util.List;
 
+import org.springframework.util.DigestUtils;
+
 /**
  * 商品
  * 
@@ -25,7 +27,7 @@ public class Goods extends Base {
 
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(new String[] { "id" });
+		return super.equals(new String[] { "id", "goodsId", "pictures", "type", "typeId" });
 	}
 
 	public Integer getId() {
@@ -129,6 +131,18 @@ public class Goods extends Base {
 
 	public void setType(ThreeType type) {
 		this.type = type;
+	}
+
+	public String getLocalGoodsId() {
+		if (goodsId != null) {
+			return goodsId;
+		} else {
+			if (this.name != null && this.name.trim().length() > 0) {
+				return DigestUtils.md5DigestAsHex(this.name.getBytes());
+			} else {
+				return goodsId;
+			}
+		}
 	}
 
 }

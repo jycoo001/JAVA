@@ -72,9 +72,20 @@
 		from t_order
 		where id=#{id}
 	</select>
-	
+
 	<select id="findCount" resultType="java.lang.Integer">
-		select count(id) from t_order 
+		select count(id) from t_order
+	</select>
+
+	<select id="findFromTo" parameterType="java.util.List"
+		resultType="ViewDate">
+		select count(1) count, DAYOFMONTH(creat_time)
+		from t_order where
+		creat_time between
+		<foreach collection="fromTo" item="date" separator=" and ">
+			#{date}
+		</foreach>
+		group by DAYOFMONTH(creat_time)
 	</select>
 
 	<insert id="insert" parameterType="Order">

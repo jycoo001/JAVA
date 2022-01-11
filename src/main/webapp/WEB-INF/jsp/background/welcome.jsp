@@ -14,8 +14,7 @@
 <title>网站后台管理模版</title>
 <link rel="stylesheet" type="text/css"
 	href="static/admin/layui/css/layui.css" />
-<link rel="stylesheet" type="text/css"
-	href="static/admin/css/admin.css" />
+<link rel="stylesheet" type="text/css" href="static/admin/css/admin.css" />
 </head>
 <body>
 	<div class="wrap-container welcome-container">
@@ -31,7 +30,8 @@
 								<div class="right-text-con">
 									<p class="name">会员数</p>
 									<p>
-										<span class="color-org">${userCount }</span>数据<span class="iconfont">&#xe628;</span>
+										<span class="color-org">${userCount }</span>数据<span
+											class="iconfont">&#xe628;</span>
 									</p>
 								</div>
 						</a></li>
@@ -41,9 +41,10 @@
 									<span class="iconfont">&#xe602;</span>
 								</div>
 								<div class="right-text-con">
-									<p class="name">商品数</p>
+									<p class="name">管理员数</p>
 									<p>
-										<span class="color-blue">${goodsCount}</span>数据<span class="iconfont">&#xe628;</span>
+										<span class="color-blue">${adminCount}</span>数据<span
+											class="iconfont">&#xe628;</span>
 									</p>
 								</div>
 						</a></li>
@@ -55,7 +56,8 @@
 								<div class="right-text-con">
 									<p class="name">订单数</p>
 									<p>
-										<span class="color-green">${orderCount}</span>数据<span class="iconfont">&#xe60f;</span>
+										<span class="color-green">${orderCount}</span>数据<span
+											class="iconfont">&#xe60f;</span>
 									</p>
 								</div>
 						</a></li>
@@ -196,6 +198,37 @@
 		layui.use([ 'layer', 'jquery' ], function() {
 			var layer = layui.layer;
 			var $ = layui.jquery;
+			var user = [];
+			var i = 0;
+			<c:forEach items="${users}" var="l">
+				if("${l.count!=null}") {
+					user[i] = +"${l.count}";
+				} else {
+					user[i] = 0;
+				}
+				i++;
+				
+			</c:forEach>
+			var admin = [];
+			i= 0;
+			<c:forEach items="${admins}" var="l">
+				if("${l.count!=null}") {
+					admin[i] = +"${l.count}";
+				} else {
+					admin[i] = 0;
+				}
+				i++;
+			</c:forEach>
+			var order = [];
+			i=0;
+			<c:forEach items="${orders}" var="l">
+				if("${l.count!=null}") {
+					order[i] = +"${l.count}";
+				} else {
+					order[i] = 0;
+				}
+				i++;
+			</c:forEach>
 			//图表
 			var myChart;
 			require.config({
@@ -221,7 +254,7 @@
 						trigger : "axis"
 					},
 					legend : {
-						data : [ "会员", "文章", "评论" ],
+						data : [ "会员", "管理员", "订单" ],
 						selectedMode : false,
 					},
 					toolbox : {
@@ -250,7 +283,9 @@
 					xAxis : [ {
 						type : "category",
 						boundaryGap : false,
-						data : [ "周一", "周二", "周三", "周四", "周五", "周六", "周日" ]
+						data : [ "2022-01-06", "2022-01-07", "2022-01-08",
+								"2022-01-09", "2022-01-10", "2022-01-11",
+								"2022-01-12" ]
 					} ],
 					yAxis : [ {
 						type : "value"
@@ -270,9 +305,9 @@
 								}
 							}
 						},
-						data : [ 10, 12, 21, 54, 260, 830, 710 ]
+						data : user
 					}, {
-						name : "文章",
+						name : "管理员",
 						type : "line",
 						smooth : true,
 						itemStyle : {
@@ -282,9 +317,9 @@
 								}
 							}
 						},
-						data : [ 30, 182, 434, 791, 390, 30, 10 ]
+						data : admin
 					}, {
-						name : "评论",
+						name : "订单",
 						type : "line",
 						smooth : true,
 						itemStyle : {
@@ -295,7 +330,7 @@
 								color : "rgb(110, 211, 199)"
 							}
 						},
-						data : [ 1320, 1132, 601, 234, 120, 90, 20 ]
+						data : order
 					} ]
 				});
 			});

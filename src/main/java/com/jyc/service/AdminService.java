@@ -11,4 +11,5 @@ public interface AdminService extends BaseService {
 	public List<Admin> findByIds(Integer[] ids);
 
 	public int updateFlagIds(Integer[] ids);
+
 }

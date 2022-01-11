@@ -48,6 +48,7 @@ public class LogoController {
 		return "background/logo/logo-add";
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@PostMapping("/logo-add")
 	public String addUser(Logo logo, @RequestParam(name = "picturex", required = false) MultipartFile multipartFile,
 			Map<String, Object> map) {
@@ -80,6 +81,7 @@ public class LogoController {
 		return "background/logo/logo-add";
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping("/logo-detail")
 	public String upda(Logo logo, Map<String, Object> map, HttpSession session) {
 		if (logo.equals("") && logo.getId() != null) {

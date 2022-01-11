@@ -10,4 +10,5 @@ public interface UserService extends BaseService {
 	public int insert(User user);
 
 	public int handlerAddress(Integer ud);
+
 }

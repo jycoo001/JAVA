@@ -1,9 +1,12 @@
 package com.jyc.service.impl;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.jyc.dao.BaseDAO;
+import com.jyc.model.ViewDate;
 
 public class BaseServiceImpl {
 
@@ -48,6 +51,12 @@ public class BaseServiceImpl {
 
 	public int findCount() {
 		return getDAO().findCount();
+	}
+
+	public List<ViewDate> findFromTo(String from, Date to) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String toStr = sdf.format(to);
+		return getDAO().findFromTo(new String[] { from, toStr });
 	}
 
 }

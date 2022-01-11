@@ -80,18 +80,12 @@
 	<insert id="insert" parameterType="Goods">
 		insert into
 		t_goods(goods_id,name,price,shop_price,inventory,goods_unit,hot,goods_desc,type_id)
-		values(#{goodsId},#{name},#{price},#{shopPrice},#{inventory},#{goodsUnit},#{hot},#{goodsDesc},#{typeId})
+		values(#{localGoodsId},#{name},#{price},#{shopPrice},#{inventory},#{goodsUnit},#{hot},#{goodsDesc},#{typeId})
 	</insert>
 
 	<update id="update" parameterType="Admin">
 		update t_goods
 		<set>
-			<if test="id!=null and id!=''">
-				id=#{id},
-			</if>
-			<if test="goodsId!=null and goodsId!=''">
-				goods_id=#{goodsId},
-			</if>
 			<if test="name!=null and name!=''">
 				name=#{name},
 			</if>
@@ -99,7 +93,7 @@
 				price=#{price},
 			</if>
 			<if test="shopPrice!=null and shopPrice!=''">
-				shop_price=#{name}.
+				shop_price=#{shopPrice},
 			</if>
 			<if test="inventory!=null and inventory!=''">
 				inventory=#{inventory},

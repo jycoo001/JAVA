@@ -1,6 +1,9 @@
 package com.jyc.service;
 
+import java.util.Date;
 import java.util.List;
+
+import com.jyc.model.ViewDate;
 
 public interface BaseService {
 	public <T> List<T> findAll(T t);
@@ -18,5 +21,7 @@ public interface BaseService {
 	public int deleteByIds(Integer[] ids);
 
 	public int findCount();
+
+	public List<ViewDate> findFromTo(String from, Date to);
 
 }

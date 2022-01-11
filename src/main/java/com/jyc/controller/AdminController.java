@@ -1,12 +1,9 @@
 package com.jyc.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -26,7 +22,6 @@ import com.jyc.model.Admin;
 import com.jyc.model.User;
 import com.jyc.service.AdminService;
 import com.jyc.service.UserService;
-import com.jyc.util.Constant;
 
 /**
  * 后台管理员登录
@@ -36,7 +31,7 @@ import com.jyc.util.Constant;
  */
 @Controller
 @RequestMapping("/background/admin")
-public class AdminController extends BaseController {
+public class AdminController {
 
 	@Autowired
 	private AdminService service;
@@ -48,6 +43,49 @@ public class AdminController extends BaseController {
 		map.put("detail", session.getAttribute("detail"));
 		session.removeAttribute("detail");
 		return req.getServletPath().replace("/background", "background");
+	}
+
+	@GetMapping("/my")
+	public String my(HttpSession session, Map<String, Object> map) {
+		Admin admin = (Admin) session.getAttribute("####admin_login####");
+		map.put("admin", admin);
+		return "background/admin/admin-info";
+	}
+
+	@PostMapping("/update")
+	public String update(Admin admin, HttpSession session, Map<String, Object> map) {
+		if (admin.getId() != null) {
+			int row = service.update(admin);
+			if (row > 0) {
+				session.setAttribute("####admin_login####", admin);
+				map.put("admin", admin);
+				map.put("detail", "修改成功");
+			} else {
+				map.put("detail", "修改失败");
+				map.put("admin", admin);
+			}
+		}
+		return "background/admin/admin-info";
+	}
+
+	@PostMapping("/update-password")
+	public String updatePassword(String password1, String password2, HttpSession session, Map<String, Object> map) {
+		Admin admin = (Admin) session.getAttribute("####admin_login####");
+		admin.setPassword(password1);
+		Admin admin1 = service.login(admin);
+		if (admin1 != null) {
+			admin1.setPassword(password2);
+			int row = service.update(admin1);
+			if (row > 0) {
+				map.put("detail", "修改成功");
+				session.setAttribute("####admin_login####", admin1);
+			} else {
+				map.put("detail", "修改失败");
+			}
+		} else {
+			map.put("detail", "密码错误");
+		}
+		return "redirect:/background/admin/my";
 	}
 
 	@RequestMapping("/user")
@@ -63,6 +101,7 @@ public class AdminController extends BaseController {
 		return "background/user/user-list";
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@GetMapping("/user-add")
 	public String addUser(User user, Map<String, Object> map) {
 		if (user.equals("")) {
@@ -79,37 +118,6 @@ public class AdminController extends BaseController {
 			map.put("user", user);
 		}
 		return "background/user/user-add";
-	}
-
-	// 未使用
-	@RequestMapping(value = "/user-up", produces = "application/json;charset=utf-8")
-	@ResponseBody
-	public Map<String, Object> addpic(User user, @RequestParam(name = "pic") MultipartFile multipartFile) {
-		Map<String, Object> map = new HashMap<>();
-		if (user.equals("")) {
-			if (multipartFile != null) {
-				String uuId = UUID.randomUUID().toString();
-				int idx = multipartFile.getOriginalFilename().lastIndexOf(".");
-				String name = "user/" + uuId + "." + multipartFile.getOriginalFilename().substring(idx + 1);
-				String url = Constant.PICTURE_URL + name;
-				File file = new File(url);
-				try {
-					multipartFile.transferTo(file);
-				} catch (IllegalStateException | IOException e) {
-					e.printStackTrace();
-				}
-				user.setUserPicture(name);
-			}
-			int row1 = usService.insert(user);
-			if (row1 > 0) {
-				map.put("detail", "修改成功");
-			} else {
-				map.put("detail", "修改失败");
-			}
-		} else {
-			map.put("detail", "输入为空");
-		}
-		return map;
 	}
 
 	@RequestMapping("/user-detail")
@@ -188,7 +196,7 @@ public class AdminController extends BaseController {
 			} else {
 				map.put("detail", "登陆失败！用户名或密码错误！");
 				map.put("user", admin);
-				return "background/user/login";
+				return "background/admin/login";
 			}
 		} else {
 			map.put("detail", "登陆失败！验证码有误！");
@@ -248,6 +256,7 @@ public class AdminController extends BaseController {
 		return map;
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@GetMapping("/admin-add")
 	public String addAdmin(Admin admin, Map<String, Object> map) {
 		admin.setCreatTime(Calendar.getInstance().getTime());
