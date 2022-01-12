@@ -16,12 +16,24 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionController {
 
+	/**
+	 * 转发到error（404）界面
+	 * 
+	 * @param e
+	 * @return
+	 */
 	@ExceptionHandler
 	public String exception(Exception e) {
 		System.out.println(exceptionToString(e));
 		return "error";
 	}
 
+	/**
+	 * 异常处理
+	 * 
+	 * @param ex
+	 * @return
+	 */
 	public String exceptionToString(Throwable ex) {
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		ex.printStackTrace(new PrintStream(os));

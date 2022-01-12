@@ -25,13 +25,13 @@
 			<div id="yonghu" style="">
 				<img src="static/after-login/img/yhm.png" />
 			</div>
-			<input type="text" name="name" placeholder="用户名" />
+			<input type="text" name="name" placeholder="用户名" value="${admin.name}" />
 		</div>
 		<div class="password">
 			<div id="yonghu">
 				<img src="static/after-login/img/mm.png" />
 			</div>
-			<input type="password" name="密码" placeholder="密码" />
+			<input type="password" name="密码" placeholder="密码" value="${admin.password}" />
 		</div>
 		<div class="code">
 			<input type="text" name="code" required lay-verify="required"

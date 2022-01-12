@@ -24,6 +24,12 @@ import com.jyc.model.Logo;
 import com.jyc.service.LogoService;
 import com.jyc.util.Constant;
 
+/**
+ * LOGO控制器
+ * 
+ * @author 12430
+ *
+ */
 @Controller
 @RequestMapping("/background/logo")
 public class LogoController {

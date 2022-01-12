@@ -21,26 +21,48 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jyc.model.Goods;
+import com.jyc.model.GoodsDetail;
 import com.jyc.model.GoodsPicture;
 import com.jyc.model.OneType;
+import com.jyc.service.GoodsDetailService;
 import com.jyc.service.GoodsPictureService;
 import com.jyc.service.GoodsService;
 import com.jyc.service.OneTypeService;
 import com.jyc.util.Constant;
 
+/**
+ * 商品管理
+ * 
+ * @author 12430
+ *
+ */
 @Controller
 @RequestMapping("/background/goods")
 public class GoodsController {
+	/**
+	 * 商品
+	 */
 	@Autowired
 	private GoodsService service;
+	/**
+	 * 商品图片
+	 */
 	@Autowired
 	private GoodsPictureService goodsPictureService;
+	/**
+	 * 分类
+	 */
 	@Autowired
 	private OneTypeService one;
+	/**
+	 * 商品详情
+	 */
+	@Autowired
+	private GoodsDetailService goodsDetailService;
 
 	@RequestMapping(value = { "", "/" })
 	public String goods(Goods goods, @RequestParam(defaultValue = "1") Integer pageNumber,
-			@RequestParam(defaultValue = "5") Integer pageSize, Map<String, Object> map) {
+			@RequestParam(defaultValue = "5") Integer pageSize, Map<String, Object> map, HttpSession session) {
 		PageHelper.startPage(pageNumber, pageSize);
 		List<Goods> list = service.findAll(goods);
 		PageInfo<Goods> page = new PageInfo<>(list);
@@ -48,6 +70,8 @@ public class GoodsController {
 		map.put("pageNumber", pageNumber);
 		map.put("goods", goods);
 		map.put("list", list);
+		map.put("detail", session.getAttribute("detail"));
+		session.removeAttribute("detail");
 		return "background/goods/goods-list";
 	}
 
@@ -293,6 +317,42 @@ public class GoodsController {
 			map.put("detail", "删除失败");
 		}
 		return map;
+	}
+
+	@RequestMapping("/detail")
+	public String toDetail(Integer id, HttpSession session, Map<String, Object> map) {
+		session.setAttribute("goodsId", id);
+		GoodsDetail goodsDetail = goodsDetailService.findByGoodsId(id);
+		map.put("goodsDetail", goodsDetail);
+		return "background/goods/goods-details/goods-detail";
+	}
+
+	@RequestMapping("/edit-detail")
+	public String detail(GoodsDetail goodsDetail, HttpSession session, Map<String, Object> map) {
+		if (goodsDetail.equals("")) {
+			Integer goodsId = (Integer) session.getAttribute("goodsId");
+			GoodsDetail goDetail = goodsDetailService.findByGoodsId(goodsId);
+			if (goDetail != null) {
+				int row = goodsDetailService.update(goodsDetail);
+				if (row > 0) {
+					map.put("detail", "修改成功");
+					return "redirect:/background/goods";
+				} else {
+					map.put("detail", "修改失败");
+				}
+			} else {
+				goodsDetail.setGoodsId(goodsId);
+				int row = goodsDetailService.insert(goodsDetail);
+				if (row > 0) {
+					map.put("detail", "添加成功");
+					return "redirect:/background/goods";
+				} else {
+					map.put("detail", "添加失败");
+				}
+			}
+			map.put("goodsDetail", goodsDetail);
+		}
+		return "background/goods/goods-details/goods-detail";
 	}
 
 }

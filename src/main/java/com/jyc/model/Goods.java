@@ -24,10 +24,11 @@ public class Goods extends Base {
 
 	private List<GoodsPicture> pictures;// 商品图片
 	private ThreeType type;// 商品类型
+	private GoodsDetail children;
 
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(new String[] { "id", "goodsId", "pictures", "type", "typeId" });
+		return super.equals(new String[] { "id", "goodsId", "pictures", "type", "typeId", "children" });
 	}
 
 	public Integer getId() {
@@ -131,6 +132,14 @@ public class Goods extends Base {
 
 	public void setType(ThreeType type) {
 		this.type = type;
+	}
+
+	public GoodsDetail getChildren() {
+		return children;
+	}
+
+	public void setChildren(GoodsDetail children) {
+		this.children = children;
 	}
 
 	public String getLocalGoodsId() {

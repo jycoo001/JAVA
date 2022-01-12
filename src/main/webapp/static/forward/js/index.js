@@ -234,7 +234,7 @@ function changeValue() {
     window.localStorage.setItem("cartlist", strCartList);
 }
 
-
+//加入购物车事件
 for (let i = 0; i < addCar.length; i++) {
 
     addCar[i].addEventListener("click", function () {
@@ -249,7 +249,7 @@ for (let i = 0; i < addCar.length; i++) {
 
 		let picture = this.parentNode.parentNode.parentNode.querySelector("img").src;
 		let id = this.parentNode.parentNode.parentNode.querySelector("img").alt;
-
+		//设计添加的数据
         let infor = {
             "id": id,
             "title": title,

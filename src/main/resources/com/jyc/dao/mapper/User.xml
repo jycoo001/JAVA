@@ -7,7 +7,7 @@
 	<sql id="Columns">
 		id,user_id,password,secret,sex,phone,qq,e_mail,card_id,creat_time,user_money,last_time,user_status,user_picture
 	</sql>
-	<resultMap type="User" id="UserMap">
+	<resultMap type="User" id="Map">
 		<id property="id" column="id" />
 		<result property="userId" column="user_id" />
 		<result property="password" column="password" />
@@ -26,7 +26,7 @@
 			select="com.jyc.dao.UserAddressDAO.findByUserId" />
 	</resultMap>
 
-	<select id="findAll" resultMap="UserMap" parameterType="User">
+	<select id="findAll" resultMap="Map" parameterType="User">
 		select
 		<include refid="Columns" />
 		from t_user
@@ -90,7 +90,7 @@
 	
 	
 
-	<select id="findById" resultMap="UserMap"
+	<select id="findById" resultMap="Map"
 		parameterType="java.lang.Integer">
 		select
 		<include refid="Columns" />
@@ -102,7 +102,7 @@
 		select count(id) from t_user
 	</select>
 
-	<select id="login" resultMap="UserMap" parameterType="User">
+	<select id="login" resultMap="Map" parameterType="User">
 		select
 		<include refid="Columns" />
 		from t_user

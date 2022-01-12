@@ -24,20 +24,46 @@ import com.jyc.service.ThreeAddressService;
 import com.jyc.service.TwoAddressService;
 import com.jyc.service.UserAddressService;
 
+/**
+ * 地址控制器
+ * 
+ * @author 12430
+ *
+ */
 @Controller
 @RequestMapping("/forward/address")
 public class AddressController {
+	/**
+	 * 一级地址
+	 */
 	@Autowired
 	private OneAddressService service;
+	/**
+	 * 二级地址
+	 */
 	@Autowired
 	private TwoAddressService two;
+	/**
+	 * 三级地址
+	 */
 	@Autowired
 	private ThreeAddressService three;
+	/**
+	 * 四级地址
+	 */
 	@Autowired
 	private FourAddressService four;
+	/**
+	 * 用户地址
+	 */
 	@Autowired
 	private UserAddressService usService;
 
+	/**
+	 * ajax实现查找所有,前台主页选择
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/all", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Map<String, Object> all() {
@@ -51,6 +77,16 @@ public class AddressController {
 		return map;
 	}
 
+	/**
+	 * ajax实现下拉框选择给下一级赋地址
+	 * 
+	 * @param oneId     一级地址ID，查找parentId得到二级地址
+	 * @param twoId     二级地址ID，查找parentId得到三级地址
+	 * @param threeId   三级地址ID，查找parentId得到四级地址
+	 * @param addressId 选定地址后的ajax按钮得到地址Id
+	 * @param session   通过session得到有关登录的用户的相关，并且添加一个用户的地址
+	 * @return 返回JSON
+	 */
 	@RequestMapping(value = "/list", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Map<String, Object> find(@RequestParam(name = "oneId", required = false) Integer oneId,
@@ -89,6 +125,17 @@ public class AddressController {
 		return map;
 	}
 
+	/**
+	 * 修改地址，ajax实现
+	 * 
+	 * @param oneId     一级地址ID，查找parentId得到二级地址
+	 * @param twoId     二级地址ID，查找parentId得到三级地址
+	 * @param threeId   三级地址ID，查找parentId得到四级地址
+	 * @param addressId 选定地址后的ajax按钮得到地址Id
+	 * @param id        修改下标回显
+	 * @param session   用户相关，修改后也修改session中数据
+	 * @return 返回一个JSON
+	 */
 	@RequestMapping(value = "/edit", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Map<String, Object> edit(@RequestParam(name = "oneId", required = false) Integer oneId,
@@ -133,6 +180,14 @@ public class AddressController {
 		return map;
 	}
 
+	/**
+	 * 删除一个地址
+	 * 
+	 * @param id      要删除的id
+	 * @param session 会话session
+	 * @param map     要返回的数据封装到map中
+	 * @return 转发到我的请求，或者返回一个重定向到我的的请求
+	 */
 	@RequestMapping("/delete")
 	public String delete(Integer id, HttpSession session, Map<String, Object> map) {
 		int row = usService.deleteById(id);

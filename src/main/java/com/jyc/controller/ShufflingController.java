@@ -24,6 +24,12 @@ import com.jyc.model.Shuffling;
 import com.jyc.service.ShufflingService;
 import com.jyc.util.Constant;
 
+/**
+ * 轮播图控制器
+ * 
+ * @author 12430
+ *
+ */
 @Controller
 @RequestMapping("/background/shuffling")
 public class ShufflingController {

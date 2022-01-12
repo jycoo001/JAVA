@@ -20,7 +20,7 @@ import com.github.pagehelper.PageInfo;
 import com.jyc.service.BaseService;
 
 /**
- * 基本控制器
+ * 基本的控制器，此控制器中有得到属性名为service的方法，基本的list、insert、update、delete
  * 
  * @author 12430
  *

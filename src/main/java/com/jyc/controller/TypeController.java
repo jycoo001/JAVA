@@ -13,6 +13,12 @@ import com.github.pagehelper.PageInfo;
 import com.jyc.model.OneType;
 import com.jyc.service.OneTypeService;
 
+/**
+ * 类别控制器
+ * 
+ * @author 12430
+ *
+ */
 @Controller
 @RequestMapping("/background/type")
 public class TypeController {

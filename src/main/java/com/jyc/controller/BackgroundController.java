@@ -25,13 +25,29 @@ import com.jyc.service.UserService;
 @Controller
 @RequestMapping("/background")
 public class BackgroundController {
+	/**
+	 * 用户
+	 */
 	@Autowired
 	private UserService usService;
+	/**
+	 * 管理员
+	 */
 	@Autowired
 	private AdminService adminService;
+	/**
+	 * 订单
+	 */
 	@Autowired
 	private OrderService orderService;
 
+	/**
+	 * 后台主页
+	 * 
+	 * @param session
+	 * @param map
+	 * @return
+	 */
 	@RequestMapping("/index")
 	public String toIndex(HttpSession session, Map<String, Object> map) {
 		map.put("detail", session.getAttribute("detail"));
@@ -39,6 +55,12 @@ public class BackgroundController {
 		return "background/index";
 	}
 
+	/**
+	 * 欢迎页面。数据统计
+	 * 
+	 * @param map MySQL得到的数据
+	 * @return 返回欢迎页面
+	 */
 	@RequestMapping("/welcome")
 	public String welcome(Map<String, Object> map) {
 		int count = usService.findCount();

@@ -25,6 +25,12 @@ import com.jyc.service.ShufflingService;
 import com.jyc.service.ThreeAddressService;
 import com.jyc.service.TwoAddressService;
 
+/**
+ * 前台主页控制器
+ * 
+ * @author 12430
+ *
+ */
 @Controller
 @RequestMapping("")
 public class IndexController {

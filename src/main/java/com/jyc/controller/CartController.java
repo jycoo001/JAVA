@@ -14,12 +14,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jyc.model.User;
 import com.jyc.service.CartService;
 
+/**
+ * 购物车控制器
+ * 
+ * @author 12430
+ *
+ */
 @Controller
 @RequestMapping("/cart")
 public class CartController {
+	/**
+	 * 购物车
+	 */
 	@Autowired
 	private CartService service;
 
+	/**
+	 * 进入购物车时，更新购物车表
+	 * 
+	 * @param ids
+	 * @param session
+	 * @param map     提示
+	 * @return 购物车页面
+	 */
 	@RequestMapping(value = { "/index/{ids}", "/index" })
 	public String cart(@PathVariable(required = false) String ids, HttpSession session, Map<String, Object> map) {
 		if (ids != null && ids.trim().length() > 0) {

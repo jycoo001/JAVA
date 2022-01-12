@@ -18,6 +18,12 @@ import com.jyc.model.Order;
 import com.jyc.model.User;
 import com.jyc.service.OrderService;
 
+/**
+ * 订单控制器
+ * 
+ * @author 12430
+ *
+ */
 @Controller
 @RequestMapping("/forward/order")
 public class OrderController extends BaseController {

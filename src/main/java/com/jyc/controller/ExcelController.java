@@ -22,15 +22,39 @@ import com.jyc.service.AdminService;
 import com.jyc.service.ShufflingService;
 import com.jyc.service.UserService;
 
+/**
+ * 导出至Excel的控制器
+ * 
+ * @author 12430
+ *
+ */
 @Controller
 public class ExcelController {
+	/**
+	 * 用户
+	 */
 	@Autowired
 	private UserService service;
+	/**
+	 * 管理员
+	 */
 	@Autowired
 	private AdminService adService;
+	/**
+	 * 轮播图
+	 */
 	@Autowired
 	private ShufflingService shufflingService;
 
+	/**
+	 * 用户信息导出
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param user
+	 * @param resp
+	 * @throws IOException
+	 */
 	@GetMapping(value = "/background/user/excel", produces = "application/vnd.ms-excel;charset=utf-8")
 	public void exportUser(Integer pageNumber, Integer pageSize, User user, HttpServletResponse resp)
 			throws IOException {
@@ -42,27 +66,27 @@ public class ExcelController {
 			pageSize = 5;
 		}
 
-		// 自动进行分页，注意：分页时要指定排序字段
 		PageHelper.startPage(pageNumber, pageSize);
-
-		// 查询全部
 		List<User> list = service.findAll(user);
 
-		// 导出操作
-		// 1.设置响应类型
-		// 2.获取要导出的数据
-		// 3.指定导出时的文件名称
 		LocalDateTime ldt = LocalDateTime.now();
-		// 导出的文件名
 		String fileName = "用户信息表_" + ldt.format(DateTimeFormatter.ofPattern("_yyyy-MM-dd-HH:mm:ss")) + ".xlsx";
 		String finalName = URLEncoder.encode(fileName, "utf-8");
 		resp.setHeader("Content-disposition", "attchment;filename=" + finalName);
 
-		// 4.导出操作，需要在模型类中使用注解指定哪些属性需要导出
 		EasyExcel.write(resp.getOutputStream(), User.class).excludeColumnFiledNames(Arrays.asList("handler"))
 				.sheet("用户信息表").doWrite(list);
 	}
 
+	/**
+	 * 管理员信息导出
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param admin
+	 * @param resp
+	 * @throws IOException
+	 */
 	@GetMapping(value = "/background/admin/excel", produces = "application/vnd.ms-excel;charset=utf-8")
 	public void exportAdmin(Integer pageNumber, Integer pageSize, Admin admin, HttpServletResponse resp)
 			throws IOException {
@@ -84,6 +108,15 @@ public class ExcelController {
 				.sheet("管理员信息表").doWrite(list);
 	}
 
+	/**
+	 * 轮播图导出
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param shuffling
+	 * @param resp
+	 * @throws IOException
+	 */
 	@GetMapping(value = "/background/shuffling/excel", produces = "application/vnd.ms-excel;charset=utf-8")
 	public void exportShuffling(Integer pageNumber, Integer pageSize, Shuffling shuffling, HttpServletResponse resp)
 			throws IOException {

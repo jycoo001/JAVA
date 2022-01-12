@@ -23,7 +23,7 @@
 				and id=#{id}
 			</if>
 			<if test="goodsId!=null and goodsId!=''">
-				and good_id=#{goodsId}
+				and goods_id=#{goodsId}
 			</if>
 			<if test="picture!=null and picture!=''">
 				and picture=#{picture}

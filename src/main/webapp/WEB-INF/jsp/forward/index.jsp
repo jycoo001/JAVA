@@ -229,7 +229,7 @@
 						<c:forEach items="${g.pictures }" var="p">
 							<c:choose>
 								<c:when test="${count==1}">
-									<img src="${p.picture}" alt="${p.id}">
+									<img src="${p.picture}" alt="${g.id}">
 									<c:set var="count" value="2"></c:set>
 								</c:when>
 								<c:otherwise>

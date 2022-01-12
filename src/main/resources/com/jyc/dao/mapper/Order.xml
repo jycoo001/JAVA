@@ -29,7 +29,6 @@
 		<include refid="Columns" />
 		from t_order
 		<where>
-
 			<if test="id!=null and id!=''">
 				and id=#{id}
 			</if>
@@ -45,7 +44,6 @@
 			<if test="localCreatTime!=null and localCreatTime!=''">
 				and creat_time=#{localCreatTime}
 			</if>
-
 			<if test="localUpdateTime!=null and localUpdateTime!=''">
 				and update_time=#{localUpdateTime}
 			</if>

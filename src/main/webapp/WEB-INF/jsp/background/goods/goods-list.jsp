@@ -127,6 +127,11 @@
 											data-id="${l.id}" data-url="background/goods/picture">
 											<i class="layui-icon">图片</i>
 										</button>
+										<button
+											class="layui-btn layui-btn-small layui-btn-normal go-btn"
+											data-id="${l.id}" data-url="background/goods/detail">
+											<i class="layui-icon">详情</i>
+										</button>
 									</div>
 								</td>
 							</tr>

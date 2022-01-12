@@ -83,7 +83,7 @@
 		values(#{localGoodsId},#{name},#{price},#{shopPrice},#{inventory},#{goodsUnit},#{hot},#{goodsDesc},#{typeId})
 	</insert>
 
-	<update id="update" parameterType="Admin">
+	<update id="update" parameterType="Goods">
 		update t_goods
 		<set>
 			<if test="name!=null and name!=''">

@@ -308,7 +308,6 @@ count.addEventListener("click", () => {
 					}
 				}
 			});
-
 		} else {
 			alert("支付失败");
 		}
