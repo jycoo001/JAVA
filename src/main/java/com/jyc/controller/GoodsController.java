@@ -23,11 +23,11 @@ import com.github.pagehelper.PageInfo;
 import com.jyc.model.Goods;
 import com.jyc.model.GoodsDetail;
 import com.jyc.model.GoodsPicture;
-import com.jyc.model.OneType;
+import com.jyc.model.GoodsType;
 import com.jyc.service.GoodsDetailService;
 import com.jyc.service.GoodsPictureService;
 import com.jyc.service.GoodsService;
-import com.jyc.service.OneTypeService;
+import com.jyc.service.GoodsTypeService;
 import com.jyc.util.Constant;
 
 /**
@@ -53,7 +53,7 @@ public class GoodsController {
 	 * 分类
 	 */
 	@Autowired
-	private OneTypeService one;
+	private GoodsTypeService one;
 	/**
 	 * 商品详情
 	 */
@@ -77,8 +77,6 @@ public class GoodsController {
 
 	@GetMapping("/goods-add")
 	public String addGoodsGet(Map<String, Object> map) {
-		List<OneType> onet = one.findAll(null);
-		map.put("type", onet);
 		return "background/goods/goods-add";
 	}
 
@@ -153,7 +151,9 @@ public class GoodsController {
 
 	@GetMapping("/type")
 	public String type(Map<String, Object> map, Integer id) {
-		List<OneType> list = one.findAll(null);
+		GoodsType type = new GoodsType();
+		type.setParentId(0);
+		List<GoodsType> list = one.findAll(type);
 		map.put("type", list);
 		map.put("id", id);
 		return "background/goods/goods-type";
@@ -333,6 +333,7 @@ public class GoodsController {
 			Integer goodsId = (Integer) session.getAttribute("goodsId");
 			GoodsDetail goDetail = goodsDetailService.findByGoodsId(goodsId);
 			if (goDetail != null) {
+				goodsDetail.setId(goDetail.getId());
 				int row = goodsDetailService.update(goodsDetail);
 				if (row > 0) {
 					map.put("detail", "修改成功");

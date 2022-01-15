@@ -39,7 +39,7 @@
 					</div>
 					<div class="layui-inline">
 						<input type="text" name="name" placeholder="请输入分类名"
-							autocomplete="off" class="layui-input">
+							autocomplete="off" class="layui-input" value="${type.name}">
 					</div>
 					<div class="layui-inline">
 						<select name="hidden" lay-filter="status">
@@ -48,6 +48,8 @@
 							<option value="0">隐藏</option>
 						</select>
 					</div>
+					<input type="hidden" name="pageNumber" value="" /> <input
+						type="hidden" name="pageSize" value="" />
 					<button class="layui-btn layui-btn-normal" lay-submit="search">搜索</button>
 				</div>
 			</form>
@@ -114,8 +116,8 @@
 
 					<ul class="pagination">
 						<c:if test="${page.pageNum!=1}">
-							<li><a
-								href="background/type?pageNumber=${pageNumber-1}&pageSize=${page.pageSize}">«</a></li>
+							<li><a class="last" href="javascript:void(0);"
+								data-pageNumber="${pageNumber-1}">«</a></li>
 						</c:if>
 						<c:if test="${page.pageNum==1 }">
 							<li class="disabled"><span>«</span></li>
@@ -127,14 +129,14 @@
 									<li class="active"><span>${p}</span></li>
 								</c:when>
 								<c:otherwise>
-									<li><a
-										href="background/type/list?pageNumber=${p}&pageSize=${page.pageSize}">${p}</a></li>
+									<li><a href="javascript:void(0);" class="pageNumber"
+										data-pageNumber="${p}">${p}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 						<c:if test="${page.pageNum!=page.navigateLastPage}">
-							<li><a
-								href="background/type/list?pageNumber=${pageNumber+1}&pageSize=${page.pageSize}">»</a></li>
+							<li><a class="next" data-pageNumber="${pageNumber+1}"
+								href="javascript:void(0);">»</a></li>
 						</c:if>
 						<c:if test="${page.pageNum==page.navigateLastPage}">
 							<li class="disabled"><span>»</span></li>

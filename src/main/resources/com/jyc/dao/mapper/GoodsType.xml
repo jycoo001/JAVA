@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.GoodsTypeDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		id,type_id,name,parent_id,hidden
+	</sql>
+	<resultMap type="GoodsType" id="Map">
+		<id property="id" column="id" />
+		<result property="typeId" column="type_id" />
+		<result property="name" column="name" />
+		<result property="parentId" column="parent_id" />
+		<result property="hidden" column="hidden" />
+		<association property="parent" column="parent_id"
+			select="com.jyc.dao.GoodsTypeDAO.findByTypeId" />
+		<collection fetchType="eager" property="childrens"
+			column="type_id" select="com.jyc.dao.GoodsTypeDAO.findByParentId" />
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="GoodsType">
+		select
+		<include refid="Columns" />
+		from t_type_1
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="typeId!=null and typeId!=''">
+				and type_id=#{typeId}
+			</if>
+			<if test="name!=null and name!=''">
+				<bind name="likeName" value="'%'+name+'%'" />
+				and name like #{likeName}
+			</if>
+			<if test="parentId!=null">
+				and parent_id=#{parentId}
+			</if>
+			<if test="hidden!=null and hidden!=''">
+				and hidden=#{hidden}
+			</if>
+		</where>
+		order by id
+	</select>
+
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_type_1
+		where id=#{id}
+	</select>
+
+	<select id="findByTypeId" resultMap="Map">
+		select
+		<include refid="Columns" />
+		from t_type_1
+		where type_id=#{id}
+	</select>
+
+	<select id="findByParentId" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_type_1
+		where parent_id=#{id}
+	</select>
+
+	<insert id="insert" parameterType="GoodsType">
+		insert into
+		t_type_1(type_id,name,parent_id,hidden)
+		values(#{typeId},#{name},#{parentId},#{hidden})
+	</insert>
+
+	<update id="update" parameterType="GoodsType">
+		update t_type_1
+		<set>
+			<if test="name!=null and name!=''">
+				name=#{name},
+			</if>
+			<if test="hidden!=null and hidden!=''">
+				hidden=#{hidden},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_type_1 where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_type_1 where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

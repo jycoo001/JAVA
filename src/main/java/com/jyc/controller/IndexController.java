@@ -10,17 +10,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jyc.model.Goods;
+import com.jyc.model.GoodsType;
 import com.jyc.model.Logo;
 import com.jyc.model.OneAddress;
-import com.jyc.model.OneType;
 import com.jyc.model.Shuffling;
 import com.jyc.model.ThreeAddress;
 import com.jyc.model.TwoAddress;
 import com.jyc.model.User;
 import com.jyc.service.GoodsService;
+import com.jyc.service.GoodsTypeService;
 import com.jyc.service.LogoService;
 import com.jyc.service.OneAddressService;
-import com.jyc.service.OneTypeService;
 import com.jyc.service.ShufflingService;
 import com.jyc.service.ThreeAddressService;
 import com.jyc.service.TwoAddressService;
@@ -37,7 +37,7 @@ public class IndexController {
 	@Autowired
 	private ShufflingService service;
 	@Autowired
-	private OneTypeService oneService;
+	private GoodsTypeService type;
 	@Autowired
 	private GoodsService goodsService;
 	@Autowired
@@ -58,10 +58,14 @@ public class IndexController {
 		List<Shuffling> shufflings = service.findAll(shuffling);
 		map.put("shufflings", shufflings);
 
-		OneType oneType = new OneType();
+		GoodsType oneType = new GoodsType();
 		oneType.setHidden("1");
-		List<OneType> type = oneService.findAll(oneType);
-		map.put("type", type);
+		oneType.setParentId(0);
+
+		List<GoodsType> type1 = type.findAll(oneType);
+
+		map.put("type", type1);
+
 		Goods good = new Goods();
 		good.setHot(1000);
 		List<Goods> goods = goodsService.findAll(good);

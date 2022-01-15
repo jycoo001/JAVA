@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jyc.model.OneType;
-import com.jyc.service.OneTypeService;
+import com.jyc.model.GoodsType;
+import com.jyc.service.GoodsTypeService;
 
 /**
  * 类别控制器
@@ -23,15 +23,15 @@ import com.jyc.service.OneTypeService;
 @RequestMapping("/background/type")
 public class TypeController {
 	@Autowired
-	private OneTypeService service;
+	private GoodsTypeService service;
 
 	@RequestMapping("/list")
 	public String type(Map<String, Object> map, @RequestParam(defaultValue = "1") Integer pageNumber,
-			@RequestParam(defaultValue = "5") Integer pageSize, OneType one) {
+			@RequestParam(defaultValue = "5") Integer pageSize, GoodsType one) {
 
 		PageHelper.startPage(pageNumber, pageSize);
-		List<OneType> list = service.findAll(one);
-		PageInfo<OneType> page = new PageInfo<>(list);
+		List<GoodsType> list = service.findAll(one);
+		PageInfo<GoodsType> page = new PageInfo<>(list);
 
 		map.put("page", page);
 		map.put("pageNumber", pageNumber);
@@ -41,7 +41,7 @@ public class TypeController {
 	}
 
 	@RequestMapping("/type-edit")
-	public String typeEdit(OneType onetype, Map<String, Object> map) {
+	public String typeEdit(GoodsType onetype, Map<String, Object> map) {
 		if (onetype.getName() != null && onetype.getName().trim().length() > 0 && onetype.getHidden() != null) {
 			int row = service.update(onetype);
 			if (row > 0) {
@@ -50,7 +50,7 @@ public class TypeController {
 				map.put("type", onetype);
 			}
 		} else {
-			OneType one = service.findById(onetype.getId());
+			GoodsType one = service.findById(onetype.getId());
 			map.put("type", one);
 		}
 		return "background/type/type-detail";

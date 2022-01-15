@@ -11,11 +11,10 @@ public class GoodsPicture extends Base {
 	private Integer id;
 	private Integer goodsId;
 	private String picture;
-	private Goods parent;
 
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(new String[] { "id", "goodsId", "parent" });
+		return super.equals(new String[] { "id", "goodsId" });
 	}
 
 	public Integer getId() {
@@ -40,14 +39,6 @@ public class GoodsPicture extends Base {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
-	}
-
-	public Goods getParent() {
-		return parent;
-	}
-
-	public void setParent(Goods parent) {
-		this.parent = parent;
 	}
 
 }

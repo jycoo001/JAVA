@@ -11,9 +11,6 @@
 		<id property="id" column="id" />
 		<result property="goodsId" column="goods_id" />
 		<result property="goodsIntroduce" column="goods_introduce" />
-
-		<association property="parent" column="goods_id"
-			select="com.jyc.dao.GoodsDAO.findById" />
 	</resultMap>
 
 	<select id="findAll" resultMap="Map" parameterType="GoodsDetail">

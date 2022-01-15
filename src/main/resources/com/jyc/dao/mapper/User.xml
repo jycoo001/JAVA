@@ -3,7 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jyc.dao.UserDAO">
-	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
 	<sql id="Columns">
 		id,user_id,password,secret,sex,phone,qq,e_mail,card_id,creat_time,user_money,last_time,user_status,user_picture
 	</sql>

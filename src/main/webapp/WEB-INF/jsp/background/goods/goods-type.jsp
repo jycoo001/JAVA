@@ -16,7 +16,7 @@
 			<select class="select1">
 				<option value="">请选择种类</option>
 				<c:forEach items="${type}" var="t">
-					<option value="${t.id}">${t.name}</option>
+					<option value="${t.typeId}">${t.name}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -42,22 +42,29 @@
 			$(".select1").change(function() {
 				var value =  $(this).val();
 				<c:forEach items="${type}" var="t">
-					if(${t.id}==value) {
-						<c:forEach items="${t.twoTypes}" var="t1">
-							$(".select2").append("<option value='${t1.id}'>${t1.name}</option>");
+					if(${t.typeId}==value) {
+						$(".select2").empty();
+						$(".select3").empty();
+						$(".select2").append("<option value=''>请选择种类</option>");
+						$(".select3").append("<option value=''>请选择种类</option>");
+						<c:forEach items="${t.childrens}" var="t1">
+							$(".select2").append("<option value='${t1.typeId}'>${t1.name}</option>");
 						</c:forEach>
 					}
 				</c:forEach>
+				
 			});
 			$(".select2").change(function() {
 				var value1 = $(".select1").val();
 				var value =  $(this).val();
 				<c:forEach items="${type}" var="t">
-					if(${t.id}==value1) {
-						<c:forEach items="${t.twoTypes}" var="t1">
-							if(${t1.id}==value) {
-								<c:forEach items="${t1.threeTypes}" var="t2">
-									$(".select3").append("<option value='${t2.id}'>${t2.name}</option>");
+					if(${t.typeId}==value1) {
+						<c:forEach items="${t.childrens}" var="t1">
+							if(${t1.typeId}==value) {
+								$(".select3").empty();
+								$(".select3").append("<option value=''>请选择种类</option>");
+								<c:forEach items="${t1.childrens}" var="t2">
+									$(".select3").append("<option value='${t2.typeId}'>${t2.name}</option>");
 								</c:forEach>
 							}
 						</c:forEach>

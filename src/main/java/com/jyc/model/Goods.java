@@ -23,8 +23,8 @@ public class Goods extends Base {
 	private Integer typeId;// 类型ID
 
 	private List<GoodsPicture> pictures;// 商品图片
-	private ThreeType type;// 商品类型
 	private GoodsDetail children;
+	private GoodsType type;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -126,14 +126,6 @@ public class Goods extends Base {
 		return pictures.get(0).getPicture();
 	}
 
-	public ThreeType getType() {
-		return type;
-	}
-
-	public void setType(ThreeType type) {
-		this.type = type;
-	}
-
 	public GoodsDetail getChildren() {
 		return children;
 	}
@@ -152,6 +144,14 @@ public class Goods extends Base {
 				return goodsId;
 			}
 		}
+	}
+
+	public GoodsType getType() {
+		return type;
+	}
+
+	public void setType(GoodsType type) {
+		this.type = type;
 	}
 
 }

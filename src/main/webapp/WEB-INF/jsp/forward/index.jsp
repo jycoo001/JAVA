@@ -182,13 +182,13 @@
 					<c:forEach items="${type}" var="t">
 						<li class="left-sub"><a href="#"> ${t.name} </a>
 							<ul class="left-sub-hid">
-								<c:forEach items="${t.twoTypes }" var="two">
+								<c:forEach items="${t.childrens }" var="two">
 									<div class="left-hid-s">
 										<p>
 											<a href="#"><b>${two.name}</b></a>
 										</p>
 										<ul class="hid-box">
-											<c:forEach items="${two.threeTypes}" var="three">
+											<c:forEach items="${two.childrens}" var="three">
 												<li style="display: none;"><a href="#">${three.name}</a></li>
 											</c:forEach>
 										</ul>
@@ -225,7 +225,7 @@
 		<ul class="wrap shopwrap">
 
 			<c:forEach items="${goods }" var="g">
-				<li class="main"><a href="#"> <c:set var="count" value="1"></c:set>
+				<li class="main"><a href="goods/detail?id=${g.id}"> <c:set var="count" value="1"></c:set>
 						<c:forEach items="${g.pictures }" var="p">
 							<c:choose>
 								<c:when test="${count==1}">

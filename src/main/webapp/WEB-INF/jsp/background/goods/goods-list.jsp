@@ -103,7 +103,7 @@
 								<td><button
 										class="layui-btn layui-btn-mini layui-btn-normal">
 										${l.hot}</button></td>
-								<td>${l.type.parent.oneType.name}${l.type.parent.name}
+								<td>${l.type.parent.parent.name}${l.type.parent.name}
 									${l.type.name}</td>
 								<td>
 									<div class="layui-inline">

@@ -12,19 +12,9 @@ public class GoodsDetail extends Base {
 	private Integer goodsId;
 	private String goodsIntroduce;
 
-	private Goods parents;
-
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(new String[] { "id", "goodsId", "parents" });
-	}
-
-	public Goods getParents() {
-		return parents;
-	}
-
-	public void setParents(Goods parents) {
-		this.parents = parents;
+		return super.equals(new String[] { "id", "goodsId" });
 	}
 
 	public Integer getId() {

@@ -19,8 +19,12 @@
 		<result property="goodsDesc" column="goods_desc" />
 		<result property="typeId" column="type_id" />
 
+		<association property="children" column="id"
+			select="com.jyc.dao.GoodsDetailDAO.findByGoodsId" />
+
 		<association property="type" column="type_id"
-			select="com.jyc.dao.ThreeTypeDAO.findById" />
+			select="com.jyc.dao.GoodsTypeDAO.findByTypeId" />
+
 		<collection property="pictures" column="id"
 			select="com.jyc.dao.GoodsPictureDAO.findByGoodsId" />
 	</resultMap>
