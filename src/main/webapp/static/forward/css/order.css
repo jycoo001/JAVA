@@ -114,11 +114,10 @@ body {
 }
 
 .address {
-	width: 60%;
-	height: 150px;
+	width: 70%;
+	height: 600px;
 	margin: 0 auto;
 }
-
 
 .address tr>td:nth-child(3) {
 	width: 400px;
@@ -159,4 +158,26 @@ body {
 	width: 100%;
 	height: 0px;
 	content: "";
+}
+
+.hidden {
+	display: none;
+}
+
+.orderDesc {
+	width: 600px;
+	height: 600px;
+	position: fixed;
+	background-color: white; 
+	left : 30%;
+	top: 20%;
+	left: 30%;
+	text-align: center;
+}
+
+.ueditor, .fail {
+	padding: 5px 15px;
+	background-color: #333;
+	color: white;
+	margin-right: 50px;
 }

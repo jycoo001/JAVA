@@ -57,6 +57,13 @@
 		$(".cartaaa").click(function() {
 			location.href = "cart/index/" + data;
 		});
+		$("#search-sea-my").click(function() {
+			//console.log("aaa");
+			var name = $(".search-input").val();
+			console.log(name);
+			location.href="index?name="+name;
+			
+		});
 	});
 </script>
 </head>
@@ -136,7 +143,7 @@
 				<li class="header-right-tit"><a href="forward/order/all">我的订单</a></li>
 				<li class="header-right-tit"><a href="forward/user/my">我的博汇</a></li>
 				<li class="header-right-tit mycar"><a
-					href="javascript:void(0);"><span
+					href="cart/index"><span
 						class="cartaaa iconfont icon-gouwuche2"></span>购物车</a></li>
 			</ul>
 		</div>
@@ -146,7 +153,7 @@
 		<ul class="wrap1">
 			<li><a href="forward/user/my"><span
 					class="iconfont icon-ren-copy"></span></a></li>
-			<li><a href="javascript:void(0);" class="cartaaa"><span
+			<li><a href="cart/index" class="cartaaa"><span
 					class="iconfont icon-gouwuche2"></span><span>购物车<b
 						class="numc">0</b></span></a></li>
 			<li><a href="shop.html"><span class="iconfont icon-shouhou1"></span><span>售后服务</span></a></li>
@@ -161,7 +168,7 @@
 		<div class="search">
 			<input class="search-input" autofocus=" autofocus" type="text"
 				placeholder="请输入你想要搜索的内容" value="">
-			<button id="search-sea">搜索</button>
+			<button id="search-sea-my">搜索</button>
 			<ul class="search-result"></ul>
 		</div>
 	</section>
@@ -180,16 +187,16 @@
 			<div class="wrap navleft">
 				<ul class="left">
 					<c:forEach items="${type}" var="t">
-						<li class="left-sub"><a href="#"> ${t.name} </a>
+						<li class="left-sub"><a href="/index?typeId=${t.typeId}"> ${t.name} </a>
 							<ul class="left-sub-hid">
 								<c:forEach items="${t.childrens }" var="two">
 									<div class="left-hid-s">
 										<p>
-											<a href="#"><b>${two.name}</b></a>
+											<a href="/index?typeId=${t.typeId}"><b>${two.name}</b></a>
 										</p>
 										<ul class="hid-box">
 											<c:forEach items="${two.childrens}" var="three">
-												<li style="display: none;"><a href="#">${three.name}</a></li>
+												<li style="display: none;"><a href="/index?typeId=${t.typeId}">${three.name}</a></li>
 											</c:forEach>
 										</ul>
 									</div>
@@ -224,7 +231,7 @@
 		</div>
 		<ul class="wrap shopwrap">
 
-			<c:forEach items="${goods }" var="g">
+			<c:forEach items="${goods}" var="g">
 				<li class="main"><a href="goods/detail?id=${g.id}"> <c:set var="count" value="1"></c:set>
 						<c:forEach items="${g.pictures }" var="p">
 							<c:choose>

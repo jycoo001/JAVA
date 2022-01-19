@@ -30,7 +30,7 @@
 							<i class="layui-icon">&#xe654;</i>
 						</button>
 						<button class="layui-btn layui-btn-small layui-btn-danger delBtn"
-							data-url="article-add.html">
+							data-url="background/order/order-delete-many">
 							<i class="layui-icon">&#xe640;</i>
 						</button>
 						<button
@@ -51,6 +51,8 @@
 						</select>
 					</div>
 					<button class="layui-btn layui-btn-normal" lay-submit="search">搜索</button>
+					<button class="layui-btn layui-btn-normal excelNow" data-url="background/order/excel">导出本页</button>
+					<button class="layui-btn layui-btn-normal excelAll" data-url="background/order/excel">导出全部</button>
 				</div>
 			</form>
 			<div class="layui-form" id="table-list">
@@ -109,7 +111,7 @@
 										</button>
 										<button
 											class="layui-btn layui-btn-small layui-btn-danger del-btn"
-											data-id="1" data-url="article-detail.html">
+											data-id="${o.id}" data-url="background/order/order-delete">
 											<i class="layui-icon">&#xe640;</i>
 										</button>
 									</div>

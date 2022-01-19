@@ -304,7 +304,7 @@ count.addEventListener("click", () => {
 						layer.msg("您已成功支付！");
 						fundelAll();
 					} else {
-						layer.alert("支付失败！");
+						layer.alert("支付失败！"+map.detail);
 					}
 				}
 			});
@@ -339,7 +339,7 @@ var usevalue = window.localStorage.getItem("username");
 if (usevalue == null || usevalue.length <= 0) {
 	var timerUser = setInterval(function() {
 		alert("请登录博汇商城，满足你的需求");
-	}, 36000);
+	}, 6000*15);
 } else {
 	clearInterval(timerUser);
 }

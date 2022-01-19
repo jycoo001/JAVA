@@ -3,16 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jyc.dao.ShufflingDAO">
-	<!-- 轮播图 -->
-	<!-- 表示对AddressDAO接口的查询方法启用二级缓存，type属性用于指定缓存的实现类 -->
 	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
-
-	<!-- 配置了一个sql片段 -->
 	<sql id="Columns">
 		id,name,picture,status
 	</sql>
-
-	<!-- 配置查询结果集与对象之间的映射 -->
 	<resultMap type="Shuffling" id="Map">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
@@ -20,7 +14,6 @@
 		<result property="status" column="status" />
 	</resultMap>
 
-	<!-- id要和dao接口中的方法名匹配 -->
 	<select id="findAll" resultMap="Map" parameterType="Shuffling">
 		select
 		<include refid="Columns" />

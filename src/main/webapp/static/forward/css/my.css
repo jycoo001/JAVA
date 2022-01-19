@@ -97,12 +97,12 @@ body {
 }
 /* 自定义的 */
 .user {
-	width: 50%;
+	width: 70%;
 	height: 100px;
 	margin: 0 auto;
 }
 
-.user>.btn-edit {
+.user>.btn-edit,.user>.btn-money {
 	margin-left: 100px;
 	background-color: #666;
 	color: white;
@@ -115,7 +115,7 @@ body {
 
 .address {
 	width: 60%;
-	height: 300px;
+	height: 600px;
 	margin: 0 auto;
 }
 
@@ -196,4 +196,22 @@ body {
 .kong {
 	width: 100%;
 	height: 50px;
+}
+#money {
+	position: fixed;
+	width: 500px;
+	height: 200px;
+	padding:150px 100px;
+	background-color:white;
+	left: 30%;
+	top:30%;
+}
+#money>input {
+	height: 40px;
+}
+.edit-money,.qvxiao {
+	background-color: #333;
+	color: white;
+	cursor: pointer;
+	padding: 5px 20px;
 }

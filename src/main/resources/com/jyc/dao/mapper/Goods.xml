@@ -41,8 +41,8 @@
 				and goods_id=#{goodsId}
 			</if>
 			<if test="name!=null and name!=''">
-				<bind name="likeNmae" value="'%'+name+'%'" />
-				and name=#{likeName}
+				<bind name="likeName" value="'%'+name+'%'" />
+				and name like #{likeName}
 			</if>
 			<if test="price!=null and price!=''">
 				and price=#{price}
@@ -63,7 +63,8 @@
 				and goods_desc=#{goodsDesc}
 			</if>
 			<if test="typeId!=null and typeId!=''">
-				and type_id=#{typeId}
+				<bind name="likeTypeId" value="typeId+'%'"/>
+				and type_id like #{likeTypeId}
 			</if>
 		</where>
 		order by hot desc
@@ -75,6 +76,13 @@
 		<include refid="Columns" />
 		from t_goods
 		where id=#{id}
+	</select>
+	
+	<select id="findLike" resultMap="Map" parameterType="java.lang.String">
+		select <include refid="Columns" />
+		from t_goods
+		<bind name="likeName" value="'%'+name+'%'"/>
+		where name like #{likeName}
 	</select>
 
 	<select id="findCount" resultType="java.lang.Integer">
@@ -117,12 +125,12 @@
 		</set>
 		where id=#{id}
 	</update>
-	<delete id="delete" parameterType="java.lang.Integer">
+	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from t_goods where
 		id=#{id}
 	</delete>
 
-	<delete id="deleteMany" parameterType="java.util.List">
+	<delete id="deleteByIds" parameterType="java.util.List">
 		delete from t_goods where id in
 		<foreach collection="ids" item="id" separator="," open="("
 			close=")">

@@ -16,9 +16,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.alibaba.excel.EasyExcel;
 import com.github.pagehelper.PageHelper;
 import com.jyc.model.Admin;
+import com.jyc.model.Back;
+import com.jyc.model.Goods;
+import com.jyc.model.GoodsType;
+import com.jyc.model.Logo;
+import com.jyc.model.Order;
 import com.jyc.model.Shuffling;
 import com.jyc.model.User;
 import com.jyc.service.AdminService;
+import com.jyc.service.BackService;
+import com.jyc.service.GoodsService;
+import com.jyc.service.GoodsTypeService;
+import com.jyc.service.LogoService;
+import com.jyc.service.OrderService;
 import com.jyc.service.ShufflingService;
 import com.jyc.service.UserService;
 
@@ -45,6 +55,24 @@ public class ExcelController {
 	 */
 	@Autowired
 	private ShufflingService shufflingService;
+
+	/**
+	 * 商品类别
+	 */
+	@Autowired
+	private GoodsTypeService goodsTypeService;
+
+	@Autowired
+	private LogoService logoService;
+
+	@Autowired
+	private GoodsService goodsService;
+
+	@Autowired
+	private OrderService orderService;
+
+	@Autowired
+	private BackService backService;
 
 	/**
 	 * 用户信息导出
@@ -136,5 +164,155 @@ public class ExcelController {
 
 		EasyExcel.write(resp.getOutputStream(), Shuffling.class).excludeColumnFiledNames(Arrays.asList("handler"))
 				.sheet("轮播图信息表").doWrite(list);
+	}
+
+	/**
+	 * 商品类别导出
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param type
+	 * @param resp
+	 * @throws IOException
+	 */
+	@GetMapping(value = "/background/type/excel", produces = "application/vnd.ms-excel;charset=utf-8")
+	public void exportType(Integer pageNumber, Integer pageSize, GoodsType type, HttpServletResponse resp)
+			throws IOException {
+		if (pageNumber == null) {
+			pageNumber = 1;
+		}
+		if (pageSize == null) {
+			pageSize = 5;
+		}
+		PageHelper.startPage(pageNumber, pageSize);
+		List<GoodsType> list = goodsTypeService.findAll(type);
+
+		LocalDateTime ldt = LocalDateTime.now();
+		String fileName = "商品类别信息表_" + ldt.format(DateTimeFormatter.ofPattern("_yyyy-MM-dd-HH-mm-ss")) + ".xlsx";
+		String finalName = URLEncoder.encode(fileName, "utf-8");
+		resp.setHeader("Content-disposition", "attchment;filename=" + finalName);
+
+		EasyExcel.write(resp.getOutputStream(), GoodsType.class).excludeColumnFiledNames(Arrays.asList("handler"))
+				.sheet("商品类别信息表").doWrite(list);
+	}
+
+	/**
+	 * LOGO导出
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param type
+	 * @param resp
+	 * @throws IOException
+	 */
+	@GetMapping(value = "/background/logo/excel", produces = "application/vnd.ms-excel;charset=utf-8")
+	public void exportLOGO(Integer pageNumber, Integer pageSize, Logo logo, HttpServletResponse resp)
+			throws IOException {
+		if (pageNumber == null) {
+			pageNumber = 1;
+		}
+		if (pageSize == null) {
+			pageSize = 5;
+		}
+		PageHelper.startPage(pageNumber, pageSize);
+		List<Logo> list = logoService.findAll(logo);
+
+		LocalDateTime ldt = LocalDateTime.now();
+		String fileName = "商城LOGO信息表_" + ldt.format(DateTimeFormatter.ofPattern("_yyyy-MM-dd-HH-mm-ss")) + ".xlsx";
+		String finalName = URLEncoder.encode(fileName, "utf-8");
+		resp.setHeader("Content-disposition", "attchment;filename=" + finalName);
+
+		EasyExcel.write(resp.getOutputStream(), Logo.class).excludeColumnFiledNames(Arrays.asList("handler"))
+				.sheet("商城LOGO信息表").doWrite(list);
+	}
+
+	/**
+	 * 商品导出
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param type
+	 * @param resp
+	 * @throws IOException
+	 */
+	@GetMapping(value = "/background/goods/excel", produces = "application/vnd.ms-excel;charset=utf-8")
+	public void exportGoods(Integer pageNumber, Integer pageSize, Goods goods, HttpServletResponse resp)
+			throws IOException {
+		if (pageNumber == null) {
+			pageNumber = 1;
+		}
+		if (pageSize == null) {
+			pageSize = 5;
+		}
+		PageHelper.startPage(pageNumber, pageSize);
+		List<Goods> list = goodsService.findAll(goods);
+
+		LocalDateTime ldt = LocalDateTime.now();
+		String fileName = "商品信息表_" + ldt.format(DateTimeFormatter.ofPattern("_yyyy-MM-dd-HH-mm-ss")) + ".xlsx";
+		String finalName = URLEncoder.encode(fileName, "utf-8");
+		resp.setHeader("Content-disposition", "attchment;filename=" + finalName);
+
+		EasyExcel.write(resp.getOutputStream(), Goods.class).excludeColumnFiledNames(Arrays.asList("handler"))
+				.sheet("商品信息表").doWrite(list);
+	}
+
+	/**
+	 * 订单导出
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param type
+	 * @param resp
+	 * @throws IOException
+	 */
+	@GetMapping(value = "/background/order/excel", produces = "application/vnd.ms-excel;charset=utf-8")
+	public void exportOrder(Integer pageNumber, Integer pageSize, Order order, HttpServletResponse resp)
+			throws IOException {
+		if (pageNumber == null) {
+			pageNumber = 1;
+		}
+		if (pageSize == null) {
+			pageSize = 5;
+		}
+		PageHelper.startPage(pageNumber, pageSize);
+		List<Order> list = orderService.findAll(order);
+
+		LocalDateTime ldt = LocalDateTime.now();
+		String fileName = "订单信息表_" + ldt.format(DateTimeFormatter.ofPattern("_yyyy-MM-dd-HH-mm-ss")) + ".xlsx";
+		String finalName = URLEncoder.encode(fileName, "utf-8");
+		resp.setHeader("Content-disposition", "attchment;filename=" + finalName);
+
+		EasyExcel.write(resp.getOutputStream(), Order.class).excludeColumnFiledNames(Arrays.asList("handler"))
+				.sheet("订单信息表").doWrite(list);
+	}
+
+	/**
+	 * 退货单导出
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param type
+	 * @param resp
+	 * @throws IOException
+	 */
+	@GetMapping(value = "/background/back/excel", produces = "application/vnd.ms-excel;charset=utf-8")
+	public void exportBack(Integer pageNumber, Integer pageSize, Back back, HttpServletResponse resp)
+			throws IOException {
+		if (pageNumber == null) {
+			pageNumber = 1;
+		}
+		if (pageSize == null) {
+			pageSize = 5;
+		}
+		PageHelper.startPage(pageNumber, pageSize);
+		List<Back> list = backService.findAll(back);
+
+		LocalDateTime ldt = LocalDateTime.now();
+		String fileName = "退货单信息表_" + ldt.format(DateTimeFormatter.ofPattern("_yyyy-MM-dd-HH-mm-ss")) + ".xlsx";
+		String finalName = URLEncoder.encode(fileName, "utf-8");
+		resp.setHeader("Content-disposition", "attchment;filename=" + finalName);
+
+		EasyExcel.write(resp.getOutputStream(), Back.class).excludeColumnFiledNames(Arrays.asList("handler"))
+				.sheet("退货单信息表").doWrite(list);
 	}
 }

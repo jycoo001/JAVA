@@ -159,14 +159,14 @@
 	$(function() {
 		var detail = "${detail}";
 		if (detail) {
-			layer.alert(detail,function(index) {
-				if (detail == "登陆成功") {
+			layer.alert(detail, function(index) {
+				if (detail != "登陆失败！用户名或密码错误！" && detail != "登陆失败！验证码有误！") {
 					window.localStorage.setItem("username", "${user.userId}");
 					window.location = "/";
 				}
 				layer.close(index);
 			});
-			
+
 		}
 		$("#imageCode").click(function() {
 			$("#imageCode").attr("src", "code?" + Math.random());

@@ -31,23 +31,23 @@
 						</dd>
 						<dd>
 							<a href="javascript:;" data-url="background/admin/admin"
-								data-id='2' data-text="后台管理员菜单"><span class="l-line"></span>后台管理员菜单</a>
+								data-id='2' data-text="后台管理员"><span class="l-line"></span>后台管理员菜单</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item layui-nav-itemed"><a
 					href="javascript:;"><i class="iconfont">&#xe607;</i>菜单管理</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="javascript:;" data-url="background/shuffling" data-id='2'
-								data-text="轮播图管理菜单"><span class="l-line"></span>轮播图菜单</a>
+							<a href="javascript:;" data-url="background/shuffling" data-id='3'
+								data-text="轮播图管理"><span class="l-line"></span>轮播图菜单</a>
 						</dd>
 						<dd>
 							<a href="javascript:;" data-url="background/type/list"
-								data-id='3' data-text="商品分类管理菜单"><span class="l-line"></span>商品分类</a>
+								data-id='4' data-text="商品分类管理"><span class="l-line"></span>商品分类</a>
 						</dd>
 						<dd>
 							<a href="javascript:;" data-url="background/logo" data-id='5'
-								data-text="LOGO管理菜单"><span class="l-line"></span>LOGO菜单</a>
+								data-text="商城LOGO管理"><span class="l-line"></span>LOGO菜单</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item"><a href="javascript:;"><i
@@ -55,11 +55,15 @@
 					<dl class="layui-nav-child">
 						<dd>
 							<a href="javascript:;" data-url="/background/order/order-list"
-								data-id='1' data-text="订单管理"><span class="l-line"></span>订单管理</a>
+								data-id='6' data-text="订单管理"><span class="l-line"></span>订单管理</a>
 						</dd>
 						<dd>
 							<a href="javascript:;" data-url="/background/goods"
-								data-id='2' data-text="商品管理"><span class="l-line"></span>商品管理</a>
+								data-id='7' data-text="商品管理"><span class="l-line"></span>商品管理</a>
+						</dd>
+						<dd>
+							<a href="javascript:;" data-url="/background/back"
+								data-id='8' data-text="退货管理"><span class="l-line"></span>退货管理</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item"><a href="javascript:;"><i

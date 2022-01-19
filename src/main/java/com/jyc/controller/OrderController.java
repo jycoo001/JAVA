@@ -35,7 +35,7 @@ public class OrderController extends BaseController {
 	public Map<String, Object> pay(@RequestParam(name = "cartList") String cartList, HttpSession session) {
 		Map<String, Object> resp = new HashMap<>();
 
-		boolean success = service.handler(cartList, (User) session.getAttribute("####user_login####"));
+		boolean success = service.handler(cartList, (User) session.getAttribute("####user_login####"), resp);
 		resp.put("success", success);
 		System.out.println(success);
 		return resp;
@@ -48,6 +48,8 @@ public class OrderController extends BaseController {
 		order.setUserId(user.getId());
 		List<Order> list = service.findAll(order);
 		map.put("order", list);
+		map.put("detail", session.getAttribute("detail"));
+		session.removeAttribute("detail");
 		map.put("user", user);
 		return "forward/user/order";
 	}
@@ -98,5 +100,27 @@ public class OrderController extends BaseController {
 		map.put("order", list);
 		map.put("user", user);
 		return "forward/user/order";
+	}
+
+	@PostMapping(value = "/desc-page", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> descPage(@RequestParam(name = "id") Integer id) {
+		Map<String, Object> map = new HashMap<>();
+		Order order = service.findById(id);
+		map.put("order", order);
+		return map;
+	}
+
+	@RequestMapping("/desc")
+	public String addDesc(Integer id, String desc, HttpSession session) {
+		Order order = service.findById(id);
+		order.setDesc(desc);
+		int row = service.update(order);
+		if (row > 0) {
+			session.setAttribute("detail", "评论成功");
+		} else {
+			session.setAttribute("detail", "评论失败");
+		}
+		return "redirect:/forward/order/all";
 	}
 }

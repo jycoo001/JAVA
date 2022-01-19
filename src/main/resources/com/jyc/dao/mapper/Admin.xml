@@ -6,7 +6,6 @@
 	<sql id="Columns">
 		id,name,password,phone,secret_key,staff_status,delete_flag,creat_time,last_login_time
 	</sql>
-
 	<resultMap type="Admin" id="Map">
 		<id property="id" column="id" />
 		<result property="name" column="name" />

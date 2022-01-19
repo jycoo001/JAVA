@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.BackDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		id,back_id,order_id
+	</sql>
+	<resultMap type="Back" id="Map">
+		<id property="id" column="id" />
+		<result property="orderId" column="order_id" />
+		<result property="backId" column="back_id"/>
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="Back">
+		select
+		<include refid="Columns" />
+		from t_back
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="orderId!=null and orderId!=''">
+				and order_id=#{orderId}
+			</if>
+			<if test="backId!=null and backId!=''">
+				and back_id=#{backId}
+			</if>
+		</where>
+	</select>
+
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_back
+		where id=#{id}
+	</select>
+
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(id) from t_back
+	</select>
+	
+	<select id="findByOrderId" parameterType="java.lang.String">
+		select <include refid="Columns"/>
+		from t_back
+		where order_id=#{orderId}
+	</select>
+
+	<insert id="insert" parameterType="Back">
+		insert into
+		t_back(order_id,back_id)
+		values(#{orderId},#{backId})
+	</insert>
+	
+	<update id="update" parameterType="Back">
+		update t_back 
+		<set>
+			<if test="orderId!=null and orderId!=''">
+				order_id=#{orderId},
+			</if>
+			<if test="backId!=null and backId!=''">
+				back_id=#{backId},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_back where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_back where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

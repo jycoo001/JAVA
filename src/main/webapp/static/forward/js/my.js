@@ -1,5 +1,25 @@
 
 //不是模板,是自定义js
+
+//充值
+$(".btn-money").click(function() {
+	$(".money").removeClass("hide");
+});
+
+$(".qvxiao").click(function() {
+	$(".money").addClass("hide");
+});
+$(".edit-money").click(function() {
+	console.log("aaa");
+	var money = $("#userMoney").val();
+	if(money) {
+		location.href="forward/user/addMoney?userMoney="+money;
+	} else {
+		layer.alert("请输入");
+	}
+
+});
+
 //更新用户
 $(".user .btn-edit").click(function() {
 	location.href = "/forward/user/update";
@@ -11,7 +31,7 @@ $(".address .btn-edit").click(function() {
 //删除地址
 $(".address .address-delete").click(function() {
 	var value = $(this).parent().parent().find("input.inpaddre").val();
-	location.href="/forward/address/delete?id="+value;
+	location.href = "/forward/address/delete?id=" + value;
 });
 //修改地址
 $(".address .address-edit").click(function() {
@@ -24,7 +44,7 @@ function ajaxAdd(name, id, url, field) {
 	$.ajax({
 		url: "forward/address/" + url,
 		method: "post",
-		data: name + "=" +  id+ field,
+		data: name + "=" + id + field,
 		dataType: "json",
 		tranditional: true,
 		success: function(map) {
@@ -114,9 +134,12 @@ function Hide() {
 }
 
 //返回的提示
-if (detail) {
-	layer.alert(detail);
-}
+$(function() {
+	if (detail) {
+		layer.alert(detail);
+	}
+});
+//end
 
 //获取账号和密码
 SQluser();

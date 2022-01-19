@@ -17,7 +17,7 @@
 		<result property="secret" column="secret" />
 		<result property="sex" column="sex" />
 		<result property="creatTime" column="creat_time" />
-		<result property="userMany" column="user_many" />
+		<result property="userMoney" column="user_money" />
 		<result property="lastTime" column="last_time" />
 		<result property="userStatus" column="user_status" />
 		<result property="userPicture" column="user_picture" />

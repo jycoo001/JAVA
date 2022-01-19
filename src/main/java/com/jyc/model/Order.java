@@ -6,27 +6,59 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * 订单总表
  * 
  * @author 12430
  *
  */
+@JsonIgnoreProperties(value = { "handler", "user", "back", "details" })
 public class Order {
+	@ExcelIgnore
 	private Integer id;
+
+	@ExcelProperty("订单编号")
 	private String orderId;
+	@ExcelProperty("用户编号")
 	private Integer userId;
+	@ExcelProperty("是否付款")
 	private String pay;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelProperty("创建日期")
+	@com.alibaba.excel.annotation.format.DateTimeFormat("yyyy-MM-dd HH:mm:ss")
 	private Date creatTime;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelProperty("修改日期")
+	@com.alibaba.excel.annotation.format.DateTimeFormat("yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
+	@ExcelProperty("地址编号")
 	private Integer addressId;
+	@ExcelProperty("总价")
 	private Double price;
+	@ExcelProperty("物流状态")
 	private String status;
+	@ExcelProperty("是否收货")
 	private String userStatus;
+	@ExcelProperty("订单评价")
+	private String desc;
+	@ExcelIgnore
 	private User user;
+	@ExcelIgnore
+	private Back back;
+	@ExcelIgnore
 	private List<OrderDetail> details;
+
+	public Back getBack() {
+		return back;
+	}
+
+	public void setBack(Back back) {
+		this.back = back;
+	}
 
 	public String getLocalCreatTime() {
 		if (creatTime == null) {
@@ -148,6 +180,14 @@ public class Order {
 
 	public void setUserStatus(String userStatus) {
 		this.userStatus = userStatus;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 }

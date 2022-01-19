@@ -1,9 +1,14 @@
 package com.jyc.model;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+
 public class Logo extends Base {
 
+	@ExcelProperty("LOGO编号")
 	private Integer id;
+	@ExcelProperty("图片地址")
 	private String address;
+	@ExcelProperty("LOGO状态")
 	private String status;
 
 	@Override

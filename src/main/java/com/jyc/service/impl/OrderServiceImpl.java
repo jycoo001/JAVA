@@ -1,16 +1,20 @@
 package com.jyc.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jyc.dao.BackDAO;
 import com.jyc.dao.CartDAO;
 import com.jyc.dao.OrderDAO;
 import com.jyc.dao.OrderDetailDAO;
 import com.jyc.dao.UserAddressDAO;
+import com.jyc.dao.UserDAO;
 import com.jyc.model.Cart;
 import com.jyc.model.Order;
 import com.jyc.model.OrderDetail;
@@ -26,16 +30,21 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 	@Autowired
 	private OrderDetailDAO orderDetailDAO;
 	@Autowired
+	private BackDAO back;
+	@Autowired
 	private UserAddressDAO addressDAO;
 	@Autowired
 	private CartDAO cartDAO;
+	@Autowired
+	private UserDAO userDAO;
 
 	/**
 	 * 处理
 	 */
-	public boolean handler(String cartList, User user) {
+	public boolean handler(String cartList, User user, Map<String, Object> map) {
 		// user为空，未登录
 		if (user == null) {
+			map.put("detail", "您尚未登陆");
 			return false;
 		}
 		// 新建一个订单
@@ -110,9 +119,21 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 			row2 = orderDetailDAO.insert(od);
 		}
 		// user付款操作
-
 		order.setPrice(price);
-		order.setPay("已付款");
+		Double money = user.getUserMoney() - price;
+		if (money > 0) {
+			user.setUserMoney(money);
+			order.setPay("已付款");
+			int row4 = userDAO.update(user);
+			if (row4 > 0) {
+				map.put("detail", "付款成功");
+			} else {
+				map.put("detail", "付款失败");
+			}
+		} else {
+			map.put("detail", "您账户中金额不足！请充值");
+			return false;
+		}
 
 		// MySQL中在订单表添加一条记录
 		int row1 = dao.insert(order);
@@ -128,9 +149,42 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 		if (row1 > 0 && row2 > 0 && row3 > 0) {
 			return true;
 		} else {
+			map.put("detail", "生成订单失败");
 			return false;
 		}
 
+	}
+
+	@Override
+	public int deleteById(Integer id) {
+		Order order = dao.findById(id);
+		List<OrderDetail> list = order.getDetails();
+		List<Integer> listI = new ArrayList<Integer>();
+		for (int i = 0; i < list.size(); i++) {
+			listI.add(list.get(i).getId());
+		}
+		int row = orderDetailDAO.deleteByIds((Integer[]) listI.toArray());
+		row += dao.deleteById(id);
+		row += back.deleteById(order.getBack().getId());
+		return row;
+	}
+
+	@Override
+	public int deleteByIds(Integer[] ids) {
+		List<Integer> listI = new ArrayList<>();
+		List<Integer> listB = new ArrayList<>();
+		for (int i = 0; i < ids.length; i++) {
+			Order order = dao.findById(ids[i]);
+			List<OrderDetail> de = order.getDetails();
+			for (int j = 0; j < de.size(); j++) {
+				listI.add(de.get(j).getId());
+			}
+			listB.add(order.getBack().getId());
+		}
+		int row = orderDetailDAO.deleteByIds((Integer[]) listI.toArray());
+		row += dao.deleteByIds(ids);
+		row += back.deleteByIds((Integer[]) listB.toArray());
+		return row;
 	}
 
 }

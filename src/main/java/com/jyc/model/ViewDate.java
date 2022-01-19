@@ -1,5 +1,11 @@
 package com.jyc.model;
 
+/**
+ * 统计EChart
+ * 
+ * @author 12430
+ *
+ */
 public class ViewDate {
 	private Integer count;
 	private Integer month;

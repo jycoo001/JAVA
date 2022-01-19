@@ -31,6 +31,7 @@
 					alt="" />
 				</a> <a href="forward/user/my">${user.userId}(${user.id})</a>
 				<button type="button" class="btn-edit">修改用户</button>
+				<button type="button" class="btn-money">去充值</button>
 			</div>
 			<div class="address">
 				<span>收货地址：</span>
@@ -87,6 +88,13 @@
 						<input class="addYes" type="button" value="确定"> <input
 							type="button" value="取消" onclick="Hide();">
 					</p>
+				</div>
+				
+				<div id="money" class="money hide">
+					<label for="userMoney">请输入充值金额:</label>
+					<input type="text" id="userMoney" name="userMoney" value="" placeholder="金额" >
+					<button type="button" class="edit-money">提交</button>
+					<button type="button" class="qvxiao">取消</button>
 				</div>
 			</div>
 			<div class="order">

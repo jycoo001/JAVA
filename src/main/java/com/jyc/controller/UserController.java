@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jyc.model.Admin;
+import com.jyc.model.Back;
 import com.jyc.model.Order;
 import com.jyc.model.User;
 import com.jyc.model.UserAddress;
+import com.jyc.service.BackService;
 import com.jyc.service.OrderService;
 import com.jyc.service.UserAddressService;
 import com.jyc.service.UserService;
@@ -43,6 +45,8 @@ public class UserController {
 	private OrderService orderService;
 	@Autowired
 	private UserAddressService usService;
+	@Autowired
+	private BackService back;
 
 	@GetMapping(value = { "/login", "/register", "/back", "/update" })
 	public String toL(HttpSession session, HttpServletRequest req, Map<String, Object> map) {
@@ -71,15 +75,14 @@ public class UserController {
 			User user1 = service.login(user);
 			if (user1 != null) {
 				if (user.getLocalLastTime() != null) {
-					session.setAttribute("detail", "登录成功！您最后一次登录是在" + user.getLocalLastTime());
+					map.put("detail", "登录成功！您最后一次登录是在" + user.getLocalLastTime());
 				} else {
-					session.setAttribute("detail", "登录成功！");
+					map.put("detail", "登录成功！");
 				}
 				user1.setLastTime(Calendar.getInstance().getTime());
 				service.update(user1);
 				session.setAttribute("####user_login####", user1);
-				session.setMaxInactiveInterval(60 * 60);
-				map.put("detail", "登陆成功");
+				session.setMaxInactiveInterval(15 * 60);
 				map.put("user", user1);
 				return "forward/user/login";
 			} else {
@@ -211,6 +214,48 @@ public class UserController {
 			session.setAttribute("detail", "修改成功");
 		} else {
 			session.setAttribute("detail", "修改失败");
+		}
+		return "redirect:/forward/user/my";
+	}
+
+	@RequestMapping("/goods-back")
+	public String back(Integer id, HttpSession session, Map<String, Object> map) {
+		Order order = orderService.findById(id);
+		order.setUserStatus("已退货");
+		Back backM = new Back();
+		String backId = UUID.randomUUID().toString();
+		backM.setBackId(backId);
+		backM.setOrderId(order.getOrderId());
+		int row = back.insert(backM);
+		int row2 = orderService.update(order);
+		if (row > 0 && row2 > 0) {
+			session.setAttribute("detail", "退货成功");
+			return "redirect:/forward/user/my";
+		} else {
+			map.put("detail", "退货失败");
+			return "redirect:/forward/user/my";
+		}
+	}
+
+	@RequestMapping("/addMoney")
+	public String addMoney(String userMoney, Map<String, Object> map, HttpSession session) {
+		User user = (User) session.getAttribute("####user_login####");
+		Double money = user.getUserMoney();
+		try {
+			money += Double.valueOf(userMoney);
+		} catch (Exception e) {
+			session.setAttribute("detail", "输入有误");
+			map.put("userMoney", userMoney);
+		}
+		user.setUserMoney(money);
+		int row = service.update(user);
+		if (row > 0) {
+			session.setAttribute("detail", "充值成功");
+			User user1 = service.findById(user.getId());
+			session.setAttribute("####user_login####", user1);
+		} else {
+			session.setAttribute("detail", "充值失败");
+			session.setAttribute("userMoney", userMoney);
 		}
 		return "redirect:/forward/user/my";
 	}

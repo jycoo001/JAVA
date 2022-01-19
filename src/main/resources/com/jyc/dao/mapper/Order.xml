@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jyc.dao.OrderDAO">
 	<sql id="Columns">
-		id,user_id,pay,price,creat_time,update_time,address_id,status,user_status,order_id
+		id,user_id,pay,price,creat_time,update_time,address_id,`status`,user_status,order_id,`desc`
 	</sql>
 	<resultMap type="Order" id="Map">
 		<id property="id" column="id" />
@@ -17,8 +17,11 @@
 		<result property="addressId" column="address_id" />
 		<result property="status" column="status" />
 		<result property="userStatus" column="user_status" />
+		<result property="desc" column="desc" />
 		<association property="user" column="user_id"
 			select="com.jyc.dao.UserDAO.findById" />
+		<association property="back" column="order_id"
+			select="com.jyc.dao.BackDAO.findByOrderId" />
 		<collection property="details" column="order_id"
 			select="com.jyc.dao.OrderDetailDAO.findByOrderId" />
 	</resultMap>
@@ -50,13 +53,16 @@
 				and address_id=#{addressId}
 			</if>
 			<if test="status!=null and status!=''">
-				and status=#{status}
+				and `status`=#{status}
 			</if>
 			<if test="userStatus!=null and userStatus!=''">
 				and user_status=#{userStatus}
 			</if>
 			<if test="orderId!=null and orderId!=''">
 				and order_id=#{orderId}
+			</if>
+			<if test="desc!=null and desc!=''">
+				and `desc`=#{desc}
 			</if>
 		</where>
 		order by id
@@ -87,8 +93,8 @@
 
 	<insert id="insert" parameterType="Order">
 		insert into
-		t_order(user_id,pay,price,creat_time,update_time,address_id,status,user_status,order_id)
-		values(#{userId},#{pay},#{price},#{localCreatTime},#{localUpdateTime},#{addressId},#{status},#{userStatus},#{orderId})
+		t_order(user_id,pay,price,creat_time,update_time,address_id,status,user_status,order_id,`desc`)
+		values(#{userId},#{pay},#{price},#{localCreatTime},#{localUpdateTime},#{addressId},#{status},#{userStatus},#{orderId},#{desc})
 	</insert>
 
 	<update id="update" parameterType="Order">
@@ -124,16 +130,19 @@
 			<if test="orderId!=null and orderId!=''">
 				order_id=#{orderId},
 			</if>
+			<if test="desc!=null and desc!=''">
+				`desc`=#{desc},
+			</if>
 		</set>
 		where id=#{id}
 	</update>
 
-	<delete id="delete" parameterType="java.lang.Integer">
+	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from t_order where
 		id=#{id}
 	</delete>
 
-	<delete id="deleteMany" parameterType="java.util.List">
+	<delete id="deleteByIds" parameterType="java.util.List">
 		delete from t_order where id in
 		<foreach collection="ids" item="id" separator="," open="("
 			close=")">

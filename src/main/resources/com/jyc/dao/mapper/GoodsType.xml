@@ -76,8 +76,14 @@
 	<update id="update" parameterType="GoodsType">
 		update t_type_1
 		<set>
+			<if test="typeId!=null">
+				type_id=#{typeId},
+			</if>
 			<if test="name!=null and name!=''">
 				name=#{name},
+			</if>
+			<if test="parentId!=null">
+				parent_id=#{parentId},
 			</if>
 			<if test="hidden!=null and hidden!=''">
 				hidden=#{hidden},

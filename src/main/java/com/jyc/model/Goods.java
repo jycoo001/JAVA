@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.util.DigestUtils;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
+
 /**
  * 商品
  * 
@@ -11,19 +14,33 @@ import org.springframework.util.DigestUtils;
  *
  */
 public class Goods extends Base {
+
+	@ExcelIgnore
 	private Integer id;// 非业务主键
+	@ExcelProperty("商品编号")
 	private String goodsId;// 业务主键
+	@ExcelProperty("商品名")
 	private String name;// 商品名
+	@ExcelProperty("标准价格")
 	private Double price;// 价格
+	@ExcelProperty("门店价格")
 	private Double shopPrice;// 实价
+	@ExcelProperty("数量")
 	private Integer inventory;// 数量
+	@ExcelProperty("单位")
 	private String goodsUnit;// 单位
+	@ExcelProperty("热度")
 	private Integer hot;// 热度
+	@ExcelProperty("商品备注")
 	private String goodsDesc;// 备注
+	@ExcelProperty("商品类型编号")
 	private Integer typeId;// 类型ID
 
+	@ExcelIgnore
 	private List<GoodsPicture> pictures;// 商品图片
+	@ExcelIgnore
 	private GoodsDetail children;
+	@ExcelIgnore
 	private GoodsType type;
 
 	@Override

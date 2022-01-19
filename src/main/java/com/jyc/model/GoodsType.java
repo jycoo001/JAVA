@@ -2,6 +2,9 @@ package com.jyc.model;
 
 import java.util.List;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
+
 /**
  * 类别类
  * 
@@ -9,13 +12,20 @@ import java.util.List;
  *
  */
 public class GoodsType {
+	@ExcelIgnore
 	private Integer id;
+	@ExcelProperty("类型id")
 	private Integer typeId;
+	@ExcelProperty("类型名")
 	private String name;
+	@ExcelProperty("父类id")
 	private Integer parentId;
+	@ExcelIgnore
 	private String hidden;
 
+	@ExcelIgnore
 	private GoodsType parent;
+	@ExcelIgnore
 	private List<GoodsType> childrens;
 
 	public Integer getId() {

@@ -1,6 +1,7 @@
 package com.jyc.controller;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -74,6 +76,46 @@ public class AdminOrderController {
 			}
 		}
 		return "background/order/order-detail";
+	}
+
+	/**
+	 * 删除管理员，实际不删，加了一个deleteFlag标记，ajax
+	 * 
+	 * @param ids 要删除的id
+	 * @return 返回JSON数据
+	 */
+	@RequestMapping(value = "/order-delete", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> deleteAdmin(@RequestParam(required = true, name = "ids") Integer ids) {
+		Map<String, Object> map = new HashMap<>();
+		int row = service.deleteById(ids);
+		if (row > 0) {
+			map.put("detail", "删除成功");
+			map.put("rows", row);
+		} else {
+			map.put("detail", "删除失败");
+		}
+		return map;
+	}
+
+	/**
+	 * 删除多个，实际不删，ajax
+	 * 
+	 * @param ids 传来的管理员数组
+	 * @return 返回一个JSON
+	 */
+	@RequestMapping(value = "/order-delete-many", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> deleteAdmin(@RequestParam(required = true, name = "ids[]") Integer[] ids) {
+		Map<String, Object> map = new HashMap<>();
+		int row = service.deleteByIds(ids);
+		if (row > 0) {
+			map.put("detail", "删除成功");
+			map.put("rows", row);
+		} else {
+			map.put("detail", "删除失败");
+		}
+		return map;
 	}
 
 }

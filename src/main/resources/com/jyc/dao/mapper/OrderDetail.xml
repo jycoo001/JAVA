@@ -102,12 +102,12 @@
 		where id=#{id}
 	</update>
 	
-	<delete id="delete" parameterType="java.lang.Integer">
+	<delete id="deleteById" parameterType="java.lang.Integer">
 		delete from t_order_detail where
 		id=#{id}
 	</delete>
 
-	<delete id="deleteMany" parameterType="java.util.List">
+	<delete id="deleteByIds" parameterType="java.util.List">
 		delete from t_order_detail where id in
 		<foreach collection="ids" item="id" separator="," open="("
 			close=")">

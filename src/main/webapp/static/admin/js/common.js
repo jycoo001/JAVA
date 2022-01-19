@@ -109,7 +109,8 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element']
 	$(".excelNow").click(function() {
 		var url = $(this).attr('data-url');
 		var searchFrom = $(".layui-form").serialize();
-		window.location.href = url + "?" + searchFrom;
+		url = url + "?" + searchFrom;
+		window.open(url);
 	});
 	//导出所有数据
 	$(".excelAll").click(function() {
@@ -117,7 +118,8 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element']
 		$(".layui-form input[name=pageSize]").val(2147483647);
 		var url = $(this).attr('data-url');
 		var searchFrom = $(".layui-form").serialize();
-		location.href = url + "?" + searchFrom;
+		url = url + "?" + searchFrom;
+		window.open(url);
 	});
 	//列表添加
 	$('#table-list').on('click', '.add-btn', function() {
@@ -182,7 +184,7 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element']
 			$(".layui-form").submit();
 		}
 		if (th.is(".pageNumber")) {
-			var pageNumber = $("a.pageNumber").attr("data-pageNumber");
+			var pageNumber = th.attr("data-pageNumber");
 			$(".layui-form input[name=pageNumber]").val(pageNumber);
 			$(".layui-form").submit();
 		}

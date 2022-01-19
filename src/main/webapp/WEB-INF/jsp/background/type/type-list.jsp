@@ -24,7 +24,7 @@
 				<div class="layui-form-item">
 					<div class="layui-inline tool-btn">
 						<button class="layui-btn layui-btn-small layui-btn-normal addBtn"
-							data-url="background/type/list">
+							data-url="background/type/add">
 							<i class="layui-icon">&#xe654;</i>
 						</button>
 						<button class="layui-btn layui-btn-small layui-btn-danger delBtn"
@@ -51,6 +51,8 @@
 					<input type="hidden" name="pageNumber" value="" /> <input
 						type="hidden" name="pageSize" value="" />
 					<button class="layui-btn layui-btn-normal" lay-submit="search">搜索</button>
+					<button class="layui-btn layui-btn-normal excelNow" data-url="background/type/excel">导出本页</button>
+					<button class="layui-btn layui-btn-normal excelAll" data-url="background/type/excel">导出全部</button>
 				</div>
 			</form>
 			<div class="layui-form" id="table-list">
@@ -105,6 +107,11 @@
 											class="layui-btn layui-btn-small layui-btn-danger del-btn"
 											data-id="1" data-url="article-detail.html">
 											<i class="layui-icon">&#xe640;</i>
+										</button>
+										<button
+											class="layui-btn layui-btn-small layui-btn-normal addBtn"
+											data-url="background/type/update?id=${t.id}">
+											<i class="layui-icon">&#xe654;</i>
 										</button>
 									</div>
 								</td>

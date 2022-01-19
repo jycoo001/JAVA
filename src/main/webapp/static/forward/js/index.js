@@ -262,7 +262,7 @@ for (let i = 0; i < addCar.length; i++) {
 
         //判断是否重复值
         for (let k = 0; k < cartlist.length; k++) {
-            if (cartlist[k].id == i) {
+            if (cartlist[k].id == id) {
                 has = 1;
                 num = cartlist[k].num++;
                 break;
@@ -709,7 +709,7 @@ $("#header-user").html(usevalue);
 if ($("#header-user").html() == "请登录") {
     var timerUser = setInterval(function () {
         // alert("请登录博汇商城，满足你的需求");
-    }, 36000);
+    }, 6000*15);
 } else {
     clearInterval(timerUser);
 }
