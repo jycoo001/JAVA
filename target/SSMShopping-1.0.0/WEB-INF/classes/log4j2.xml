@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="info" monitorInterval="1800">
+	<!-- 定义一些属性值变量，在后面的配置中引用 -->
+	<properties>
+		<!-- 日志文件存储位置 -->
+		<property name="LOG_HOME">d:/logs/lession1213/</property>
+		<!-- 异常信息日志文件名 -->
+		<property name="ERROR_LOG_FILE_NAME">error</property>
+		<!-- 普通信息日志文件名 -->
+		<property name="INFO_LOG_FILE_NAME">info</property>
+		
+		<!-- mybatis输出sql时，进行简化处理，重点输出sql及参数即可 -->
+		<property name="MYBATIS_PATTERN">%d [mybatis] %m%n</property>
+		<property name="PATTERN">%d %-5p [%t] %C{1} (%F:%L) - %m%n</property>
+	</properties>
+
+	<!-- 日志追加器 -->
+	<Appenders>
+		<!-- 向控制台输出日志 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout charset="UTF-8" pattern="${PATTERN}" />
+		</Console>
+		
+		<!-- 对mybatis输出定制化处理 -->
+		<Console name="Mybatis_Console" target="SYSTEM_OUT">
+			<PatternLayout charset="UTF-8" pattern="${MYBATIS_PATTERN}" />
+		</Console>
+
+		<!-- 异常类日志文件滚动生成 -->
+		<RollingRandomAccessFile name="ErrorLog" fileName="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log" filePattern="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+			<PatternLayout charset="UTF-8" pattern="${PATTERN}" />
+			<!-- 滚动生成策略 -->
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingRandomAccessFile>
+
+		<!-- 普通消息类日志文件滚动生成 -->
+		<RollingRandomAccessFile name="InfoLog" fileName="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log" filePattern="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+			<PatternLayout charset="UTF-8" pattern="${PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingRandomAccessFile>
+	</Appenders>
+
+	<!-- 日志记录器 -->
+	<Loggers>
+		<!-- 异步Root日志配置 -->
+		<AsyncRoot level="info" includeLocation="true" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="ErrorLog" />
+		</AsyncRoot>
+		
+		<!--异步日志模式。对应的mybatis输入日志，仅用于开发过程中的调试。且设置为异步日志模式 -->
+		<!-- mybatis.dao在日志输出时的日志名称前缀 -->
+		<AsyncLogger name="mybatis.dao" level="debug" includeLocation="true" additivity="false">
+			<appender-ref ref="Mybatis_Console" />
+			<!-- <appender-ref ref="SocketLog" /> -->
+		</AsyncLogger>
+		
+		<!-- 注意：同一名称的logger，只能选择同步模式和异步模式中的一种。例如：mybatis.dao要么使用同步模式，要么使用异步模式 -->
+	</Loggers>
+</Configuration>

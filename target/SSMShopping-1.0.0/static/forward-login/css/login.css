@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.aui-register-form-item input.txt05 {
+	width: 70%;
+}
+
+.aui-register-form-item img#imageCode {
+	width: 30%;
+}

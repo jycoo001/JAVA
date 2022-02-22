@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.OrderDetailDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		id,user_id,goods_id,price,count,creat_time,update_time,order_id
+	</sql>
+	<resultMap type="OrderDetail" id="Map">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="goodsId" column="goods_id" />
+		<result property="price" column="price" />
+		<result property="count" column="count"/>
+		<result property="creatTime" column="creat_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="orderId" column="order_id"/>
+		<association property="goods" column="goods_id" select="com.jyc.dao.GoodsDAO.findById" />
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="OrderDetail">
+		select
+		<include refid="Columns" />
+		from t_order_detail
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="userId!=null and userId!=''">
+				and user_id=#{userId}
+			</if>
+			<if test="goodsId!=null and goodsId!=''">
+				and goods_id=#{goodsId}
+			</if>
+			<if test="price!=null and price!=''">
+				and price=#{price}
+			</if>
+			<if test="count!=null and count!=''">
+				and count=#{count}
+			</if>
+			<if test="localCreatTime!=null and localCreatTime!=''">
+				and creat_time=#{localCreatTime}
+			</if>
+			<if test="localUpdateTime!=null and localUpdateTime!=''">
+				and update_time=#{localUpdateTime}
+			</if>
+			<if test="orderId!=null and orderId!=''">
+				and order_id=#{orderId}
+			</if>
+		</where>
+		order by id
+	</select>
+	
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_order_detail
+		where id=#{id}
+	</select>
+	
+	<select id="findByOrderId" resultMap="Map" parameterType="java.lang.String">
+		select <include refid="Columns"/>
+		from t_order_detail
+		where order_id=#{id}
+	</select>
+
+	<insert id="insert" parameterType="OrderDetail">
+		insert into
+		t_order_detail(goods_id,user_id,price,count,creat_time,update_time,order_id)
+		values(#{goodsId},#{userId},#{price},#{count},#{localCreatTime},#{localUpdateTime},#{orderId})
+	</insert>
+
+	<update id="update" parameterType="OrderDetail">
+		update t_order
+		<set>
+			<if test="id!=null and id!=''">
+				id=#{id},
+			</if>
+			<if test="userId!=null and userId!=''">
+				user_id=#{userId},
+			</if>
+			<if test="goodsId!=null and goodsId!=''">
+				goods_id=#{goodsId},
+			</if>
+			<if test="price!=null and price!=''">
+				price=#{price},
+			</if>
+			<if test="count!=null and count!=''">
+				count=#{count},
+			</if>
+			<if test="localCreatTime!=null and localCreatTime!=''">
+				creat_time=#{localCreatTime},
+			</if>
+			<if test="localUpdateTime!=null and localUpdateTime!=''">
+				update_time=#{localUpdateTime},
+			</if>
+			<if test="orderId!=null and orderId!=''">
+				order_id=#{orderId},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from t_order_detail where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteMany" parameterType="java.util.List">
+		delete from t_order_detail where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

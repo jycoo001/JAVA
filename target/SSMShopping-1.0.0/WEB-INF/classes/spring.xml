@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	  http://www.springframework.org/schema/beans/spring-beans.xsd
+	  http://www.springframework.org/schema/aop
+	  http://www.springframework.org/schema/aop/spring-aop.xsd
+	  http://www.springframework.org/schema/context
+	  http://www.springframework.org/schema/context/spring-context.xsd
+	  http://www.springframework.org/schema/tx
+	  http://www.springframework.org/schema/tx/spring-tx.xsd
+	  http://www.springframework.org/schema/cache
+      http://www.springframework.org/schema/cache/spring-cache.xsd">
+	<context:component-scan base-package="com.jyc" />
+	<!-- 自动加载properties配置文件 -->
+	<context:property-placeholder
+		location="classpath:jdbc.properties" />
+
+	<!-- 配置一个数据库连接池 -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.password}" />
+
+		<!-- 配置最小、最大。注意：生产环境的参数可能会远远大于测试环境的参数。 -->
+		<property name="initialSize" value="10" />
+		<property name="maxTotal" value="30" />
+		<property name="maxIdle" value="20" />
+		<property name="minIdle" value="5" />
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWaitMillis" value="3000" />
+		<property name="poolPreparedStatements" value="true" />
+		<!-- 配置缓存的PreparedStatement的数量 -->
+		<property name="maxOpenPreparedStatements" value="200" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+
+		<!-- 将testOnBorrow和testOnReturn设置为true的话，会影响数据库操作性能 -->
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnReturn" value="false" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnCreate" value="false" />
+	</bean>
+
+
+	<!-- 配置mybatis -->
+	<!-- 创建SqlSessionFactory, 使用工厂模式 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 注意：value值配置的是路径格式，不是包格式。配置映射文件。 -->
+		<property name="mapperLocations"
+			value="classpath:com/jyc/dao/mapper/*.xml" />
+
+		<property name="configLocation" value="classpath:mybatis.xml" />
+
+		<!-- 给mybatis配置插件，配置分页插件 -->
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<value>
+							helperDialect=mysql
+							reasonable=true
+							rowBoundsWithCount=true
+							pageSizeZero=true
+							offsetAsPageNum=true
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+
+	<!-- mapper扫描器，将包下面的mapper接口自动创建代理对象，自动创建到Spring容器中，bean的id就是mapper的类名(首字母小写) -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.jyc.dao" />
+	</bean>
+
+	<!-- 配置mybatis需要的会话，会话不能使用单例 -->
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+
+	<!-- 事务配置 -->
+	<!--1.配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 2.配置事务拦截表达式，统一由xml文件配置 -->
+	<tx:advice id="txAdvice"
+		transaction-manager="transactionManager">
+		<!-- 配置对满足指定规则的方法，在出现何种异常时，执行何种类型的事务 -->
+		<!-- propagation配置spring事务传播方式 -->
+		<tx:attributes>
+			<!-- name表示方法匹配规则，*代表任意字符，rollback-for配置当出现何种异常时，事务回滚 -->
+			<tx:method name="delete*" propagation="REQUIRED"
+				read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED"
+				read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="insert*" propagation="REQUIRED"
+				read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="*Tran" propagation="REQUIRED"
+				read-only="false" rollback-for="java.lang.Exception" />
+
+			<!-- 支持使用事务 -->
+			<tx:method name="find*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 3.借助于spring aop来实现事务 -->
+	<aop:config>
+		<!-- 配置切入点，配置对满足何种规则的方法进行切入，第1个*代表任意类，第2个*代表任意方法，..代表不限参数个数 -->
+		<aop:pointcut id="pc"
+			expression="execution(* com.situ.service.impl.*.*(..))" />
+
+		<!-- 配置切面（通知），在哪个切入点，切入何种操作 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pc"
+			order="1" />
+	</aop:config>
+
+
+
+</beans>
+                                   

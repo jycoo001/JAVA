@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.GoodsPictureDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		id,goods_id,picture
+	</sql>
+	<resultMap type="GoodsPicture" id="Map">
+		<id property="id" column="id" />
+		<result property="goodsId" column="goods_id" />
+		<result property="picture" column="picture" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="Map" parameterType="GoodsPicture">
+		select
+		<include refid="Columns" />
+		from t_goods_picture
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="goodsId!=null and goodsId!=''">
+				and goods_id=#{goodsId}
+			</if>
+			<if test="picture!=null and picture!=''">
+				and picture=#{picture}
+			</if>
+		</where>
+		order by id
+	</select>
+	
+	<select id="findByGoodsId" resultMap="Map" parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_goods_picture
+		where goods_id=#{id}
+	</select>
+	
+	<insert id="insert" parameterType="GoodsPicture">
+		insert into
+		t_goods_picture(goods_id,picture)
+		values(#{goodsId},#{picture})
+	</insert>
+
+	<update id="update" parameterType="GoodsPicture">
+		update t_goods_picture
+		<set>
+			<if test="id!=null and id!=''">
+				id=#{id},
+			</if>
+			<if test="goodsId!=null and goodsId!=''">
+				goods_id=#{goodsId},
+			</if>
+			<if test="picture!=null and picture!=''">
+				picture=#{picture},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_goods_picture where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_goods_picture where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

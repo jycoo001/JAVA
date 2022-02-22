@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.UserAddressDAO">
+	<sql id="Columns">
+		id,user_id,address_id,`default`
+	</sql>
+	<resultMap type="UserAddress" id="Map">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="addressId" column="address_id" />
+		<result property="defaults" column="default" />
+		<association property="address" column="address_id"
+			select="com.jyc.dao.FourAddressDAO.findById" />
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="UserAddress">
+		select
+		<include refid="Columns" />
+		from t_user_address
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="userId!=null and userId!=''">
+				and user_id=#{userId}
+			</if>
+			<if test="addressId!=null and addressId!=''">
+				and address_id=#{addressId}
+			</if>
+			<if test="defaults!=null and defaults!=''">
+				and `default`=#{defaults}
+			</if>
+		</where>
+		order by `default` desc
+	</select>
+
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_user_address
+		where id=#{id}
+	</select>
+
+	<select id="findByUserId" resultMap="Map"
+		parameterType="java.lang.Integer" useCache="false">
+		select
+		<include refid="Columns" />
+		from t_user_address
+		where user_id=#{id}
+	</select>
+
+	<update id="update" parameterType="UserAddress">
+		update t_user_address
+		<set>
+			<if test="userId!=null and userId!=''">
+				user_id=#{userId},
+			</if>
+			<if test="addressId!=null and addressId!=''">
+				address_id=#{addressId},
+			</if>
+			<if test="defaults!=null and defaults!=''">
+				`default`=#{defaults},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<insert id="insert" parameterType="UserAddress"
+		flushCache="true">
+		insert into
+		t_user_address(user_id,address_id,`default`)
+		values(#{userId},#{addressId},#{defaults})
+	</insert>
+
+	<delete id="deleteById" parameterType="java.lang.Integer"
+		flushCache="true">
+		delete from t_user_address where id=#{id}
+	</delete>
+	
+	<delete id="deleteByIds" parameterType="java.lang.Integer"
+		flushCache="true">
+		delete from t_user_address where id in 
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+</mapper>

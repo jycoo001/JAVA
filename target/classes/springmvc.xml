@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/context
+                     https://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/mvc
+                     https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- 注解驱动：激活基于注解的配置，如：@RequestMapping、@ExceptionHandler、数据绑定、@NumberFormat、@DateTimeFormat、@Controller、@Valid、@ResponseBody等 -->
+	<mvc:annotation-driven />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/forward/**" />
+			<mvc:exclude-mapping path="/**/login" />
+			<mvc:exclude-mapping path="/index" />
+			<mvc:exclude-mapping path="/**/register" />
+			<mvc:exclude-mapping path="/**/update" />
+			<mvc:exclude-mapping path="/*/code" />
+			<mvc:exclude-mapping path="/static/**" />
+			<mvc:exclude-mapping path="/forward/address/all"/>
+			<bean class="com.jyc.interceptor.UserInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/background/**" />
+			<mvc:exclude-mapping path="/**/login" />
+			<mvc:exclude-mapping path="/*/code" />
+			<mvc:exclude-mapping path="/static/**" />
+			<bean class="com.jyc.interceptor.AdminInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- 使用默认的Servlet解析静态资源，需要与结合mvc:annotation-driven -->
+	<mvc:default-servlet-handler />
+	<!-- 配置扫描包路径，springmvc会自动扫描该包及其子包下满足特定条件的类， use-default-filters属性默认值为true，表示使用默认过滤器， 
+		默认过滤器会扫描所有标有@Component、@Controller、@Service、@Repository注解的类 -->
+	<context:component-scan base-package="com.jyc" />
+
+	<!-- 静态资源映射，不仅可以将任意目录下的静态资源映射成指定的路径，还能设置浏览器对此静态资源缓存 -->
+	<mvc:resources location="/static/" mapping="/static/**"></mvc:resources>
+	<mvc:resources mapping="/**"
+		location="file:///D:/图片/ssmShopping/" />
+
+	<!-- 视图层配置，使用jsp作为模板引擎 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 前缀 -->
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<!-- 后缀 -->
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 配置文件解析器，id必须叫multipartResolver -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="maxUploadSize" value="102400000"></property>
+	</bean>
+
+</beans>                   

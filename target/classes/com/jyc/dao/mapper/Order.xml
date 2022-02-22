@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.OrderDAO">
+	<sql id="Columns">
+		id,user_id,pay,price,creat_time,update_time,address_id,`status`,user_status,order_id,`desc`
+	</sql>
+	<resultMap type="Order" id="Map">
+		<id property="id" column="id" />
+		<result property="orderId" column="order_id" />
+		<result property="userId" column="user_id" />
+		<result property="pay" column="pay" />
+		<result property="price" column="price" />
+		<result property="creatTime" column="creat_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="addressId" column="address_id" />
+		<result property="status" column="status" />
+		<result property="userStatus" column="user_status" />
+		<result property="desc" column="desc" />
+		<association property="user" column="user_id"
+			select="com.jyc.dao.UserDAO.findById" />
+		<association property="back" column="order_id"
+			select="com.jyc.dao.BackDAO.findByOrderId" />
+		<collection property="details" column="order_id"
+			select="com.jyc.dao.OrderDetailDAO.findByOrderId" />
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="Order">
+		select
+		<include refid="Columns" />
+		from t_order
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="userId!=null and userId!=''">
+				and user_id=#{userId}
+			</if>
+			<if test="pay!=null and pay!=''">
+				and pay=#{pay}
+			</if>
+			<if test="price!=null and price!=''">
+				and price=#{price}
+			</if>
+			<if test="localCreatTime!=null and localCreatTime!=''">
+				and creat_time=#{localCreatTime}
+			</if>
+			<if test="localUpdateTime!=null and localUpdateTime!=''">
+				and update_time=#{localUpdateTime}
+			</if>
+			<if test="addressId!=null and addressId!=''">
+				and address_id=#{addressId}
+			</if>
+			<if test="status!=null and status!=''">
+				and `status`=#{status}
+			</if>
+			<if test="userStatus!=null and userStatus!=''">
+				and user_status=#{userStatus}
+			</if>
+			<if test="orderId!=null and orderId!=''">
+				and order_id=#{orderId}
+			</if>
+			<if test="desc!=null and desc!=''">
+				and `desc`=#{desc}
+			</if>
+		</where>
+		order by id
+	</select>
+
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_order
+		where id=#{id}
+	</select>
+
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(id) from t_order
+	</select>
+
+	<select id="findFromTo" parameterType="java.util.List"
+		resultType="ViewDate">
+		select count(1) count, DAYOFMONTH(creat_time)
+		from t_order where
+		creat_time between
+		<foreach collection="fromTo" item="date" separator=" and ">
+			#{date}
+		</foreach>
+		group by DAYOFMONTH(creat_time)
+	</select>
+
+	<insert id="insert" parameterType="Order">
+		insert into
+		t_order(user_id,pay,price,creat_time,update_time,address_id,status,user_status,order_id,`desc`)
+		values(#{userId},#{pay},#{price},#{localCreatTime},#{localUpdateTime},#{addressId},#{status},#{userStatus},#{orderId},#{desc})
+	</insert>
+
+	<update id="update" parameterType="Order">
+		update t_order
+		<set>
+			<if test="id!=null and id!=''">
+				id=#{id},
+			</if>
+			<if test="userId!=null and userId!=''">
+				user_id=#{userId},
+			</if>
+			<if test="pay!=null and pay!=''">
+				pay=#{pay},
+			</if>
+			<if test="price!=null and price!=''">
+				price=#{price},
+			</if>
+			<if test="localCreatTime!=null and localCreatTime!=''">
+				creat_time=#{localCreatTime},
+			</if>
+			<if test="localUpdateTime!=null and localUpdateTime!=''">
+				update_time=#{localUpdateTime},
+			</if>
+			<if test="addressId!=null and addressId!=''">
+				address_id=#{addressId},
+			</if>
+			<if test="status!=null and status!=''">
+				status=#{status},
+			</if>
+			<if test="userStatus!=null and userStatus!=''">
+				user_status=#{userStatus},
+			</if>
+			<if test="orderId!=null and orderId!=''">
+				order_id=#{orderId},
+			</if>
+			<if test="desc!=null and desc!=''">
+				`desc`=#{desc},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_order where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_order where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

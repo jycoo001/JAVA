@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.AdminDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		id,name,password,phone,secret_key,staff_status,delete_flag,creat_time,last_login_time
+	</sql>
+
+	<resultMap type="Admin" id="Map">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+		<result property="phone" column="phone" />
+		<result property="secretKey" column="secret_key" />
+		<result property="staffStatus" column="staff_status" />
+		<result property="deleteFlag" column="delete_flag" />
+		<result property="creatTime" column="creat_time" />
+		<result property="lastLoginTime" column="last_login_time" />
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="Admin">
+		select
+		<include refid="Columns" />
+		from t_admin
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="name!=null and name!=''">
+				<bind name="likeName" value="'%'+name+'%'" />
+				and name like #{likeName}
+			</if>
+			<if test="password!=null and password!=''">
+				and password=#{password}
+			</if>
+			<if test="phone!=null and phone!=''">
+				and phone=#{phone}
+			</if>
+			<if test="secretKey!=null and secretKey!=''">
+				and secret_key=#{secretKey}
+			</if>
+			<if test="creatTime!=null">
+				and creat_time=#{localCreatTime}
+			</if>
+			<if test="staffStatus!=null and staffStatus!=''">
+				and staff_status=#{staffStatus}
+			</if>
+			<if test="lastLoginTime!=null">
+				and last_login_time=#{localLastLoginTime}
+			</if>
+			<if test="deleteFlag!=null and deleteFlag!=''">
+				and delete_flag=#{deleteFlag}
+			</if>
+		</where>
+		order by id
+	</select>
+
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_admin
+		where id=#{id}
+	</select>
+
+	<select id="findByIds" resultMap="Map"
+		parameterType="java.util.List">
+		select
+		<include refid="Columns" />
+		from t_admin
+		where id in
+		<foreach collection="ids" open="(" close=")" item="id"
+			separator=",">
+			#{id}
+		</foreach>
+	</select>
+
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(id) from t_admin
+	</select>
+
+
+	<select id="findFromTo" parameterType="java.util.List"
+		resultType="ViewDate">
+		select count(1) count, DAYOFMONTH(creat_time)
+		from t_admin where
+		creat_time between
+		<foreach collection="fromTo" item="date" separator=" and ">
+			#{date}
+		</foreach>
+		group by DAYOFMONTH(creat_time)
+	</select>
+
+	<select id="login" resultMap="Map" parameterType="Admin">
+		select
+		<include refid="Columns" />
+		from t_admin
+		where name=#{name} and password=#{localPassword} and
+		staff_status='1' and delete_flag='0'
+	</select>
+
+	<insert id="insert" parameterType="Admin">
+		insert into
+		t_admin(name,password,phone,secret_key,staff_status,delete_flag,creat_time)
+		values(#{name},#{localPassword},#{phone},#{localSecretKey},#{staffStatus},#{localDeleteFlag},#{localCreatTime})
+	</insert>
+
+	<update id="update" parameterType="Admin">
+		update t_admin
+		<set>
+			<if test="name!=null and name!=''">
+				name=#{name},
+			</if>
+			<if test="password!=null and password!=''">
+				password=#{localPassword},
+			</if>
+			<if test="phone!=null and phone!=''">
+				phone=#{phone},
+			</if>
+			<if test="localSecretKey!=null">
+				secret_key=#{localSecretKey},
+			</if>
+			<if test="staffStatus!=null and staffStatus!=''">
+				staff_status=#{staffStatus},
+			</if>
+			<if test="lastLoginTime!=null">
+				last_login_time=#{localLastLoginTime},
+			</if>
+			<if test="deleteFlag!=null and deleteFlag!=''">
+				delete_flag=#{deleteFlag},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<update id="updateFlagByIds" parameterType="java.util.List">
+		update t_admin
+		set deleteFlag='1'
+		where id in
+		<foreach collection="ids" open="(" close=")" item="id"
+			separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+</mapper>

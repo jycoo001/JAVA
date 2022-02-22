@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.UserDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		id,user_id,password,secret,sex,phone,qq,e_mail,card_id,creat_time,user_money,last_time,user_status,user_picture
+	</sql>
+	<resultMap type="User" id="Map">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="password" column="password" />
+		<result property="phone" column="phone" />
+		<result property="qq" column="qq" />
+		<result property="email" column="e_mail" />
+		<result property="cardId" column="card_id" />
+		<result property="secret" column="secret" />
+		<result property="sex" column="sex" />
+		<result property="creatTime" column="creat_time" />
+		<result property="userMany" column="user_many" />
+		<result property="lastTime" column="last_time" />
+		<result property="userStatus" column="user_status" />
+		<result property="userPicture" column="user_picture" />
+		<collection property="address" column="id"
+			select="com.jyc.dao.UserAddressDAO.findByUserId" />
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="User">
+		select
+		<include refid="Columns" />
+		from t_user
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="userId!=null and userId!=''">
+				<bind name="likeUserId" value="'%'+userId+'%'" />
+				and user_id like #{likeUserId}
+			</if>
+			<if test="password!=null and password!=''">
+				and password=#{localPassword}
+			</if>
+			<if test="secret!=null and secret!=''">
+				and secret=#{secret}
+			</if>
+			<if test="sex!=null and sex!=''">
+				and sex=#{sex}
+			</if>
+			<if test="phone!=null and phone!=''">
+				and phone=#{phone}
+			</if>
+			<if test="qq!=null and qq!=''">
+				and qq=#{qq}
+			</if>
+			<if test="email!=null and email!=''">
+				and e_mail=#{email}
+			</if>
+			<if test="cardId!=null and cardId!=''">
+				and card_id=#{cardId}
+			</if>
+			<if test="creatTime!=null">
+				and creat_time=#{localCreatTime}
+			</if>
+			<if test="userMoney!=null and userMoney!=''">
+				and user_money=#{userMoney}
+			</if>
+			<!--last_time,user_status -->
+			<if test="lastTime!=null">
+				and last_time=#{localLastTime}
+			</if>
+			<if test="userStatus!=null and userStatus!=''">
+				and user_status=#{userStatus}
+			</if>
+			<if test="userPicture!=null and userPicture!=''">
+				and user_picture=#{userPicture}
+			</if>
+		</where>
+		order by id
+	</select>
+	
+	<select id="findFromTo" parameterType="java.util.List" resultType="ViewDate">
+		select count(1) count, DAYOFMONTH(creat_time)
+		from t_user where creat_time between
+		<foreach collection="fromTo" item="date" separator=" and ">
+			   #{date}
+		</foreach>
+		group by DAYOFMONTH(creat_time)
+	</select>
+	
+	
+
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_user
+		where id=#{id}
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(id) from t_user
+	</select>
+
+	<select id="login" resultMap="Map" parameterType="User">
+		select
+		<include refid="Columns" />
+		from t_user
+		where user_id=#{userId} and password=#{localPassword} and
+		user_status='1'
+	</select>
+
+	<insert id="register" parameterType="User">
+		insert into
+		t_user(user_id,password,secret,sex,phone,qq,e_mail,card_id,creat_time,user_money,user_status)
+		values(#{userId},#{localPassword},#{localSecret},#{localSex},#{phone},#{qq},#{email},#{cardId},#{localCreatTime},#{userMoney},#{userStatus})
+	</insert>
+
+	<insert id="insert" parameterType="User">
+		insert into
+		t_user(user_id,password,secret,sex,phone,qq,e_mail,card_id,creat_time,user_money,user_status)
+		values(#{userId},#{localPassword},#{localSecret},#{localSex},#{phone},#{qq},#{email},#{cardId},#{localCreatTime},#{userMoney},#{userStatus})
+	</insert>
+
+	<update id="update" parameterType="User">
+		update t_user
+		<set>
+			<if test="id!=null and id!=''">
+				id=#{id},
+			</if>
+			<if test="userId!=null and userId!=''">
+				user_id=#{userId},
+			</if>
+			<if test="password!=null and password!=''">
+				password=#{localPassword},
+			</if>
+			<if test="localSecret!=null and localSecret!=''">
+				secret=#{localSecret},
+			</if>
+			<if test="sex!=null and sex!=''">
+				sex=#{sex},
+			</if>
+			<if test="phone!=null and phone!=''">
+				phone=#{phone},
+			</if>
+			<if test="qq!=null and qq!=''">
+				qq=#{qq},
+			</if>
+			<if test="email!=null and email!=''">
+				e_mail=#{email},
+			</if>
+			<if test="cardId!=null and cardId!=''">
+				card_id=#{cardId},
+			</if>
+			<if test="creatTime!=null">
+				creat_time=#{localCreatTime},
+			</if>
+			<if test="userMoney!=null and userMoney!=''">
+				user_money=#{userMoney},
+			</if>
+			<!--last_time,user_status -->
+			<if test="lastTime!=null">
+				last_time=#{localLastTime},
+			</if>
+			<if test="userStatus!=null and userStatus!=''">
+				user_status=#{userStatus},
+			</if>
+			<if test="userPicture!=null and userPicture!=''">
+				user_picture=#{userPicture}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_user where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_user where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

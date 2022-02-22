@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.LogoDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		id,address,status
+	</sql>
+	<resultMap type="Logo" id="Map">
+		<id property="id" column="id" />
+		<result property="address" column="address" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="Logo">
+		select
+		<include refid="Columns" />
+		from t_logo
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="address!=null and address!=''">
+				and address=#{address}
+			</if>
+			<if test="status!=null and status!=''">
+				and status=#{status}
+			</if>
+		</where>
+		order by id
+	</select>
+
+	<select id="findById" resultMap="Map"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_logo
+		where id=#{id}
+	</select>
+
+	<insert id="insert" parameterType="Logo">
+		insert into
+		t_logo(address,status) values(#{address},#{status})
+	</insert>
+
+	<update id="update" parameterType="Logo">
+		update t_logo
+		<set>
+			<if test="id!=null and id!=''">
+				id=#{id},
+			</if>
+			<if test="address!=null and address!=''">
+				address=#{address},
+			</if>
+			<if test="status!=null and status!=''">
+				status=#{status},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_logo where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_logo where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	
+</mapper>

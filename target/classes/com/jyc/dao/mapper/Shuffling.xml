@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.dao.ShufflingDAO">
+	<cache type="org.mybatis.caches.caffeine.CaffeineCache" />
+	<sql id="Columns">
+		id,name,picture,status
+	</sql>
+	<resultMap type="Shuffling" id="Map">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="picture" column="picture" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<select id="findAll" resultMap="Map" parameterType="Shuffling">
+		select
+		<include refid="Columns" />
+		from t_shuffling
+		<where>
+			<if test="id!=null and id!=''">
+				and id=#{id}
+			</if>
+			<if test="name!=null and name!=''">
+			<bind name="likeName" value="'%'+name+'%'"/>
+				and name=#{likeName}
+			</if>
+			<if test="picture!=null and picture!=''">
+				and picture=#{picture}
+			</if>
+			<if test="status!=null and status!=''">
+				and status=#{status}
+			</if>
+		</where>
+		order by id
+	</select>
+
+	<select id="findById" resultMap="Map" parameterType="java.lang.Integer">
+		select
+		<include refid="Columns" />
+		from t_shuffling
+		where id=#{id}
+	</select>
+
+
+	<insert id="insert" parameterType="Shuffling">
+		insert into
+		t_shuffling(name,picture,status)
+		values(#{name},#{picture},#{status})
+	</insert>
+
+	<update id="update" parameterType="Shuffling">
+		update t_shuffling
+		<set>
+			<if test="name!=null and name!=''">
+				name=#{name},
+			</if>
+			<if test="picture!=null and picture!=''">
+				picture=#{picture},
+			</if>
+			<if test="status!=null and status!=''">
+				status=#{status},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from t_shuffling where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="java.util.List">
+		delete from t_shuffling where id in
+		<foreach collection="ids" item="id" separator="," open="("
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>
