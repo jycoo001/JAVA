@@ -262,6 +262,7 @@ for (let i = 0; i < addCar.length; i++) {
 
         //判断是否重复值
         for (let k = 0; k < cartlist.length; k++) {
+			//购物车实现查重，重复就商品数量加一
             if (cartlist[k].id == id) {
                 has = 1;
                 num = cartlist[k].num++;

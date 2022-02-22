@@ -33,17 +33,17 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element']
 		dialog.tips('添加', '.addBtn');
 
 	})
-	
+
 	$('.addBtn1').click(function() {
 		var url = $(this).attr('data-url');
 		var id = $(this).attr('data-id');
 		//将iframeObj传递给父级窗口,执行操作完成刷新
-		parent.page("菜单添加", url+"?id="+id, iframeObj, w = "700px", h = "620px");
+		parent.page("菜单添加", url + "?id=" + id, iframeObj, w = "700px", h = "620px");
 		return false;
 	}).mouseenter(function() {
 		dialog.tips('添加', '.addBtn');
 	})
-	
+
 	//顶部排序
 	$('.listOrderBtn').click(function() {
 		var url = $(this).attr('data-url');
@@ -70,28 +70,32 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element']
 			message: '您确定要删除选中项',
 			success: function(index) {
 				var checked = $(".myChecked:checked");
-				var ids = [];
-				var trs = checked.closest("tr");
-				for (var i = 0; i < checked.length; i++) {
-					ids[i] = +checked[i].getAttribute("data-id");
-				}
-				$.ajax({
-					url: url,
-					method: "post",
-					data: {
-						"ids": ids
-					},
-					dataType: "json",
-					tranditional: true,
-					success: function(map) {
-						if (map.detail == '删除成功') {
-							$(trs).remove();
-							layer.msg(map.detail + ",删除了" + map.rows + "个用户");
-						} else {
-							layer.msg(map.detail);
-						}
+				if (checked[0]) {
+					var ids = [];
+					var trs = checked.closest("tr");
+					for (var i = 0; i < checked.length; i++) {
+						ids[i] = +checked[i].getAttribute("data-id");
 					}
-				});
+					$.ajax({
+						url: url,
+						method: "post",
+						data: {
+							"ids": ids
+						},
+						dataType: "json",
+						tranditional: true,
+						success: function(map) {
+							if (map.detail == '删除成功') {
+								$(trs).remove();
+								layer.msg(map.detail + ",删除了" + map.rows + "个用户");
+							} else {
+								layer.msg(map.detail);
+							}
+						}
+					});
+				} else {
+					layer.alert("您未选中");
+				}
 				layer.close(index);
 			},
 			cancel: function() {
@@ -169,6 +173,13 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog', 'element']
 		window.location.href = url + "?id=" + id;
 		return false;
 	})
+	//分类点击跳转下一级
+	$("#table-list .type-children").click(function() {
+		console.log("aa");
+		var path = $(this).attr("data-url");
+		window.location.href = path;
+		return false;
+	});
 	//自定义
 	$(".pagination a").click(function() {
 		console.log("jin");

@@ -8,6 +8,8 @@
 	<packaging>war</packaging>
 	<name>shopping</name>
 
+
+
 	<!-- maven的属性（变量）配置，关键字常量 -->
 	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -15,6 +17,8 @@
 	</properties>
 
 	<dependencies>
+
+
 		<!-- 导出excel -->
 		<!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
 		<dependency>

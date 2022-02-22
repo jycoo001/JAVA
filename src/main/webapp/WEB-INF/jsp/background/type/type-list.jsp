@@ -28,7 +28,7 @@
 							<i class="layui-icon">&#xe654;</i>
 						</button>
 						<button class="layui-btn layui-btn-small layui-btn-danger delBtn"
-							data-url="background/type/list">
+							data-url="background/type/type-delete-many">
 							<i class="layui-icon">&#xe640;</i>
 						</button>
 						<button
@@ -48,11 +48,17 @@
 							<option value="0">隐藏</option>
 						</select>
 					</div>
+					<div class="layui-inline">
+						<input type="text" name="parentId" value="${type.parentId}"
+							placeholder="请输入父类Id" autocomplete="off" class="layui-input">
+					</div>
 					<input type="hidden" name="pageNumber" value="" /> <input
 						type="hidden" name="pageSize" value="" />
 					<button class="layui-btn layui-btn-normal" lay-submit="search">搜索</button>
-					<button class="layui-btn layui-btn-normal excelNow" data-url="background/type/excel">导出本页</button>
-					<button class="layui-btn layui-btn-normal excelAll" data-url="background/type/excel">导出全部</button>
+					<button class="layui-btn layui-btn-normal excelNow"
+						data-url="background/type/excel">导出本页</button>
+					<button class="layui-btn layui-btn-normal excelAll"
+						data-url="background/type/excel">导出全部</button>
 				</div>
 			</form>
 			<div class="layui-form" id="table-list">
@@ -82,12 +88,15 @@
 
 						<c:forEach items="${list}" var="t">
 							<tr>
-								<td><input type="checkbox" name="" lay-skin="primary"
-									data-id="1"></td>
+								<td><input type="checkbox" name="" class="myChecked" lay-skin="primary"
+									data-id="${t.id}"></td>
 								<td class="hidden-xs">${t.id}</td>
 								<td class="hidden-xs"><input type="text" name="title"
 									autocomplete="off" class="layui-input" value="0" data-id="1"></td>
-								<td>${t.name}</td>
+								<td><button
+										class="layui-btn layui-btn-mini layui-btn-normal type-children"
+										data-url="/background/type/list?parentId=${t.typeId}">${t.name}</button>
+								</td>
 								<td><c:choose>
 										<c:when test="${t.hidden=='1'}">
 											<button class="layui-btn layui-btn-mini layui-btn-normal">已显示</button>
@@ -105,7 +114,7 @@
 										</button>
 										<button
 											class="layui-btn layui-btn-small layui-btn-danger del-btn"
-											data-id="1" data-url="article-detail.html">
+											data-id="${t.id}" data-url="background/type/type-delete">
 											<i class="layui-icon">&#xe640;</i>
 										</button>
 										<button

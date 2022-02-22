@@ -19,7 +19,7 @@ $(function() {
 	//导航条的点击li事件
 	$(".navigation>.container ul").on("click","li",function() {
 		var url = $(this).attr("data-url");
-		location.href="http://127.0.0.1:8848/shop/index.html"+url;
+		location.href=path+url;
 	});
 	
 	$(window).scroll(function() { //开始监听滚动条

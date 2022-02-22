@@ -257,10 +257,326 @@
 			</c:forEach>
 		</ul>
 	</div>
+<!-- 抢购列表一 -->
+	<div class="main-tit">
+		—— <b>抢购列表一</b>——
+	</div>
+	<section class="section3">
+		<ul class="rush-list">
+			<li class="rush-item">
+				<div class="shadow">
+					<div class="sec3-img">
+						<img src="static/forward/images/1.png">
+						<div class="get-time" data-timenow="2019-11-30,10:00:00">
+							距离抢购开始还有<br>1小时5分10秒
+						</div>
+					</div>
+					<div class="info">
+						<h3 title="小米小爱蓝牙音箱随身版 白色">小米小爱蓝牙音箱随身版 白色</h3>
+						<p>小巧便携，一键唤醒小爱</p>
+						<p>
+							<span>24.50元</span>
+							<del>49元</del>
+						</p>
+						<button>即将开始</button>
+					</div>
+				</div>
+			</li>
+			<li class="rush-item">
+				<div class="shadow">
+					<div class="sec3-img">
+						<img src="../../static/forward/images/2.png">
+						<div class="get-time" data-timenow="2019-11-30,12:00:00">
+							距离抢购开始还有<br>1小时5分10秒
+						</div>
+					</div>
+					<div class="info">
+						<h3 title="贝医生0+防蛀健齿牙膏 100克">贝医生0+防蛀健齿牙膏 100克</h3>
+						<p>强健牙釉质，牙齿更坚固</p>
+						<p>
+							<span>1.00元</span>
+							<del>12.9元</del>
+						</p>
+						<button>即将开始</button>
+					</div>
+				</div>
+			</li>
+			<li class="rush-item">
+				<div class="shadow">
+					<div class="sec3-img">
+						<img src="static/forward/images/3.jpg">
+						<div class="get-time" data-timenow="2019-11-30,14:00:00">
+							距离抢购开始还有<br>1小时5分10秒
+						</div>
+					</div>
+					<div class="info">
+						<h3 title="小米路由器4C 白色">小米路由器4C 白色</h3>
+						<p>小巧便携，一键唤醒小爱</p>
+						<p>
+							<span>24.50元</span>
+							<del>49元</del>
+						</p>
+						<button>即将开始</button>
+					</div>
+				</div>
+			</li>
+			<li class="rush-item">
+				<div class="shadow">
+					<div class="sec3-img">
+						<img src="static/forward/images/4.jpg">
+						<div class="get-time" data-timenow="2019-12-30,16:00:00">
+							距离抢购开始还有<br>1小时5分10秒
+						</div>
+					</div>
+					<div class="info">
+						<h3 title="小米旅行箱 青春款 20英寸 黄色 20寸">小米旅行箱 青春款 20英寸 黄色 20寸</h3>
+						<p>环保材料，轻便重量</p>
+						<p>
+							<span>199.00元</span>
+							<del>249元</del>
+						</p>
+						<button>即将开始</button>
+					</div>
+				</div>
+			</li>
+			<li class="rush-item">
+				<div class="shadow">
+					<div class="sec3-img">
+						<img src="static/forward/images/5.jpg">
+						<div class="get-time" data-timenow="2019-12-30,18:00:00">
+							距离抢购开始还有<br>1小时5分10秒
+						</div>
+					</div>
+					<div class="info">
+						<h3 title="米家直流变频落地扇 白色">米家直流变频落地扇 白色</h3>
+						<p>用科技创造自然风</p>
+						<p>
+							<span>279.00元</span>
+							<del>349元</del>
+						</p>
+						<button>即将开始</button>
+					</div>
+				</div>
+			</li>
+			<li class="rush-item">
+				<div class="shadow">
+					<div class="sec3-img">
+						<img src="../../static/forward/images/6.jpg">
+						<div class="get-time" data-timenow="2019-12-30,20:00:00">
+							距离抢购开始还有<br>1小时5分10秒
+						</div>
+					</div>
+					<div class="info">
+						<h3 title="烟灶套装（天然气）">烟灶套装（天然气）</h3>
+						<p>点火排烟，风随火动</p>
+						<p>
+							<span>1999.00元</span>
+							<del>2298元</del>
+						</p>
+						<button>即将开始</button>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</section>
 
 
 
+	<div class="main-tit">
+		—— <b>抢购列表二</b>——
+	</div>
+	<div class="wrap purch">
+		<ul>
+			<li class="box">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (1).jpg"> </a>
+				<div class="box-right">
+					<a href="shop.html"><b> 美的（Midea）</b>NPS10-15B小太阳电取暖器气家用电热扇烤火炉立式多功能节能办公室神器
+						NPS10-15B </a>
+					<p>
+						<b class="redprice">299.00元</b><s>329.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (2).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"> 科沃斯(Ecovacs)扫地机器人DL33家用<b>全自动</b>超薄智能洗擦拖地宝一体机吸尘
+					</a>
+					<p>
+						<b class="redprice">3399.00元</b><s>4099.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (3).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"> 小米(MI)<b>智能</b>床头灯<b>智能台灯</b>家居简约彩色灯泡卧室灯
+					</a>
+					<p>
+						<b class="redprice">199.00元</b><s>236.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (4).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"> <b> 九阳（Joyoung）</b>豆浆机不用手洗立体加热智能预约破壁豆浆机
+						DJ06R-Kmini白
+					</a>
+					<p>
+						<b class="redprice">399.00元</b><s>499.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (5).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"><b> 小度智能音箱 </b>百度智能音响 WiFi/蓝牙音箱
+						、智能机器人、AI生活助手、2600+技能、带娃神器故事机 </a>
+					<p>
+						<b class="redprice">199.00元</b><s>299.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (6).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"><b> Apple 苹果 </b>iPhone 11Pro 手机 暗夜绿色 全网通
+						256GB </a>
+					<p>
+						<b class="redprice">9488.00元</b><s>9999.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box" data-start="2019-12:11 17:24:00"
+				data-start="2019-12:11 17:54:00">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (7).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"> <b> 佳能（Canon）</b>EOS 800D 单反相机 单反机身 单反套机
+						（EF-S 18-55mm f/4-5.6 IS STM 单反镜头）
+					</a>
+					<p>
+						<b class="redprice">4999.00元</b><s>5299.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box"
+				data-time="{start:'2019-12-11 17:24:00', end:'2019-12-11 17:54:09'}">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (8).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"> <b> 凤禧珠宝</b>玉手镯满绿色翡翠玉镯子玉石玉器圆镯女款送妈妈女友生日礼物中码
+					</a>
+					<p>
+						<b class="redprice">1599.00元</b><s>1999.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (5).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"><b> 小度智能音箱 </b>百度智能音响 WiFi/蓝牙音箱
+						、智能机器人、AI生活助手、2600+技能、带娃神器故事机 </a>
+					<p>
+						<b class="redprice">199.00元</b><s>299.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (6).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"><b> Apple 苹果 </b>iPhone 11Pro 手机 暗夜绿色 全网通
+						256GB </a>
+					<p>
+						<b class="redprice">9488.00元</b><s>9999.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+			<li class="box" data-start="2019-12:11 17:24:00"
+				data-start="2019-12:11 17:54:00">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (7).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"> <b> 佳能（Canon）</b>EOS 800D 单反相机 单反机身 单反套机
+						（EF-S 18-55mm f/4-5.6 IS STM 单反镜头）
+					</a>
+					<p>
+						<b class="redprice">4999.00元</b><s>5299.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
 
+			<li class="box"
+				data-time="{start:'2019-12-11 17:24:00', end:'2019-12-11 17:54:09'}">
+				<div class="times">
+					距离抢购<b class="end">开始</b>还有
+					<div class="times-sub"></div>
+				</div> <a href="shop.html"><img
+					src="../../static/forward/images/buy (8).jpg"></a>
+				<div class="box-right">
+					<a href="shop.html"> <b> 凤禧珠宝</b>玉手镯满绿色翡翠玉镯子玉石玉器圆镯女款送妈妈女友生日礼物中码
+					</a>
+					<p>
+						<b class="redprice">1599.00元</b><s>1999.00元</s>
+					</p>
+					<div class="click">等待中...</div>
+				</div>
+			</li>
+		</ul>
+	</div>
 
 	<!-- 页脚 -->
 	<div class="main-tit">

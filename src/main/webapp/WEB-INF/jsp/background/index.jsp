@@ -42,7 +42,7 @@
 								data-text="轮播图管理"><span class="l-line"></span>轮播图菜单</a>
 						</dd>
 						<dd>
-							<a href="javascript:;" data-url="background/type/list"
+							<a href="javascript:;" data-url="background/type/list?parentId=0"
 								data-id='4' data-text="商品分类管理"><span class="l-line"></span>商品分类</a>
 						</dd>
 						<dd>

@@ -18,6 +18,9 @@
 	type="text/javascript" charset="utf-8"></script>
 <script src="static/forward-detail/js/detail.js" type="text/javascript"
 	charset="utf-8"></script>
+<script type="text/javascript">
+	var path = "${path}/";
+</script>
 </head>
 <body>
 	<div class="hidden"></div>
@@ -26,7 +29,7 @@
 		<div class="container">
 			<div>
 				<ul>
-					<li data-url="#">商品名</li>
+					<li data-url="goods/detail?id=${goods.id}">${goods.name}</li>
 				</ul>
 			</div>
 			<div>
@@ -69,10 +72,8 @@
 			<div class="swiper-button-prev"></div>
 			<div class="swiper-button-next"></div>
 		</div>
-			
-		<div class="img">
-			${goods.children.goodsIntroduce}
-		</div>
+
+		<div class="img">${goods.children.goodsIntroduce}</div>
 	</div>
 </body>
 </html>
