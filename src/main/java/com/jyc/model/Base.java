@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * 重写了equal的类
+ * 工具类
  * 
  * @author 12430
  *
@@ -47,4 +47,9 @@ public class Base {
 		}
 		return b;
 	}
+
+	public boolean hashCode(String[] name) {
+		return equals(name);
+	}
+
 }
